@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="habits">
+        <item>нет курению</item>
+        <item>нет нездоровой пище</item>
+        <item>нет алкоголю</item>
+        <item>нет наркотикам</item>
+        <item>да спорту</item>
+    </string-array>
+    <integer-array name="link">
+        <item>0</item>
+        <item>4</item>
+        <item>5</item>
+        <item>11</item>
+        <item>19</item>
+    </integer-array>
+    <integer-array name="influence">
+        <item>1</item>
+        <item>-1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+    </integer-array>
+</resources>

@@ -1,0 +1,72 @@
+<resources>
+    <string name="app_name">Memento</string>
+    <string name="header_main">Здравствуйте, %s!</string>
+    <string name="forecast">В среднем человек вашего возраста, пола и привычек доживет до %s года.</string>
+    <string name="invitation">Вы можете перейти к заполнению анкеты</string>
+    <string name="clear">Очистить Анкету</string>
+    <string name="update">Вновь пройти опрос</string>
+    <string name="start">Пройти опрос</string>
+    <string name="general">Для определения продолжительности жизни нужно ответить на ряд вопросов. \nВы можете перейти к заполнению анкеты</string>
+    <string name="username">Пользователь</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="unknown">Нет ответа</string>
+    <string name="prev">Назад</string>
+    <string name="next">Вперед</string>
+    <string name="name">Имя или ник</string>
+    <string name="introduction">Представьтесь, введите год и месяц своего рождения и пол</string>
+    <string name="year">Год рождения</string>
+    <string name="to_questionnaire">Перейти к анкете</string>
+    <string name="save">Сохранить</string>
+    <string name="male">Муж</string>
+    <string name="female">Жен</string>
+    <string name="limit_age">Введите корректную дату рождения</string>
+    <string name="map">just map</string>
+    <string name="dial">just dialer</string>
+    <string name="mail">just mail</string>
+    <string name="skip">пропустить остальное и сохранить</string>
+    <string name="weight">Ваш вес, кг</string>
+    <string name="height">Ваш рост, см</string>
+    <string name="limit_gender">Определитесь с полом</string>
+    <string name="bmi">Ваш индекс массы тела составляет %s</string>
+    <string name="calculate">Рассчитать индекс массы тела</string>
+    <string name="to_weight">Продолжить</string>
+    <string name="bmi_valid">Введите корректные данные веса и роста</string>
+    <string name="label_weight">Вес</string>
+    <string name="label_height">Рост</string>
+    <string name="new_habit">Новая привычка</string>
+    <string name="non_active">Не активна</string>
+    <string name="clean">Очистить</string>
+    <string name="cancel">Отменить</string>
+    <string name="ok">OK</string>
+
+    <string-array name="months">
+        <item>Январь</item>
+        <item>Февраль</item>
+        <item>Март</item>
+        <item>Апрель</item>
+        <item>Май</item>
+        <item>Июнь</item>
+        <item>Июль</item>
+        <item>Август</item>
+        <item>Сентябрь</item>
+        <item>Октябрь</item>
+        <item>Ноябрь</item>
+        <item>Декабрь</item>
+    </string-array>
+
+    <string-array name="month">
+        <item>января</item>
+        <item>февраля</item>
+        <item>марта</item>
+        <item>апреля</item>
+        <item>мая</item>
+        <item>июня</item>
+        <item>июля</item>
+        <item>августа</item>
+        <item>сентября</item>
+        <item>октября</item>
+        <item>ноября</item>
+        <item>декабря</item>
+    </string-array>
+</resources>

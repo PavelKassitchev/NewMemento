@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_map"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_dialog_map"
+        android:title="@string/map"/>
+    <item
+        android:id="@+id/action_dial"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_dialog_dialer"
+        android:title="@string/dial" />
+    <item
+        android:id="@+id/action_mail"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_dialog_email"
+        android:title="@string/mail" />
+</menu>
