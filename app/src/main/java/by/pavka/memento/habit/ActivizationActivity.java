@@ -15,7 +15,6 @@ import by.pavka.memento.BottomNavigationListener;
 import by.pavka.memento.MementoApplication;
 import by.pavka.memento.R;
 import by.pavka.memento.databinding.ActivityActivizationBinding;
-import by.pavka.memento.databinding.ActivityImproveBinding;
 
 public class ActivizationActivity extends AppCompatActivity implements View.OnClickListener {
     private MementoApplication application;
@@ -31,9 +30,8 @@ public class ActivizationActivity extends AppCompatActivity implements View.OnCl
         viewModel = new ViewModelProvider(this).get(ActivizationViewModel.class);
         Intent intent = getIntent();
         if (intent != null) {
-            int position = intent.getIntExtra("position", -1);
-            System.out.println("ACTIVE POSITION = " + position);
-            viewModel.setPosition(position);
+            Habit habit = (Habit)intent.getSerializableExtra("habit");
+            viewModel.setHabit(habit);
         }
         BottomNavigationView bottomNavigationView = binding.bottomNavigation.getRoot();
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationListener(this));
@@ -51,17 +49,17 @@ public class ActivizationActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()) {
+        switch (v.getId()) {
             case R.id.button_cancel:
+                viewModel.setHabit(null);
                 setResult(RESULT_CANCELED);
                 finish();
                 break;
-                case R.id.button_ok:
-                    Intent intent = new Intent();
-                    System.out.println("View Model Position = " + viewModel.getPosition());
-                    intent.putExtra("position", viewModel.getPosition());
-                    setResult(RESULT_OK, intent);
-                    finish();
+            case R.id.button_ok:
+                Intent intent = new Intent();
+                viewModel.resetProgress();
+                setResult(RESULT_OK, intent);
+                finish();
         }
     }
 }

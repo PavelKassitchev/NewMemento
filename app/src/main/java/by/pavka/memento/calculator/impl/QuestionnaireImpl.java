@@ -60,7 +60,6 @@ public class QuestionnaireImpl implements Questionnaire {
     @Override
     public void setCursor(int i) {
         cursor = i;
-        System.out.println("!!!!!!!!!!!!!!!!!!SETTING " + cursor);
     }
 
     @Override

@@ -1,6 +1,11 @@
 package by.pavka.memento.habit;
 
-public class Habit {
+import androidx.annotation.NonNull;
+
+import java.io.Serializable;
+import java.util.Objects;
+
+public class Habit implements Serializable {
     private String name;
     private int imageId;
 
@@ -54,5 +59,27 @@ public class Habit {
 
     public void setBetter(int better) {
         this.better = better;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Habit habit = (Habit) o;
+        return imageId == habit.imageId &&
+                question == habit.question &&
+                better == habit.better &&
+                name.equals(habit.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, imageId, question, better);
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "{\"better\":" + better + ",\"imageId\":" + imageId + ",\"name\":\"" + name + "\",\"question\":" + question + "}";
     }
 }

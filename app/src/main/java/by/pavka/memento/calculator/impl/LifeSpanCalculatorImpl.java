@@ -23,7 +23,6 @@ public class LifeSpanCalculatorImpl implements LifeSpanCalculator {
         int totalDaysRaw = preCalculator.findLifeDaySpan(gender, birthDate, locale);
         Calendar end = (Calendar) birthDate.clone();
         end.add(Calendar.DAY_OF_MONTH, totalDaysRaw);
-        System.out.println("END: " + end.get(Calendar.YEAR));
         int leftDays = (int) TimeUnit.MILLISECONDS.toDays(end.getTimeInMillis() - now.getTimeInMillis());
         double factor = 365.2 * leftDays / totalDaysRaw;
         int i = 0;
@@ -32,14 +31,11 @@ public class LifeSpanCalculatorImpl implements LifeSpanCalculator {
             switch (answers[i]) {
                 case -1:
                     leftDays += (int) (factor * questionnaire.getNegative());
-                    System.out.println("ANSWER negative" + i + leftDays);
                     break;
                 case 1:
                     leftDays += (int) (factor * questionnaire.getPositive());
-                    System.out.println("ANSWER positive " + i + leftDays);
                     break;
                 default:
-                    System.out.println("ANSWER neutral " + i + leftDays);
                     break;
             }
             i++;

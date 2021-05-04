@@ -23,7 +23,6 @@ public class PreCalculatorImpl implements PreCalculator {
             case -1:
                 return (int) femaleLifeDaySpan(ageInYears, locale);
             case 1:
-                System.out.println("PRECALCULATOR: " + maleLifeDaySpan(ageInYears, locale));
                 return (int) maleLifeDaySpan(ageInYears, locale);
             default:
                 return (int) ((femaleLifeDaySpan(ageInYears, locale) + maleLifeDaySpan(ageInYears, locale)) / 2);

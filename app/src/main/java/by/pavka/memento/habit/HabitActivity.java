@@ -20,13 +20,14 @@ import by.pavka.memento.MementoApplication;
 import by.pavka.memento.R;
 import by.pavka.memento.databinding.ActivityHabbitBinding;
 
-public class HabitActivity extends AppCompatActivity {
+public class  HabitActivity extends AppCompatActivity {
 
     private MementoApplication application;
     private RecyclerView recycler;
     private HabitRecyclerViewAdapter adapter;
 
-    private List<Habit> habits;
+//    private List<Habit> habits;
+    private UserHabitTracker tracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,16 +41,9 @@ public class HabitActivity extends AppCompatActivity {
         MenuItem item = bottomNavigationView.getMenu().findItem(R.id.action_dial);
         item.setChecked(true);
 
-        habits = new ArrayList<>();
-        habits.add(new Habit("Smoking"));
-        habits.add(new Habit("Drinking"));
-        habits.add(new Habit("Sport"));
-        habits.add(new Habit("Weight"));
-        habits.add(new Habit("Education"));
-        habits.add(new Habit("Food"));
-
+        tracker = application.getUser().getTracker();
         recycler = findViewById(R.id.recyclerView);
-        adapter = new HabitRecyclerViewAdapter(this, habits);
+        adapter = new HabitRecyclerViewAdapter(this, tracker);
         recycler.setAdapter(adapter);
         recycler.setLayoutManager(new GridLayoutManager(this, getResources().getConfiguration().orientation * 2));
     }
@@ -58,8 +52,9 @@ public class HabitActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            int position = data.getIntExtra("position", -1);
-            System.out.println("POSITION = " + position);
+            adapter.setTracker(application.getUser().getTracker());
+            adapter.notifyDataSetChanged();
+            application.saveHabits();
         }
     }
 }

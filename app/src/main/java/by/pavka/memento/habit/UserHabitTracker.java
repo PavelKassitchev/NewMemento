@@ -1,0 +1,66 @@
+package by.pavka.memento.habit;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import by.pavka.memento.MementoApplication;
+import by.pavka.memento.R;
+
+public class UserHabitTracker {
+    private transient MementoApplication app;
+    private Map<Habit, HabitProgress> habits;
+
+    public UserHabitTracker(MementoApplication app) {
+        this.app = app;
+        habits = new HashMap<>();
+        init();
+    }
+
+    public UserHabitTracker() {
+        habits = new HashMap<>();
+    }
+
+    private void init() {
+        String[] habs = app.getResources().getStringArray(R.array.habits);
+        int[] questions = app.getResources().getIntArray(R.array.link);
+        int[] influence = app.getResources().getIntArray(R.array.influence);
+        int length = habs.length;
+        Habit[] habies = new Habit[length];
+        for (int i = 0; i < length; i++) {
+            habies[i] = new Habit(habs[i], 0, questions[i], influence[i]);
+            habits.put(habies[i], new HabitProgress());
+        }
+    }
+
+    public void updateWithAnswers(int[] answers) {
+        for(Map.Entry<Habit, HabitProgress> entry: habits.entrySet()) {
+            Habit habit = entry.getKey();
+            System.out.println(habit.getName());
+            int question = habit.getQuestion();
+            int better = habit.getBetter();
+            int answer = answers[question];
+            HabitProgress progress = entry.getValue();
+            if (better * answer >= 0) {
+                progress.setHabitStatus(HabitStatus.ENABLED);
+            } else {
+                progress.setHabitStatus(HabitStatus.DISABLED);
+            }
+        }
+    }
+
+    public Map<Habit, HabitProgress> getHabits() {
+        return habits;
+    }
+
+    public MementoApplication getApp() {
+        return app;
+    }
+
+    public void setApp(MementoApplication app) {
+        this.app = app;
+    }
+
+    public void setHabits(Map<Habit, HabitProgress> habits) {
+        this.habits = habits;
+    }
+}

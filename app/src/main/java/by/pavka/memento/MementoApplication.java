@@ -10,12 +10,17 @@ import androidx.annotation.NonNull;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.Calendar;
+import java.util.Map;
 
 import by.pavka.memento.calculator.Questionnaire;
 import by.pavka.memento.calculator.impl.QuestionnaireImpl;
-import by.pavka.memento.habit.HabitTracker;
+import by.pavka.memento.habit.Habit;
+import by.pavka.memento.habit.HabitProgress;
+import by.pavka.memento.habit.UserHabitTracker;
 import by.pavka.memento.user.User;
 import by.pavka.memento.util.CalendarConverter;
 
@@ -32,7 +37,6 @@ public class MementoApplication extends Application {
 
     private Questionnaire questionnaire;
     private User user;
-    private HabitTracker habitTracker;
 
     public Questionnaire getQuestionnaire() {
         if (questionnaire == null) {
@@ -45,7 +49,9 @@ public class MementoApplication extends Application {
     public User getUser() {
         if (user == null) {
             user = createUser();
+            System.out.println("CREATION");
         }
+        System.out.println("TRACKER = " + user.getTracker());
         return user;
     }
 
@@ -56,6 +62,15 @@ public class MementoApplication extends Application {
     private User createUser() {
         User user = new User();
         SharedPreferences preferences = getSharedPreferences(APP_PREF, MODE_PRIVATE);
+        boolean habitsCustomized = preferences.getBoolean(HABITS_CUSTOMIZED, false);
+        UserHabitTracker tracker;
+        if (habitsCustomized) {
+            System.out.println("HABIT CUSTOMIZED");
+            tracker = loadTracker();
+        } else {
+            System.out.println("NOT CUSTOMIZED");
+            tracker = new UserHabitTracker(this);
+        }
         String dateOfBirth = preferences.getString(DATE, null);
         String name = "";
         int length = getQuestionnaire().getLength();
@@ -76,6 +91,7 @@ public class MementoApplication extends Application {
         }
         user.setName(name);
         user.setAnswers(answers);
+        user.setTracker(tracker);
         return user;
     }
 
@@ -84,6 +100,7 @@ public class MementoApplication extends Application {
         editor.putString(NAME, name);
         editor.putString(DATE, dateOfBirth);
         editor.putInt(GENDER, gender);
+        editor.putBoolean(HABITS_CUSTOMIZED, true);
         editor.apply();
     }
 
@@ -109,34 +126,28 @@ public class MementoApplication extends Application {
         editor.apply();
     }
 
-    public HabitTracker getHabitTracker() {
-        if (habitTracker == null) {
-            SharedPreferences preferences = getSharedPreferences(MementoApplication.APP_PREF, MODE_PRIVATE);
-            boolean customized = preferences.getBoolean(HABITS_CUSTOMIZED, false);
-            if (customized) {
-               habitTracker = loadTracker();
-            } else {
-                habitTracker = new HabitTracker(this);
-            }
-        }
-        return habitTracker;
+    public void saveHabits() {
+        SharedPreferences.Editor editor = getSharedPreferences(MementoApplication.APP_PREF, MODE_PRIVATE).edit();
+        GsonBuilder builder = new GsonBuilder();
+        builder.enableComplexMapKeySerialization();
+        Gson gson = builder.create();
+        String sTracker = gson.toJson(user.getTracker());
+        System.out.println(sTracker);
+        System.out.println("Habit " + gson.toJson(new Habit("vow", 0, 1, 1)));
+        System.out.println(new Habit("vow", 0, 1, 1));
+
+//        Type type = new TypeToken<UserHabitTracker>() {}.getType();
+//        System.out.println("RESULT " + gson.fromJson(sTracker, type));
+        editor.putString(TRACKER, sTracker);
+        editor.apply();
     }
 
-    private HabitTracker loadTracker() {
+    private UserHabitTracker loadTracker() {
         SharedPreferences preferences = getSharedPreferences(MementoApplication.APP_PREF, MODE_PRIVATE);
         String tracker = preferences.getString(TRACKER, null);
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
-        return gson.fromJson(tracker, HabitTracker.class);
-    }
-
-    private void saveTracker(HabitTracker tracker) {
-        SharedPreferences.Editor editor = getSharedPreferences(MementoApplication.APP_PREF, MODE_PRIVATE).edit();
-        GsonBuilder builder = new GsonBuilder();
-        Gson gson = builder.create();
-        String sTracker = gson.toJson(tracker);
-        editor.putString(TRACKER, sTracker);
-        editor.apply();
+        return gson.fromJson(tracker, UserHabitTracker.class);
     }
 
 }

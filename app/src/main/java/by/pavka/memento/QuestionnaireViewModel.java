@@ -24,16 +24,13 @@ public class QuestionnaireViewModel extends AndroidViewModel {
         super(application);
         app = (MementoApplication)application;
         questionnaire = ((MementoApplication)application).getQuestionnaire();
-        System.out.println("IN VIEW MODEL questionnaire " + questionnaire);
         length = questionnaire.getLength();
         user = ((MementoApplication)application).getUser();
-        System.out.println("USERS ANSWERS: " + user);
         answers = Arrays.copyOf(user.getAnswers(), length);
     }
 
     public String getText() {
         questionnaire.setCursor(page);
-        System.out.println("SETTTTTTTTTTING TTTTEXT!!!!");
         return questionnaire.getQuestion();
     }
 

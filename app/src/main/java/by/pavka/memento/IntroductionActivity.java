@@ -76,6 +76,7 @@ public class IntroductionActivity extends AppCompatActivity implements View.OnCl
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             User user = application.getUser();
+            System.out.println("ON ACTIVITY RESULT TRACKER " + user.getTracker());
             String userName = name.getText().toString();
             user.setName(userName);
             String birthYear = year.getText().toString();
@@ -97,6 +98,10 @@ public class IntroductionActivity extends AppCompatActivity implements View.OnCl
             }
             user.setGender(gender);
             application.savePersonData(userName, dateOfBirth, gender);
+            System.out.println(user.getTracker() + " 1 TRACKER!!!");
+            user.updateTracker();
+            System.out.println(user.getTracker() + " 2 TRACKER!!!");
+            application.saveHabits();
             setResult(RESULT_OK, getIntent());
             finish();
         }

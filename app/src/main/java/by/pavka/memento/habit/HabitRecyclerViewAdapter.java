@@ -17,17 +17,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import by.pavka.memento.R;
 
 public class HabitRecyclerViewAdapter extends RecyclerView.Adapter<HabitRecyclerViewAdapter.HabitViewHolder> {
     private List<Habit> habits;
+    List<HabitProgress> progress;
     private LayoutInflater inflater;
     private Context context;
 
-    public HabitRecyclerViewAdapter(Context context, List<Habit> habits) {
-        this.habits = habits;
+    public HabitRecyclerViewAdapter(Context context, UserHabitTracker tracker) {
+        habits = new ArrayList<>(tracker.getHabits().keySet());
+        progress = new ArrayList<>(tracker.getHabits().values());
         this.context = context;
         inflater = LayoutInflater.from(context);
     }
@@ -43,6 +47,9 @@ public class HabitRecyclerViewAdapter extends RecyclerView.Adapter<HabitRecycler
     public void onBindViewHolder(@NonNull HabitViewHolder holder, int position) {
         Habit habit = habits.get(position);
         holder.habitName.setText(habit.getName());
+        HabitProgress prog = progress.get(position);
+        HabitStatus status = prog.getHabitStatus();
+        holder.status.setText(status.toString());
 
 //        Uri uri = Uri.parse("@android:drawable/btn_star");
         holder.imageView.setImageResource(R.drawable.ic_launcher_background);
@@ -58,24 +65,31 @@ public class HabitRecyclerViewAdapter extends RecyclerView.Adapter<HabitRecycler
         private HabitRecyclerViewAdapter adapter;
         private ImageView imageView;
         private TextView habitName;
-        private int position;
+        private TextView status;
 
         public HabitViewHolder(@NonNull View itemView, HabitRecyclerViewAdapter adapter) {
             super(itemView);
             this.adapter = adapter;
             imageView = itemView.findViewById(R.id.card_image);
             habitName = itemView.findViewById(R.id.card_text);
+            status = itemView.findViewById(R.id.card_status);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     HabitActivity context = (HabitActivity)(adapter.context);
                     Intent intent = new Intent(context,ActivizationActivity.class);
-                    intent.putExtra("position", getLayoutPosition());
+                    Habit habit = habits.get(getLayoutPosition());
+                    intent.putExtra("habit", habit);
                     context.startActivityForResult(intent, REQUEST_CODE);
                 }
             });
         }
 
 
+    }
+
+    public void setTracker(UserHabitTracker tracker) {
+        habits = new ArrayList<>(tracker.getHabits().keySet());
+        progress = new ArrayList<>(tracker.getHabits().values());
     }
 }

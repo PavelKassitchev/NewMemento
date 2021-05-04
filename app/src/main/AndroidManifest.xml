@@ -11,7 +11,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Memento">
         <activity android:name=".habit.ActivizationActivity"></activity>
-        <activity android:name=".habit.ImproveActivity" />
         <activity
             android:name=".habit.HabitActivity"
             android:launchMode="singleTask" />
