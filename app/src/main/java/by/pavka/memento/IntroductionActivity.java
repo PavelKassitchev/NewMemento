@@ -64,10 +64,8 @@ public class IntroductionActivity extends AppCompatActivity implements View.OnCl
             startActivityForResult(intent, REQUEST_CODE);
         } else if (!validateDate()){
             Validator.showSnackbar(R.string.limit_age, v);
-            //Snackbar.make(v, R.string.limit_age, Snackbar.LENGTH_SHORT).show();
         } else {
             Validator.showSnackbar(R.string.limit_gender, v);
-            //Snackbar.make(v, R.string.limit_gender, Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -76,7 +74,6 @@ public class IntroductionActivity extends AppCompatActivity implements View.OnCl
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             User user = application.getUser();
-            System.out.println("ON ACTIVITY RESULT TRACKER " + user.getTracker());
             String userName = name.getText().toString();
             user.setName(userName);
             String birthYear = year.getText().toString();
@@ -98,9 +95,7 @@ public class IntroductionActivity extends AppCompatActivity implements View.OnCl
             }
             user.setGender(gender);
             application.savePersonData(userName, dateOfBirth, gender);
-            System.out.println(user.getTracker() + " 1 TRACKER!!!");
-            user.updateTracker();
-            System.out.println(user.getTracker() + " 2 TRACKER!!!");
+            user.updateTracker(false);
             application.saveHabits();
             setResult(RESULT_OK, getIntent());
             finish();

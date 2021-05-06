@@ -1,7 +1,9 @@
 package by.pavka.memento;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -20,7 +22,7 @@ import by.pavka.memento.calculator.impl.PreCalculatorImpl;
 import by.pavka.memento.databinding.ActivityMainBinding;
 import by.pavka.memento.user.User;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, DialogInterface.OnClickListener {
 
     private static final int REQUEST_CODE = 1;
     private TextView header;
@@ -66,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             int[] answers = user.getAnswers();
             int weight = user.getWeight();
             int height = user.getHeight();
-            end = calculator.tuneLifeDaySpan(gender, birthDate, weight, height,null, preCalculator, questionnaire, answers);
+            end = calculator.tuneLifeDaySpan(gender, birthDate, weight, height, null, preCalculator, questionnaire, answers);
             setButtons(true);
         } else {
             setButtons(false);
@@ -83,10 +85,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivityForResult(intent, REQUEST_CODE);
                 break;
             case R.id.button_clear:
-                clearUser();
-                setHeader(null);
-                setForecast(null);
-                setButtons(false);
+                if (application.getUser().isProgressing()) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle(getString(R.string.clearance)).setMessage(getString(R.string.confidence))
+                            .setNegativeButton(getString(R.string.cancel), this)
+                            .setNeutralButton(getString(R.string.quest_only), this)
+                            .setPositiveButton(getString(R.string.clear_all), this);
+                    builder.create().show();
+                } else {
+                    clearUser();
+                    setHeader(null);
+                    setForecast(null);
+                    setButtons(false);
+                }
                 break;
         }
     }
@@ -98,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void setHeader(User user) {
         String rawText = getResources().getString(R.string.header_main);
-        String userName = (user == null || user.getName().equals(""))? getResources().getString(R.string.username) : user.getName();
+        String userName = (user == null || user.getName().equals("")) ? getResources().getString(R.string.username) : user.getName();
         String head = String.format(rawText, userName);
         header.setText(head);
     }
@@ -123,10 +134,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void setButtons(boolean status) {
         buttonClear.setEnabled(status);
-        if(status) {
+        if (status) {
             buttonUpdate.setText(getResources().getString(R.string.update));
         } else {
             buttonUpdate.setText(getResources().getString(R.string.start));
         }
+    }
+
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        switch (which) {
+            case DialogInterface.BUTTON_NEGATIVE:
+                break;
+            case DialogInterface.BUTTON_NEUTRAL:
+                clearUserQuestionnaire();
+                application.clearQuestionnaireData();
+                application.saveHabits();
+                setHeader(null);
+                setForecast(null);
+                setButtons(false);
+                break;
+            case DialogInterface.BUTTON_POSITIVE:
+                clearUser();
+                setHeader(null);
+                setForecast(null);
+                setButtons(false);
+        }
+    }
+
+    private void clearUserQuestionnaire() {
+        application.getUser().cleanQuestionnaire();
     }
 }

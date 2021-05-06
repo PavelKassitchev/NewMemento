@@ -65,10 +65,8 @@ public class MementoApplication extends Application {
         boolean habitsCustomized = preferences.getBoolean(HABITS_CUSTOMIZED, false);
         UserHabitTracker tracker;
         if (habitsCustomized) {
-            System.out.println("HABIT CUSTOMIZED");
             tracker = loadTracker();
         } else {
-            System.out.println("NOT CUSTOMIZED");
             tracker = new UserHabitTracker(this);
         }
         String dateOfBirth = preferences.getString(DATE, null);
@@ -104,6 +102,12 @@ public class MementoApplication extends Application {
         editor.apply();
     }
 
+    public void customizeHabits(boolean customized) {
+        SharedPreferences.Editor editor = getSharedPreferences(APP_PREF, MODE_PRIVATE).edit();
+        editor.putBoolean(HABITS_CUSTOMIZED, customized);
+        editor.apply();
+    }
+
     public void saveBMIData(int weight, int height) {
         SharedPreferences.Editor editor = getSharedPreferences(APP_PREF, MODE_PRIVATE).edit();
         editor.putInt(WEIGHT, weight);
@@ -126,18 +130,18 @@ public class MementoApplication extends Application {
         editor.apply();
     }
 
+    public void clearQuestionnaireData() {
+        SharedPreferences.Editor editor = getSharedPreferences(MementoApplication.APP_PREF, MODE_PRIVATE).edit();
+        editor.remove(NAME).remove(GENDER).remove(DATE).remove(WEIGHT).remove(HEIGHT);
+        editor.apply();
+    }
+
     public void saveHabits() {
         SharedPreferences.Editor editor = getSharedPreferences(MementoApplication.APP_PREF, MODE_PRIVATE).edit();
         GsonBuilder builder = new GsonBuilder();
         builder.enableComplexMapKeySerialization();
         Gson gson = builder.create();
         String sTracker = gson.toJson(user.getTracker());
-        System.out.println(sTracker);
-        System.out.println("Habit " + gson.toJson(new Habit("vow", 0, 1, 1)));
-        System.out.println(new Habit("vow", 0, 1, 1));
-
-//        Type type = new TypeToken<UserHabitTracker>() {}.getType();
-//        System.out.println("RESULT " + gson.fromJson(sTracker, type));
         editor.putString(TRACKER, sTracker);
         editor.apply();
     }

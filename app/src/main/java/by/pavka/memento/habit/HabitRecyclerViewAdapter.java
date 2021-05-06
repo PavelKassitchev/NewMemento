@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import by.pavka.memento.R;
+import by.pavka.memento.util.Validator;
 
 public class HabitRecyclerViewAdapter extends RecyclerView.Adapter<HabitRecyclerViewAdapter.HabitViewHolder> {
     private List<Habit> habits;
@@ -76,11 +77,16 @@ public class HabitRecyclerViewAdapter extends RecyclerView.Adapter<HabitRecycler
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    HabitActivity context = (HabitActivity)(adapter.context);
-                    Intent intent = new Intent(context,ActivizationActivity.class);
-                    Habit habit = habits.get(getLayoutPosition());
-                    intent.putExtra("habit", habit);
-                    context.startActivityForResult(intent, REQUEST_CODE);
+                    HabitProgress habitProgress = progress.get(getLayoutPosition());
+                    if (habitProgress.getHabitStatus() == HabitStatus.DISABLED) {
+                        Validator.showSnackbar(R.string.disabled, v);
+                    } else {
+                        Habit habit = habits.get(getLayoutPosition());
+                        HabitActivity habitActivity = (HabitActivity) (adapter.context);
+                        Intent intent = new Intent(habitActivity, ActivizationActivity.class);
+                        intent.putExtra("habit", habit);
+                        habitActivity.startActivityForResult(intent, REQUEST_CODE);
+                    }
                 }
             });
         }

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import by.pavka.memento.habit.Habit;
 import by.pavka.memento.habit.HabitProgress;
+import by.pavka.memento.habit.HabitStatus;
 import by.pavka.memento.habit.UserHabitTracker;
 
 public class User {
@@ -83,8 +84,27 @@ public class User {
         this.habitCustomized = habitCustomized;
     }
 
-    public void updateTracker() {
-        System.out.println("UPDATING TRACKER");
-        tracker.updateWithAnswers(answers);
+    public void updateTracker(boolean cleanUser) {
+        tracker.updateWithAnswers(answers, cleanUser);
+        setHabitCustomized(true);
+    }
+
+    public boolean isProgressing() {
+        for (HabitProgress progress : tracker.getHabits().values()) {
+            if (progress.getHabitStatus() == HabitStatus.ACTIVE) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void cleanQuestionnaire() {
+        setName("");
+        setHeight(0);
+        setWeight(0);
+        setGender(0);
+        setBirthDate(null);
+        setAnswers(new int[answers.length]);
+        updateTracker(true);
     }
 }

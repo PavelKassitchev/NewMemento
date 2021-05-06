@@ -32,18 +32,23 @@ public class UserHabitTracker {
         }
     }
 
-    public void updateWithAnswers(int[] answers) {
+    public void updateWithAnswers(int[] answers, boolean cleanUser) {
         for(Map.Entry<Habit, HabitProgress> entry: habits.entrySet()) {
             Habit habit = entry.getKey();
-            System.out.println(habit.getName());
             int question = habit.getQuestion();
             int better = habit.getBetter();
             int answer = answers[question];
             HabitProgress progress = entry.getValue();
-            if (better * answer >= 0) {
-                progress.setHabitStatus(HabitStatus.ENABLED);
+            if (!cleanUser) {
+                if (better * answer >= 0) {
+                    progress.setHabitStatus(HabitStatus.ENABLED);
+                } else {
+                    progress.setHabitStatus(HabitStatus.DISABLED);
+                }
             } else {
-                progress.setHabitStatus(HabitStatus.DISABLED);
+                if (progress.getHabitStatus() == HabitStatus.DISABLED) {
+                    progress.setHabitStatus(HabitStatus.ENABLED);
+                }
             }
         }
     }

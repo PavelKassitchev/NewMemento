@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel;
 import java.util.Map;
 
 import by.pavka.memento.MementoApplication;
+import by.pavka.memento.user.User;
 
 public class ActivizationViewModel extends AndroidViewModel {
     private MementoApplication app;
@@ -27,8 +28,11 @@ public class ActivizationViewModel extends AndroidViewModel {
     }
 
     public void resetProgress() {
-        Map<Habit, HabitProgress> habits = app.getUser().getTracker().getHabits();
+        User user = app.getUser();
+        Map<Habit, HabitProgress> habits = user.getTracker().getHabits();
         habits.put(habit, new HabitProgress(HabitStatus.ACTIVE));
+        user.setHabitCustomized(true);
+        app.customizeHabits(true);
         habit = null;
     }
 }
