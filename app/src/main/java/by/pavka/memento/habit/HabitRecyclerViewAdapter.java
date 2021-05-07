@@ -3,6 +3,7 @@ package by.pavka.memento.habit;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,10 +52,17 @@ public class HabitRecyclerViewAdapter extends RecyclerView.Adapter<HabitRecycler
         HabitProgress prog = progress.get(position);
         HabitStatus status = prog.getHabitStatus();
         holder.status.setText(status.toString());
-
-//        Uri uri = Uri.parse("@android:drawable/btn_star");
-//        holder.imageView.setImageResource(R.drawable.ic_launcher_background);
         holder.imageView.setImageResource(habit.getImageId());
+        switch (status) {
+            case ENABLED:
+                holder.itemView.setBackgroundColor(0xFF03DAC5);
+                break;
+            case ACTIVE:
+                holder.itemView.setBackgroundColor(0xFFFF693B);
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
