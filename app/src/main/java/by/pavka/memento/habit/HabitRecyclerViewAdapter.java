@@ -53,7 +53,8 @@ public class HabitRecyclerViewAdapter extends RecyclerView.Adapter<HabitRecycler
         holder.status.setText(status.toString());
 
 //        Uri uri = Uri.parse("@android:drawable/btn_star");
-        holder.imageView.setImageResource(R.drawable.ic_launcher_background);
+//        holder.imageView.setImageResource(R.drawable.ic_launcher_background);
+        holder.imageView.setImageResource(habit.getImageId());
     }
 
     @Override

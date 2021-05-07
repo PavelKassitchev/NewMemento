@@ -21,4 +21,11 @@
         <item>1</item>
         <item>1</item>
     </integer-array>
+    <integer-array name="pics">
+        <item>@drawable/no_smoke</item>
+        <item>@drawable/no_food</item>
+        <item>@drawable/no_drink</item>
+        <item>@drawable/no_drug</item>
+        <item>@drawable/sport</item>
+    </integer-array>
 </resources>
