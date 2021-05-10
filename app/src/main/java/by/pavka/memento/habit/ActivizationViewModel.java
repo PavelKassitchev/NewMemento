@@ -25,6 +25,11 @@ public class ActivizationViewModel extends AndroidViewModel {
         return habit;
     }
 
+    public void clearHabit() {
+        habit = null;
+        end = null;
+    }
+
     public void setHabit(Habit habit) {
         this.habit = habit;
         User user = app.getUser();
