@@ -2,6 +2,7 @@ package by.pavka.memento;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.multidex.MultiDex;
 
 import android.content.DialogInterface;
 import android.content.Intent;

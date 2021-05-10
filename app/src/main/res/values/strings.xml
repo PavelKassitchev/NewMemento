@@ -44,6 +44,7 @@
     <string name="confidence">выхотите удалить только данные опросника или также прогресс привычек?</string>
     <string name="quest_only">очистить опросник</string>
     <string name="clear_all">очистить все</string>
+    <string name="set_end">Установите конечную дату выработки привычки, если вас не устраивает значение по умолчанию</string>
 
     <string-array name="months">
         <item>Январь</item>

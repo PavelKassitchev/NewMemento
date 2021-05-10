@@ -34,7 +34,6 @@ public class UserHabitTracker {
         for (int i = 0; i < length; i++) {
             int pic = imgs.getResourceId(i, 0);
             habies[i] = new Habit(habs[i], pic, questions[i], influence[i]);
-            Log.e("HABIT", pic + "");
             habits.put(habies[i], new HabitProgress());
         }
     }

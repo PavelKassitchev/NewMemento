@@ -3,21 +3,24 @@ package by.pavka.memento.habit;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.time.LocalDate;
+import java.util.Calendar;
+
 import by.pavka.memento.BottomNavigationListener;
-import by.pavka.memento.MementoApplication;
 import by.pavka.memento.R;
 import by.pavka.memento.databinding.ActivityActivizationBinding;
 
-public class ActivizationActivity extends AppCompatActivity implements View.OnClickListener {
-    private MementoApplication application;
+public class ActivizationActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
     private ActivizationViewModel viewModel;
 
     @Override
@@ -26,7 +29,6 @@ public class ActivizationActivity extends AppCompatActivity implements View.OnCl
         ActivityActivizationBinding binding = ActivityActivizationBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        application = (MementoApplication) getApplication();
         viewModel = new ViewModelProvider(this).get(ActivizationViewModel.class);
         Intent intent = getIntent();
         if (intent != null) {
@@ -45,6 +47,9 @@ public class ActivizationActivity extends AppCompatActivity implements View.OnCl
         Button buttonOk = binding.buttonOk;
         buttonOk.setOnClickListener(this);
 
+        Button endDay = binding.endDay;
+        endDay.setOnClickListener(this);
+        endDay.setText(viewModel.getEnd().toString());
     }
 
     @Override
@@ -60,6 +65,15 @@ public class ActivizationActivity extends AppCompatActivity implements View.OnCl
                 viewModel.resetProgress();
                 setResult(RESULT_OK, intent);
                 finish();
+                break;
+            case R.id.end_day:
+                LocalDate now = LocalDate.now();
+                new DatePickerDialog(this, this, now.getYear(), now.getMonthValue(), now.getDayOfMonth()).show();
         }
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
     }
 }

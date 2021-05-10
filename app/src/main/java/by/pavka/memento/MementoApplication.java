@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
+import androidx.multidex.MultiDexApplication;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
@@ -24,7 +25,7 @@ import by.pavka.memento.habit.UserHabitTracker;
 import by.pavka.memento.user.User;
 import by.pavka.memento.util.CalendarConverter;
 
-public class MementoApplication extends Application {
+public class MementoApplication extends MultiDexApplication {
     public static final String APP_PREF = "MementoPref";
     public static final String NAME = "name";
     public static final String DATE = "birthDate";
@@ -34,6 +35,8 @@ public class MementoApplication extends Application {
     public static final String INDEX = "index";
     public static final String HABITS_CUSTOMIZED = "customized";
     public static final String TRACKER = "tracker";
+
+    public static final int DAYS_FOR_HABIT = 28;
 
     private Questionnaire questionnaire;
     private User user;

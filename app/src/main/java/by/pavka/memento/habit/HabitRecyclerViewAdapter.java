@@ -51,7 +51,11 @@ public class HabitRecyclerViewAdapter extends RecyclerView.Adapter<HabitRecycler
         holder.habitName.setText(habit.getName());
         HabitProgress prog = progress.get(position);
         HabitStatus status = prog.getHabitStatus();
-        holder.status.setText(status.toString());
+        if (status != HabitStatus.ACTIVE) {
+            holder.status.setText(status.toString());
+        } else {
+            holder.status.setText(prog.getStartDate() + " " + prog.getEndDate());
+        }
         holder.imageView.setImageResource(habit.getImageId());
         switch (status) {
             case ENABLED:
