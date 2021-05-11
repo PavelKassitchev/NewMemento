@@ -51,7 +51,11 @@ public class ActivizationActivity extends AppCompatActivity implements View.OnCl
 
         endDay = binding.endDay;
         endDay.setOnClickListener(this);
-        endDay.setText(viewModel.getEnd().toString());
+        if (!viewModel.isClearance()) {
+            endDay.setText(viewModel.getEnd().toString());
+        } else {
+            endDay.setText("");
+        }
     }
 
     @Override
@@ -64,13 +68,18 @@ public class ActivizationActivity extends AppCompatActivity implements View.OnCl
                 break;
             case R.id.button_ok:
                 Intent intent = new Intent();
-                viewModel.resetProgress();
+                viewModel.resetProgress(viewModel.isClearance());
                 setResult(RESULT_OK, intent);
                 finish();
                 break;
             case R.id.end_day:
                 LocalDate now = LocalDate.now();
                 new DatePickerDialog(this, this, now.getYear(), now.getMonthValue() - 1, now.getDayOfMonth()).show();
+                break;
+            case R.id.button_clean:
+                viewModel.setClearance(true);
+                endDay.setText("");
+                break;
         }
     }
 
@@ -78,6 +87,7 @@ public class ActivizationActivity extends AppCompatActivity implements View.OnCl
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         LocalDate end = LocalDate.of(year, month + 1, dayOfMonth);
         viewModel.setEnd(end);
+        viewModel.setClearance(false);
         endDay.setText(end.toString());
     }
 }

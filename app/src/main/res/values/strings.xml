@@ -38,13 +38,13 @@
     <string name="non_active">Не активна</string>
     <string name="clean">Очистить</string>
     <string name="cancel">Отменить</string>
-    <string name="ok">OK</string>
+    <string name="ok">сохранить</string>
     <string name="disabled">Привычка уже обретена. Очистите или измените профиль для активизации</string>
     <string name="clearance">очистка данных</string>
     <string name="confidence">выхотите удалить только данные опросника или также прогресс привычек?</string>
     <string name="quest_only">очистить опросник</string>
     <string name="clear_all">очистить все</string>
-    <string name="set_end">Установите конечную дату выработки привычки, если вас не устраивает значение ниже</string>
+    <string name="set_end">Дата фиксации привычки</string>
 
     <string-array name="months">
         <item>Январь</item>

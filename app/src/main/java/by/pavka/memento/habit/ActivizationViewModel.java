@@ -15,10 +15,19 @@ public class ActivizationViewModel extends AndroidViewModel {
     private MementoApplication app;
     private Habit habit;
     private LocalDate end;
+    private boolean clearance;
 
     public ActivizationViewModel(@NonNull Application application) {
         super(application);
         app = (MementoApplication) application;
+    }
+
+    public boolean isClearance() {
+        return clearance;
+    }
+
+    public void setClearance(boolean clearance) {
+        this.clearance = clearance;
     }
 
     public Habit getHabit() {
@@ -28,6 +37,7 @@ public class ActivizationViewModel extends AndroidViewModel {
     public void clearHabit() {
         habit = null;
         end = null;
+        clearance = false;
     }
 
     public void setHabit(Habit habit) {
@@ -38,14 +48,18 @@ public class ActivizationViewModel extends AndroidViewModel {
         end = progress.getEndDate() == null ? LocalDate.now().plusDays(MementoApplication.DAYS_FOR_HABIT) : progress.getEndDate();
     }
 
-    public void resetProgress() {
+    public void resetProgress(boolean cleared) {
         User user = app.getUser();
         Map<Habit, HabitProgress> habits = user.getTracker().getHabits();
-        habits.put(habit, new HabitProgress(HabitStatus.ACTIVE, LocalDate.now(), end));
-        user.setHabitCustomized(true);
-        app.customizeHabits(true);
-        habit = null;
-        end = null;
+        if (cleared) {
+            habits.put(habit, new HabitProgress(HabitStatus.ENABLED));
+            clearance = false;
+        } else {
+            habits.put(habit, new HabitProgress(HabitStatus.ACTIVE, LocalDate.now(), end));
+            user.setHabitCustomized(true);
+            app.customizeHabits(true);
+        }
+        clearHabit();
     }
 
     public void setEnd(LocalDate end) {
