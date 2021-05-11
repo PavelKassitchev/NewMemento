@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/action_map"
+        android:id="@+id/profile"
         android:enabled="true"
-        android:icon="@android:drawable/ic_dialog_map"
-        android:title="@string/map"/>
+        android:icon="@drawable/person"
+        android:title="@string/person"/>
     <item
-        android:id="@+id/action_dial"
+        android:id="@+id/habit"
         android:enabled="true"
-        android:icon="@android:drawable/ic_dialog_dialer"
-        android:title="@string/dial" />
+        android:icon="@drawable/habit"
+        android:title="@string/habit" />
     <item
-        android:id="@+id/action_mail"
+        android:id="@+id/weights"
         android:enabled="true"
-        android:icon="@android:drawable/ic_dialog_email"
-        android:title="@string/mail" />
+        android:icon="@drawable/weights"
+        android:title="@string/weight" />
 </menu>

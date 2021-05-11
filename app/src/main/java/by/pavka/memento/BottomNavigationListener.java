@@ -22,10 +22,10 @@ public class BottomNavigationListener implements BottomNavigationView.OnNavigati
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Intent intent = null;
         switch (item.getItemId()) {
-            case R.id.action_map:
+            case R.id.profile:
                 intent = new Intent(activity, MainActivity.class);
                 break;
-            case R.id.action_dial:
+            case R.id.habit:
                 intent = new Intent(activity, HabitActivity.class);
                 break;
         }

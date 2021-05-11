@@ -12,9 +12,6 @@ import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import by.pavka.memento.BottomNavigationListener;
 import by.pavka.memento.MementoApplication;
 import by.pavka.memento.R;
@@ -38,7 +35,7 @@ public class  HabitActivity extends AppCompatActivity {
         application = (MementoApplication) getApplication();
         BottomNavigationView bottomNavigationView = binding.bottomNavigation.getRoot();
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationListener(this));
-        MenuItem item = bottomNavigationView.getMenu().findItem(R.id.action_dial);
+        MenuItem item = bottomNavigationView.getMenu().findItem(R.id.habit);
         item.setChecked(true);
 
         tracker = application.getUser().getTracker();

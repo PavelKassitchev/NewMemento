@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModelProvider;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +14,6 @@ import android.widget.DatePicker;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.time.LocalDate;
-import java.util.Calendar;
 
 import by.pavka.memento.BottomNavigationListener;
 import by.pavka.memento.R;
@@ -39,7 +37,7 @@ public class ActivizationActivity extends AppCompatActivity implements View.OnCl
         }
         BottomNavigationView bottomNavigationView = binding.bottomNavigation.getRoot();
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationListener(this));
-        MenuItem item = bottomNavigationView.getMenu().findItem(R.id.action_dial);
+        MenuItem item = bottomNavigationView.getMenu().findItem(R.id.habit);
         item.setChecked(true);
 
         Button buttonClean = binding.buttonClean;

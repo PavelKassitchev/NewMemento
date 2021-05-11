@@ -21,8 +21,6 @@
     <string name="male">Муж</string>
     <string name="female">Жен</string>
     <string name="limit_age">Введите корректную дату рождения</string>
-    <string name="map">just map</string>
-    <string name="dial">just dialer</string>
     <string name="mail">just mail</string>
     <string name="skip">пропустить остальное и сохранить</string>
     <string name="weight">Ваш вес, кг</string>
@@ -45,6 +43,8 @@
     <string name="quest_only">очистить опросник</string>
     <string name="clear_all">очистить все</string>
     <string name="set_end">Дата фиксации привычки</string>
+    <string name="person">профиль</string>
+    <string name="habit">привычки</string>
 
     <string-array name="months">
         <item>Январь</item>
