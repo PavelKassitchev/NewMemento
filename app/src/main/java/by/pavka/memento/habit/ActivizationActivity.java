@@ -4,24 +4,30 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.TimePicker;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 
 import by.pavka.memento.BottomNavigationListener;
 import by.pavka.memento.R;
 import by.pavka.memento.databinding.ActivityActivizationBinding;
 
-public class ActivizationActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
+public class ActivizationActivity extends AppCompatActivity implements View.OnClickListener,
+        DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     private ActivizationViewModel viewModel;
     private Button endDay;
+    private Button time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +38,7 @@ public class ActivizationActivity extends AppCompatActivity implements View.OnCl
         viewModel = new ViewModelProvider(this).get(ActivizationViewModel.class);
         if (viewModel.getEnd() == null) {
             Intent intent = getIntent();
-            Habit habit = (Habit)intent.getSerializableExtra("habit");
+            Habit habit = (Habit) intent.getSerializableExtra("habit");
             viewModel.setHabit(habit);
         }
         BottomNavigationView bottomNavigationView = binding.bottomNavigation.getRoot();
@@ -49,16 +55,28 @@ public class ActivizationActivity extends AppCompatActivity implements View.OnCl
 
         endDay = binding.endDay;
         endDay.setOnClickListener(this);
+
+        time = binding.time;
+        time.setOnClickListener(this);
+
         if (!viewModel.isClearance()) {
             endDay.setText(viewModel.getEnd().toString());
+            //todo
+            time.setText(LocalTime.now().truncatedTo(ChronoUnit.MINUTES).toString());
         } else {
             endDay.setText("");
+            time.setText("");
         }
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.button_clean:
+                viewModel.setClearance(true);
+                endDay.setText("");
+                time.setText("");
+                break;
             case R.id.button_cancel:
                 viewModel.clearHabit();
                 setResult(RESULT_CANCELED);
@@ -74,9 +92,9 @@ public class ActivizationActivity extends AppCompatActivity implements View.OnCl
                 LocalDate now = LocalDate.now();
                 new DatePickerDialog(this, this, now.getYear(), now.getMonthValue() - 1, now.getDayOfMonth()).show();
                 break;
-            case R.id.button_clean:
-                viewModel.setClearance(true);
-                endDay.setText("");
+            case R.id.time:
+                LocalTime localTime = LocalTime.now();
+                new TimePickerDialog(this, this, localTime.getHour(), localTime.getMinute(), true).show();
                 break;
         }
     }
@@ -87,5 +105,10 @@ public class ActivizationActivity extends AppCompatActivity implements View.OnCl
         viewModel.setEnd(end);
         viewModel.setClearance(false);
         endDay.setText(end.toString());
+    }
+
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
     }
 }

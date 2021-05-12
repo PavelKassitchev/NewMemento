@@ -45,6 +45,15 @@
     <string name="set_end">Дата фиксации привычки</string>
     <string name="person">профиль</string>
     <string name="habit">привычки</string>
+    <string name="selector">Периодичность и время уведомлений</string>
+    <string name="mo">пн</string>
+    <string name="tue">вт</string>
+    <string name="wed">ср</string>
+    <string name="thu">чт</string>
+    <string name="fri">пт</string>
+    <string name="sat">сб</string>
+    <string name="sun">вс</string>
+    <string name="all">все</string>
 
     <string-array name="months">
         <item>Январь</item>
