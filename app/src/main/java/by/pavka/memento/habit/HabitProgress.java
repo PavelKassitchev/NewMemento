@@ -1,6 +1,7 @@
 package by.pavka.memento.habit;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import by.pavka.memento.MementoApplication;
 
@@ -9,6 +10,7 @@ public class HabitProgress {
     private LocalDate startDate;
     private LocalDate endDate;
     private boolean[] week;
+    private LocalTime time;
 
     public HabitProgress(HabitStatus habitStatus) {
         this.habitStatus = habitStatus;
@@ -34,6 +36,22 @@ public class HabitProgress {
         this.startDate = startDate;
         this.endDate = endDate;
         this.week = week;
+    }
+
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
+    }
+
+    public HabitProgress(HabitStatus habitStatus, LocalDate startDate, LocalDate endDate, boolean[] week, LocalTime time) {
+        this.habitStatus = habitStatus;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.week = week;
+        this.time = time;
     }
 
     public HabitStatus getHabitStatus() {

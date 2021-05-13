@@ -82,8 +82,7 @@ public class ActivizationActivity extends AppCompatActivity implements View.OnCl
         if (!viewModel.isClearance()) {
             endDay.setText(viewModel.getEnd().toString());
             setWeek();
-            //todo
-            time.setText(LocalTime.now().truncatedTo(ChronoUnit.MINUTES).toString());
+            time.setText(viewModel.getTime().toString());
         } else {
             endDay.setText("");
             time.setText("");
@@ -132,7 +131,10 @@ public class ActivizationActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        //todo
+        LocalTime localTime = LocalTime.of(hourOfDay, minute);
+        viewModel.setTime(localTime);
+        viewModel.setClearance(false);
+        time.setText(viewModel.getTime().truncatedTo(ChronoUnit.MINUTES).toString());
     }
 
     @Override

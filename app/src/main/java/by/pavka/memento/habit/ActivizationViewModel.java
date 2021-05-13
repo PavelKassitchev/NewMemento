@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Map;
 
 import by.pavka.memento.MementoApplication;
@@ -19,6 +21,7 @@ public class ActivizationViewModel extends AndroidViewModel {
     private Habit habit;
     private LocalDate end;
     private boolean[] week;
+    private LocalTime time;
     private boolean clearance;
 
     public ActivizationViewModel(@NonNull Application application) {
@@ -52,6 +55,7 @@ public class ActivizationViewModel extends AndroidViewModel {
         HabitProgress progress = habits.get(habit);
         end = progress.getEndDate() == null ? LocalDate.now().plusDays(MementoApplication.DAYS_FOR_HABIT) : progress.getEndDate();
         week = progress.getWeek() == null? UNCHECKED_WEEK : progress.getWeek();
+        time = progress.getTime() == null? LocalTime.now().truncatedTo(ChronoUnit.MINUTES) : progress.getTime();
     }
 
     public void resetProgress(boolean cleared) {
@@ -61,7 +65,7 @@ public class ActivizationViewModel extends AndroidViewModel {
             habits.put(habit, new HabitProgress(HabitStatus.ENABLED));
             clearance = false;
         } else {
-            habits.put(habit, new HabitProgress(HabitStatus.ACTIVE, LocalDate.now(), end, week));
+            habits.put(habit, new HabitProgress(HabitStatus.ACTIVE, LocalDate.now(), end, week, time));
             user.setHabitCustomized(true);
             app.customizeHabits(true);
         }
@@ -90,5 +94,13 @@ public class ActivizationViewModel extends AndroidViewModel {
 
     public void setDay(int i, boolean isChecked) {
         week[i] = isChecked;
+    }
+
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
     }
 }
