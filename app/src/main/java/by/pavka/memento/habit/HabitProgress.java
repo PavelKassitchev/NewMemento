@@ -8,6 +8,7 @@ public class HabitProgress {
     private HabitStatus habitStatus;
     private LocalDate startDate;
     private LocalDate endDate;
+    private boolean[] week;
 
     public HabitProgress(HabitStatus habitStatus) {
         this.habitStatus = habitStatus;
@@ -16,7 +17,6 @@ public class HabitProgress {
     public HabitProgress(HabitStatus habitStatus, LocalDate startDate) {
         this.habitStatus = habitStatus;
         this.startDate = startDate;
-//        endDate = startDate.plusDays(MementoApplication.DAYS_FOR_HABIT);
     }
 
     public HabitProgress() {
@@ -27,6 +27,13 @@ public class HabitProgress {
         this.habitStatus = habitStatus;
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+
+    public HabitProgress(HabitStatus habitStatus, LocalDate startDate, LocalDate endDate, boolean[] week) {
+        this.habitStatus = habitStatus;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.week = week;
     }
 
     public HabitStatus getHabitStatus() {
@@ -51,5 +58,13 @@ public class HabitProgress {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    public boolean[] getWeek() {
+        return week;
+    }
+
+    public void setWeek(boolean[] week) {
+        this.week = week;
     }
 }

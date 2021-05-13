@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
@@ -24,10 +26,11 @@ import by.pavka.memento.R;
 import by.pavka.memento.databinding.ActivityActivizationBinding;
 
 public class ActivizationActivity extends AppCompatActivity implements View.OnClickListener,
-        DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+        DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, CompoundButton.OnCheckedChangeListener {
     private ActivizationViewModel viewModel;
     private Button endDay;
     private Button time;
+    private CheckBox mo, tue, wed, thu, fri, sat, snd, all;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,14 +62,34 @@ public class ActivizationActivity extends AppCompatActivity implements View.OnCl
         time = binding.time;
         time.setOnClickListener(this);
 
+        mo = binding.mo;
+        mo.setOnCheckedChangeListener(this);
+        tue = binding.tue;
+        tue.setOnCheckedChangeListener(this);
+        wed = binding.wed;
+        wed.setOnCheckedChangeListener(this);
+        thu = binding.thu;
+        thu.setOnCheckedChangeListener(this);
+        fri = binding.fri;
+        fri.setOnCheckedChangeListener(this);
+        sat = binding.sat;
+        sat.setOnCheckedChangeListener(this);
+        snd = binding.snd;
+        snd.setOnCheckedChangeListener(this);
+        all = binding.all;
+        all.setOnCheckedChangeListener(this);
+
         if (!viewModel.isClearance()) {
             endDay.setText(viewModel.getEnd().toString());
+            setWeek();
             //todo
             time.setText(LocalTime.now().truncatedTo(ChronoUnit.MINUTES).toString());
         } else {
             endDay.setText("");
             time.setText("");
+            checkWeek(false);
         }
+
     }
 
     @Override
@@ -76,6 +99,7 @@ public class ActivizationActivity extends AppCompatActivity implements View.OnCl
                 viewModel.setClearance(true);
                 endDay.setText("");
                 time.setText("");
+                checkWeek(false);
                 break;
             case R.id.button_cancel:
                 viewModel.clearHabit();
@@ -83,9 +107,8 @@ public class ActivizationActivity extends AppCompatActivity implements View.OnCl
                 finish();
                 break;
             case R.id.button_ok:
-                Intent intent = new Intent();
                 viewModel.resetProgress(viewModel.isClearance());
-                setResult(RESULT_OK, intent);
+                setResult(RESULT_OK);
                 finish();
                 break;
             case R.id.end_day:
@@ -109,6 +132,93 @@ public class ActivizationActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        //todo
+    }
 
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        switch (buttonView.getId()) {
+            case R.id.all:
+                if (isChecked) {
+                    checkWeek(true);
+                    viewModel.setWeek(ActivizationViewModel.CHECKED_WEEK);
+                } else {
+                    viewModel.setDay(7, false);
+                }
+                break;
+            case R.id.mo:
+                if (!isChecked) {
+                    all.setChecked(false);
+                    viewModel.setDay(7, false);
+                }
+                viewModel.setDay(0, isChecked);
+                break;
+            case R.id.tue:
+                if (!isChecked) {
+                    all.setChecked(false);
+                    viewModel.setDay(7, false);
+                }
+                viewModel.setDay(1, isChecked);
+                break;
+            case R.id.wed:
+                if (!isChecked) {
+                    all.setChecked(false);
+                    viewModel.setDay(7, false);
+                }
+                viewModel.setDay(2, isChecked);
+                break;
+            case R.id.thu:
+                if (!isChecked) {
+                    all.setChecked(false);
+                    viewModel.setDay(7, false);
+                }
+                viewModel.setDay(3, isChecked);
+                break;
+            case R.id.fri:
+                if (!isChecked) {
+                    all.setChecked(false);
+                    viewModel.setDay(7, false);
+                }
+                viewModel.setDay(4, isChecked);
+                break;
+            case R.id.sat:
+                if (!isChecked) {
+                    all.setChecked(false);
+                    viewModel.setDay(7, false);
+                }
+                viewModel.setDay(5, isChecked);
+                break;
+            case R.id.snd:
+                if (!isChecked) {
+                    all.setChecked(false);
+                    viewModel.setDay(7, false);
+                }
+                viewModel.setDay(6, isChecked);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void checkWeek(boolean check) {
+        mo.setChecked(check);
+        tue.setChecked(check);
+        wed.setChecked(check);
+        thu.setChecked(check);
+        fri.setChecked(check);
+        sat.setChecked(check);
+        snd.setChecked(check);
+        all.setChecked(check);
+    }
+
+    private void setWeek() {
+        mo.setChecked(viewModel.getDay(0));
+        tue.setChecked(viewModel.getDay(1));
+        wed.setChecked(viewModel.getDay(2));
+        thu.setChecked(viewModel.getDay(3));
+        fri.setChecked(viewModel.getDay(4));
+        sat.setChecked(viewModel.getDay(5));
+        snd.setChecked(viewModel.getDay(6));
+        all.setChecked(viewModel.getDay(7));
     }
 }
