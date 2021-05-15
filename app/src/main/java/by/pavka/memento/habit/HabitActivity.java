@@ -22,8 +22,6 @@ public class  HabitActivity extends AppCompatActivity {
     private MementoApplication application;
     private RecyclerView recycler;
     private HabitRecyclerViewAdapter adapter;
-
-//    private List<Habit> habits;
     private UserHabitTracker tracker;
 
     @Override
@@ -52,6 +50,8 @@ public class  HabitActivity extends AppCompatActivity {
             adapter.setTracker(application.getUser().getTracker());
             adapter.notifyDataSetChanged();
             application.saveHabits();
+            Habit habit = (Habit)data.getSerializableExtra("habit");
+            application.controlHabit(habit);
         }
     }
 }

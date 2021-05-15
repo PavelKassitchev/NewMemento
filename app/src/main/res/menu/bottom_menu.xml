@@ -8,11 +8,11 @@
     <item
         android:id="@+id/habit"
         android:enabled="true"
-        android:icon="@drawable/habit"
+        android:icon="@drawable/ic_healthy_lifestyle"
         android:title="@string/habit" />
     <item
         android:id="@+id/weights"
         android:enabled="true"
         android:icon="@drawable/weights"
-        android:title="@string/weight" />
+        android:title="@string/weights" />
 </menu>

@@ -43,8 +43,9 @@
     <string name="quest_only">очистить опросник</string>
     <string name="clear_all">очистить все</string>
     <string name="set_end">Дата фиксации привычки</string>
-    <string name="person">профиль</string>
-    <string name="habit">привычки</string>
+    <string name="person">Профиль</string>
+    <string name="habit">Привычки</string>
+    <string name="weights">Вес</string>
     <string name="selector">Периодичность и время уведомлений</string>
     <string name="mo">пн</string>
     <string name="tue">вт</string>

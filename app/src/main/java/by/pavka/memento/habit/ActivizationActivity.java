@@ -106,8 +106,10 @@ public class ActivizationActivity extends AppCompatActivity implements View.OnCl
                 finish();
                 break;
             case R.id.button_ok:
+                Intent intent = new Intent();
+                intent.putExtra("habit", viewModel.getHabit());
                 viewModel.resetProgress(viewModel.isClearance());
-                setResult(RESULT_OK);
+                setResult(RESULT_OK, intent);
                 finish();
                 break;
             case R.id.end_day:
@@ -143,7 +145,7 @@ public class ActivizationActivity extends AppCompatActivity implements View.OnCl
             case R.id.all:
                 if (isChecked) {
                     checkWeek(true);
-                    viewModel.setWeek(ActivizationViewModel.CHECKED_WEEK);
+                    viewModel.setWeek(new boolean[] {true, true, true, true, true, true, true, true});
                 } else {
                     viewModel.setDay(7, false);
                 }
@@ -215,6 +217,7 @@ public class ActivizationActivity extends AppCompatActivity implements View.OnCl
 
     private void setWeek() {
         mo.setChecked(viewModel.getDay(0));
+        System.out.println("MONDAY = " + viewModel.getDay(0));
         tue.setChecked(viewModel.getDay(1));
         wed.setChecked(viewModel.getDay(2));
         thu.setChecked(viewModel.getDay(3));

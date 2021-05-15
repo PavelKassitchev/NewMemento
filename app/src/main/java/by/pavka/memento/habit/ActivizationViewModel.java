@@ -8,14 +8,13 @@ import androidx.lifecycle.AndroidViewModel;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 import java.util.Map;
 
 import by.pavka.memento.MementoApplication;
 import by.pavka.memento.user.User;
 
 public class ActivizationViewModel extends AndroidViewModel {
-    public static final boolean[] CHECKED_WEEK = {true, true, true, true, true, true, true, true};
-    public static final boolean[] UNCHECKED_WEEK = {false, false, false, false, false, false, false, false};
 
     private MementoApplication app;
     private Habit habit;
@@ -49,12 +48,14 @@ public class ActivizationViewModel extends AndroidViewModel {
     }
 
     public void setHabit(Habit habit) {
+        System.out.println("While setting habit WEEK = " + week);
         this.habit = habit;
         User user = app.getUser();
         Map<Habit, HabitProgress> habits = user.getTracker().getHabits();
         HabitProgress progress = habits.get(habit);
+        System.out.println("PROGRESS WEEK = " + progress.getWeek());
         end = progress.getEndDate() == null ? LocalDate.now().plusDays(MementoApplication.DAYS_FOR_HABIT) : progress.getEndDate();
-        week = progress.getWeek() == null? UNCHECKED_WEEK : progress.getWeek();
+        week = progress.getWeek() == null? new boolean[]{false, false, false, false, false, false, false, false} : progress.getWeek();
         time = progress.getTime() == null? LocalTime.now().truncatedTo(ChronoUnit.MINUTES) : progress.getTime();
     }
 

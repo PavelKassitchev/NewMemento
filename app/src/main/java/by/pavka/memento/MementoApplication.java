@@ -14,6 +14,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Map;
 
@@ -21,11 +23,13 @@ import by.pavka.memento.calculator.Questionnaire;
 import by.pavka.memento.calculator.impl.QuestionnaireImpl;
 import by.pavka.memento.habit.Habit;
 import by.pavka.memento.habit.HabitProgress;
+import by.pavka.memento.habit.HabitStatus;
 import by.pavka.memento.habit.UserHabitTracker;
 import by.pavka.memento.user.User;
 import by.pavka.memento.util.CalendarConverter;
 
 public class MementoApplication extends MultiDexApplication {
+    public static final String MEMENTO_CHANNEL_ID = "Memento Channel";
     public static final String APP_PREF = "MementoPref";
     public static final String NAME = "name";
     public static final String DATE = "birthDate";
@@ -157,4 +161,12 @@ public class MementoApplication extends MultiDexApplication {
         return gson.fromJson(tracker, UserHabitTracker.class);
     }
 
+    public void controlHabit(Habit habit) {
+        HabitProgress progress = getUser().getTracker().getHabits().get(habit);
+        HabitStatus status = progress.getHabitStatus();
+        LocalTime time = progress.getTime();
+        LocalDate date = progress.getEndDate();
+        boolean[] week = progress.getWeek();
+        //todo
+    }
 }
