@@ -1,14 +1,17 @@
 package by.pavka.memento.habit;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
+import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Map;
 
 import by.pavka.memento.MementoApplication;
@@ -18,10 +21,14 @@ public class ActivizationViewModel extends AndroidViewModel {
 
     private MementoApplication app;
     private Habit habit;
-    private LocalDate end;
+    //private LocalDate end;
+    private Calendar end;
     private boolean[] week;
-    private LocalTime time;
+    //private LocalTime time;
+    private int hour;
+    private int minute;
     private boolean clearance;
+    DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
 
     public ActivizationViewModel(@NonNull Application application) {
         super(application);
@@ -44,19 +51,31 @@ public class ActivizationViewModel extends AndroidViewModel {
         habit = null;
         end = null;
         week = null;
+        //time = null;
+        hour = 0;
+        minute = 0;
         clearance = false;
     }
 
     public void setHabit(Habit habit) {
-        System.out.println("While setting habit WEEK = " + week);
         this.habit = habit;
         User user = app.getUser();
         Map<Habit, HabitProgress> habits = user.getTracker().getHabits();
         HabitProgress progress = habits.get(habit);
-        System.out.println("PROGRESS WEEK = " + progress.getWeek());
-        end = progress.getEndDate() == null ? LocalDate.now().plusDays(MementoApplication.DAYS_FOR_HABIT) : progress.getEndDate();
-        week = progress.getWeek() == null? new boolean[]{false, false, false, false, false, false, false, false} : progress.getWeek();
-        time = progress.getTime() == null? LocalTime.now().truncatedTo(ChronoUnit.MINUTES) : progress.getTime();
+        //end = progress.getEndDate() == null ? LocalDate.now().plusDays(MementoApplication.DAYS_FOR_HABIT) : progress.getEndDate();
+        if (progress.getEndDate() != null) {
+            end = progress.getEndDate();
+            week = progress.getWeek();
+            hour = progress.getHour();
+            minute = progress.getMinute();
+        } else {
+            week = new boolean[]{false, false, false, false, false, false, false};
+            Calendar last = Calendar.getInstance();
+            hour = last.get(Calendar.HOUR_OF_DAY);
+            minute = last.get(Calendar.MINUTE);
+            last.add(Calendar.DATE, MementoApplication.DAYS_FOR_HABIT);
+            end = last;
+        }
     }
 
     public void resetProgress(boolean cleared) {
@@ -64,20 +83,21 @@ public class ActivizationViewModel extends AndroidViewModel {
         Map<Habit, HabitProgress> habits = user.getTracker().getHabits();
         if (cleared) {
             habits.put(habit, new HabitProgress(HabitStatus.ENABLED));
-            clearance = false;
         } else {
-            habits.put(habit, new HabitProgress(HabitStatus.ACTIVE, LocalDate.now(), end, week, time));
+            end.set(Calendar.HOUR_OF_DAY, hour);
+            end.set(Calendar.MINUTE, minute);
+            habits.put(habit, new HabitProgress(HabitStatus.ACTIVE, Calendar.getInstance(), end, week, hour, minute));
             user.setHabitCustomized(true);
             app.customizeHabits(true);
         }
         clearHabit();
     }
 
-    public void setEnd(LocalDate end) {
+    public void setEnd(Calendar end) {
         this.end = end;
     }
 
-    public LocalDate getEnd() {
+    public Calendar getEnd() {
         return end;
     }
 
@@ -97,11 +117,29 @@ public class ActivizationViewModel extends AndroidViewModel {
         week[i] = isChecked;
     }
 
-    public LocalTime getTime() {
-        return time;
+//    public LocalTime getTime() {
+//        return time;
+//    }
+//
+//    public void setTime(LocalTime time) {
+//        this.time = time;
+//    }
+
+
+    public int getHour() {
+        return hour;
     }
 
-    public void setTime(LocalTime time) {
-        this.time = time;
+    public void setHour(int hour) {
+        this.hour = hour;
     }
+
+    public int getMinute() {
+        return minute;
+    }
+
+    public void setMinute(int minute) {
+        this.minute = minute;
+    }
+
 }

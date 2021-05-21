@@ -6,9 +6,9 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Habit implements Serializable {
+    private int id;
     private String name;
     private int imageId;
-
     private int question;
     private int better;
 
@@ -59,6 +59,14 @@ public class Habit implements Serializable {
 
     public void setBetter(int better) {
         this.better = better;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

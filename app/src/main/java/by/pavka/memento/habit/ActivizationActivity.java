@@ -20,10 +20,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
 
 import by.pavka.memento.BottomNavigationListener;
 import by.pavka.memento.R;
 import by.pavka.memento.databinding.ActivityActivizationBinding;
+import by.pavka.memento.util.CalendarConverter;
 
 public class ActivizationActivity extends AppCompatActivity implements View.OnClickListener,
         DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, CompoundButton.OnCheckedChangeListener {
@@ -80,13 +82,11 @@ public class ActivizationActivity extends AppCompatActivity implements View.OnCl
         all.setOnCheckedChangeListener(this);
 
         if (!viewModel.isClearance()) {
-            endDay.setText(viewModel.getEnd().toString());
+            endDay.setText(CalendarConverter.showDate(viewModel.getEnd()));
             setWeek();
-            time.setText(viewModel.getTime().toString());
+            time.setText(CalendarConverter.showTime(viewModel.getHour(), viewModel.getMinute()));
         } else {
-            endDay.setText("");
-            time.setText("");
-            checkWeek(false);
+            cleanUIData();
         }
 
     }
@@ -95,10 +95,7 @@ public class ActivizationActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button_clean:
-                viewModel.setClearance(true);
-                endDay.setText("");
-                time.setText("");
-                checkWeek(false);
+                cleanUIData();
                 break;
             case R.id.button_cancel:
                 viewModel.clearHabit();
@@ -113,30 +110,34 @@ public class ActivizationActivity extends AppCompatActivity implements View.OnCl
                 finish();
                 break;
             case R.id.end_day:
-                LocalDate now = LocalDate.now();
-                new DatePickerDialog(this, this, now.getYear(), now.getMonthValue() - 1, now.getDayOfMonth()).show();
+                Calendar today = Calendar.getInstance();
+                new DatePickerDialog(this, this, today.get(Calendar.YEAR),
+                        today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH)).show();
                 break;
             case R.id.time:
-                LocalTime localTime = LocalTime.now();
-                new TimePickerDialog(this, this, localTime.getHour(), localTime.getMinute(), true).show();
+                Calendar now = Calendar.getInstance();
+                int hour = now.get(Calendar.HOUR_OF_DAY);
+                int minute = now.get(Calendar.MINUTE);
+                new TimePickerDialog(this, this, hour, minute, true).show();
                 break;
         }
     }
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        LocalDate end = LocalDate.of(year, month + 1, dayOfMonth);
+        Calendar end = Calendar.getInstance();
+        end.set(year, month, dayOfMonth);
         viewModel.setEnd(end);
         viewModel.setClearance(false);
-        endDay.setText(end.toString());
+        endDay.setText(CalendarConverter.showDate(viewModel.getEnd()));
     }
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        LocalTime localTime = LocalTime.of(hourOfDay, minute);
-        viewModel.setTime(localTime);
+        viewModel.setHour(hourOfDay);
+        viewModel.setMinute(minute);
         viewModel.setClearance(false);
-        time.setText(viewModel.getTime().truncatedTo(ChronoUnit.MINUTES).toString());
+        time.setText(CalendarConverter.showTime(viewModel.getHour(), viewModel.getMinute()));
     }
 
     @Override
@@ -145,57 +146,48 @@ public class ActivizationActivity extends AppCompatActivity implements View.OnCl
             case R.id.all:
                 if (isChecked) {
                     checkWeek(true);
-                    viewModel.setWeek(new boolean[] {true, true, true, true, true, true, true, true});
-                } else {
-                    viewModel.setDay(7, false);
+                    viewModel.setWeek(new boolean[]{true, true, true, true, true, true, true});
                 }
                 break;
             case R.id.mo:
                 if (!isChecked) {
                     all.setChecked(false);
-                    viewModel.setDay(7, false);
                 }
                 viewModel.setDay(0, isChecked);
                 break;
             case R.id.tue:
                 if (!isChecked) {
                     all.setChecked(false);
-                    viewModel.setDay(7, false);
                 }
                 viewModel.setDay(1, isChecked);
                 break;
             case R.id.wed:
                 if (!isChecked) {
                     all.setChecked(false);
-                    viewModel.setDay(7, false);
                 }
                 viewModel.setDay(2, isChecked);
                 break;
             case R.id.thu:
                 if (!isChecked) {
                     all.setChecked(false);
-                    viewModel.setDay(7, false);
                 }
                 viewModel.setDay(3, isChecked);
                 break;
             case R.id.fri:
                 if (!isChecked) {
                     all.setChecked(false);
-                    viewModel.setDay(7, false);
                 }
                 viewModel.setDay(4, isChecked);
                 break;
             case R.id.sat:
                 if (!isChecked) {
                     all.setChecked(false);
-                    viewModel.setDay(7, false);
                 }
                 viewModel.setDay(5, isChecked);
                 break;
             case R.id.snd:
                 if (!isChecked) {
                     all.setChecked(false);
-                    viewModel.setDay(7, false);
                 }
                 viewModel.setDay(6, isChecked);
                 break;
@@ -217,13 +209,21 @@ public class ActivizationActivity extends AppCompatActivity implements View.OnCl
 
     private void setWeek() {
         mo.setChecked(viewModel.getDay(0));
-        System.out.println("MONDAY = " + viewModel.getDay(0));
         tue.setChecked(viewModel.getDay(1));
         wed.setChecked(viewModel.getDay(2));
         thu.setChecked(viewModel.getDay(3));
         fri.setChecked(viewModel.getDay(4));
         sat.setChecked(viewModel.getDay(5));
         snd.setChecked(viewModel.getDay(6));
-        all.setChecked(viewModel.getDay(7));
+        all.setChecked(viewModel.getDay(0) && viewModel.getDay(1) && viewModel.getDay(2)
+                && viewModel.getDay(3) && viewModel.getDay(4) && viewModel.getDay(5)
+                && viewModel.getDay(6));
+    }
+
+    private void cleanUIData() {
+        viewModel.setClearance(true);
+        endDay.setText("");
+        time.setText("");
+        checkWeek(false);
     }
 }

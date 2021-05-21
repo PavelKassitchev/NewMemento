@@ -6,7 +6,12 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -35,7 +40,6 @@ public class  HabitActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationListener(this));
         MenuItem item = bottomNavigationView.getMenu().findItem(R.id.habit);
         item.setChecked(true);
-
         tracker = application.getUser().getTracker();
         recycler = findViewById(R.id.recyclerView);
         adapter = new HabitRecyclerViewAdapter(this, tracker);
@@ -51,7 +55,8 @@ public class  HabitActivity extends AppCompatActivity {
             adapter.notifyDataSetChanged();
             application.saveHabits();
             Habit habit = (Habit)data.getSerializableExtra("habit");
-            application.controlHabit(habit);
+            //application.setNextNotification(habit.getId(), true);
+            application.launchNotification(habit.getId(), true);
         }
     }
 }

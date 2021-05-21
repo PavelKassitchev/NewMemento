@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import by.pavka.memento.R;
+import by.pavka.memento.util.CalendarConverter;
 import by.pavka.memento.util.Validator;
 
 public class HabitRecyclerViewAdapter extends RecyclerView.Adapter<HabitRecyclerViewAdapter.HabitViewHolder> {
@@ -54,7 +55,8 @@ public class HabitRecyclerViewAdapter extends RecyclerView.Adapter<HabitRecycler
         if (status != HabitStatus.ACTIVE) {
             holder.status.setText(status.toString());
         } else {
-            holder.status.setText(prog.getStartDate() + " " + prog.getEndDate());
+            holder.status.setText(CalendarConverter.showDate(prog.getStartDate()) + " - "
+                    + CalendarConverter.showDate(prog.getEndDate()));
         }
         holder.imageView.setImageResource(habit.getImageId());
         switch (status) {

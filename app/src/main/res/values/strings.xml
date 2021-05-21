@@ -55,6 +55,8 @@
     <string name="sat">сб</string>
     <string name="sun">вс</string>
     <string name="all">все</string>
+    <string name="done">Готово</string>
+    <string name="fail">Неудача</string>
 
     <string-array name="months">
         <item>Январь</item>

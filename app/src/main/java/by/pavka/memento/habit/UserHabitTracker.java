@@ -27,15 +27,16 @@ public class UserHabitTracker {
         String[] habs = app.getResources().getStringArray(R.array.habits);
         int[] questions = app.getResources().getIntArray(R.array.link);
         int[] influence = app.getResources().getIntArray(R.array.influence);
-//        int[] pics = app.getResources().getIntArray(R.array.pics);
         TypedArray imgs = app.getResources().obtainTypedArray(R.array.pics);
         int length = habs.length;
         Habit[] habies = new Habit[length];
         for (int i = 0; i < length; i++) {
             int pic = imgs.getResourceId(i, 0);
             habies[i] = new Habit(habs[i], pic, questions[i], influence[i]);
+            habies[i].setId(i);
             habits.put(habies[i], new HabitProgress());
         }
+        imgs.recycle();
     }
 
     public void updateWithAnswers(int[] answers, boolean cleanUser) {
@@ -57,6 +58,24 @@ public class UserHabitTracker {
                 }
             }
         }
+    }
+
+    public Habit getHabit(int id) {
+        for (Map.Entry<Habit, HabitProgress> entry : habits.entrySet()) {
+            if (entry.getKey().getId() == id) {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
+
+    public HabitProgress getHabitProgress(int id) {
+        for (Map.Entry<Habit, HabitProgress> entry : habits.entrySet()) {
+            if (entry.getKey().getId() == id) {
+                return entry.getValue();
+            }
+        }
+        return null;
     }
 
     public Map<Habit, HabitProgress> getHabits() {

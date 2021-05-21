@@ -4,13 +4,20 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.time.LocalDate;
+import java.util.Calendar;
 
 import by.pavka.memento.databinding.ActivityWeightBinding;
 import by.pavka.memento.user.User;
@@ -65,6 +72,14 @@ public class WeightActivity extends AppCompatActivity implements View.OnClickLis
         int id = v.getId();
         switch (id) {
             case R.id.calculate:
+                //Just to try gson
+                SharedPreferences.Editor editor = getSharedPreferences(MementoApplication.APP_PREF, MODE_PRIVATE).edit();
+                GsonBuilder builder = new GsonBuilder();
+                builder.enableComplexMapKeySerialization();
+                builder.setDateFormat("MM-dd-yyyy");
+                Gson gson = builder.create();
+                String date = gson.toJson(Calendar.getInstance());
+                Log.d("MYSTERY", "Date = " + date);
                 //TODO
                 break;
             case R.id.forward:
