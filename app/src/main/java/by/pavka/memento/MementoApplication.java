@@ -30,6 +30,7 @@ import by.pavka.memento.habit.Habit;
 import by.pavka.memento.habit.HabitProgress;
 import by.pavka.memento.habit.HabitStatus;
 import by.pavka.memento.habit.UserHabitTracker;
+import by.pavka.memento.notification.CountDownWorker;
 import by.pavka.memento.notification.MementoWorker;
 import by.pavka.memento.user.User;
 import by.pavka.memento.util.CalendarConverter;
@@ -46,16 +47,19 @@ public class MementoApplication extends MultiDexApplication {
     public static final String HABITS_CUSTOMIZED = "customized";
     public static final String TRACKER = "tracker";
     public static final int DAYS_FOR_HABIT = 28;
+    public static final int REACTION_GAP = 60;
 
     private Questionnaire questionnaire;
     private User user;
     private NotificationManager mNotifyManager;
     private NotificationChannel channel;
+    private String success;
 
     @Override
     public void onCreate() {
         super.onCreate();
         createNotificationChannel();
+        success = getString(R.string.success);
     }
 
     public Questionnaire getQuestionnaire() {
@@ -111,6 +115,7 @@ public class MementoApplication extends MultiDexApplication {
         user.setTracker(tracker);
         return user;
     }
+
 
     public void savePersonData(String name, String dateOfBirth, int gender) {
         SharedPreferences.Editor editor = getSharedPreferences(APP_PREF, MODE_PRIVATE).edit();
@@ -175,98 +180,8 @@ public class MementoApplication extends MultiDexApplication {
         return habitTracker;
     }
 
-//    public void controlHabit(Habit habit) {
-//        HabitProgress progress = getUser().getTracker().getHabits().get(habit);
-//        HabitStatus status = progress.getHabitStatus();
-//        LocalTime time = progress.getTime();
-//        LocalDate date = progress.getEndDate();
-//        boolean[] week = progress.getWeek();
-//        Data data = new Data.Builder().putString("habit", habit.getName())
-//                .putInt("id", habit.getId())
-//                .build();
-//        OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(MementoWorker.class)
-//                .setInitialDelay(10, TimeUnit.SECONDS)
-//                .setInputData(data)
-//                .build();
-//        WorkManager.getInstance(this).enqueue(request);
-//        //todo
-//    }
-
-    public void setNextNotification(int id, boolean init) {
-        UserHabitTracker tracker = getUser().getTracker();
-        Habit habit = tracker.getHabit(id);
-        HabitProgress progress = tracker.getHabitProgress(id);
-        WorkManager workManager = WorkManager.getInstance(this);
-        if (init) {
-            workManager.cancelAllWorkByTag(habit.getName());
-        }
-        if (progress.getHabitStatus() == HabitStatus.ACTIVE) {
-            long interval = calculateDelay(progress);
-            if (interval > 0) {
-                Data data = new Data.Builder().putString("habit", habit.getName())
-                        .putInt("id", habit.getId())
-                        .build();
-                OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(MementoWorker.class)
-                        .setInitialDelay(interval, TimeUnit.SECONDS)
-                        .setInputData(data)
-                        .addTag(habit.getName())
-                        .build();
-                workManager.enqueue(request);
-            }
-        }
-    }
-
-    private long calculateDelay(HabitProgress progress) {
-        long delay = 60;
-//        java.time.LocalDate currentDate = LocalDate.now();
-//        int dayOfWeek = currentDate.getDayOfWeek().getValue() - 1;
-//        boolean[] week = progress.getWeek();
-//        boolean today = week[dayOfWeek];
-//        if (today && LocalTime.now().isBefore(progress.getTime())) {
-//            delay = Duration.between(LocalTime.now(), progress.getTime()).getSeconds();
-//        } else {
-//            LocalDate nextDate = nextNotificationDay(week, dayOfWeek);
-//            if (nextDate == null) {
-//                return -1;
-//            }
-//            if (nextDate.isAfter(progress.getEndDate())) {
-//                nextDate = progress.getEndDate();
-//            }
-//            LocalDateTime dateTime = LocalDateTime.of(nextDate, progress.getTime());
-//            delay = Duration.between(LocalDateTime.now(), dateTime).getSeconds();
-//        }
-        return delay;
-    }
-
-    private LocalDate nextNotificationDay(boolean[] week, int day) {
-//        LocalDate result = LocalDate.now();
-//        for (int i = day + 1; i < week.length - 1; i++) {
-//            result = result.plusDays(1);
-//            if (week[i] = true) {
-//                return result;
-//            }
-//        }
-//        for (int i = 0; i <= day; i++) {
-//            result = result.plusDays(1);
-//            if (week[i] = true) {
-//                return result;
-//            }
-//        }
-        return null;
-    }
-
-    private int findNextDay(boolean[] week, int day) {
-        for (int i = day + 1; i < week.length - 1; i++) {
-            if (week[i] = true) {
-                return i;
-            }
-        }
-        for (int i = 0; i < day; i++) {
-            if (week[i] = true) {
-                return i;
-            }
-        }
-        return -1;
+    public String getSuccess() {
+        return success;
     }
 
     private void createNotificationChannel() {
@@ -277,17 +192,60 @@ public class MementoApplication extends MultiDexApplication {
         notifyManager.createNotificationChannel(channel);
     }
 
-    public void launchNotification(int id, boolean b) {
+    public void cancelWork(String tag) {
+        WorkManager workManager = WorkManager.getInstance(this);
+        workManager.cancelAllWorkByTag(tag);
+    }
+
+    public void launchNotification(int id, boolean resetting) {
         UserHabitTracker tracker = getUser().getTracker();
         Habit habit = tracker.getHabit(id);
         HabitProgress progress = tracker.getHabitProgress(id);
         boolean[] week = progress.getWeek();
+        String habitName = habit.getName();
         Log.d("MYSTERY", "WEEK = " + week);
         int hour = progress.getHour();
         int minute = progress.getMinute();
         WorkManager workManager = WorkManager.getInstance(this);
-        long delay = new MementoAlarmer().tillNextAlarm(week, hour, minute);
-        long end = new MementoAlarmer().tillEnd(progress.getEndDate());
-        Log.d("MYSTERY", "DELAY = " + delay + " ENDDELAY = " + end);
+        MementoAlarmer alarmer = new MementoAlarmer();
+        long delay = alarmer.tillNextAlarm(week, hour, minute, resetting);
+        if (resetting) {
+            workManager.cancelAllWorkByTag(habitName);
+        }
+        if (progress.getHabitStatus() == HabitStatus.ACTIVE) {
+            Log.d("MYSTERY", "RAW DELAY = " + delay);
+            long end = alarmer.tillEnd(progress.getEndDate());
+            String contentText;
+            long tillNext;
+            if (delay < 0 || end < delay) {
+                contentText = success;
+                tillNext = end;
+            } else {
+                contentText = habitName;
+                tillNext = delay;
+            }
+            Data data = new Data.Builder().putString("habit", habit.getName())
+                    .putString("result", contentText).putInt("id", habit.getId()).build();
+            Log.d("MYSTERY", "APP DELAY = " + delay + " APP TILL END DELAY = " + end
+                    + " APP TILL NEXT = " + tillNext + " resetting = " + resetting);
+            OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(MementoWorker.class)
+                    .setInitialDelay(tillNext, TimeUnit.SECONDS).setInputData(data).addTag(habitName + id).build();
+            workManager.enqueue(request);
+        }
+    }
+
+    public void countDown(int id) {
+        Log.d("MYSTERY", "Inside countDown");
+        String habitName = getUser().getTracker().getHabit(id).getName();
+        WorkManager workManager = WorkManager.getInstance(this);
+        Data data = new Data.Builder().putInt("id", id).putString("name", habitName).build();
+        OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(CountDownWorker.class)
+                .setInitialDelay(REACTION_GAP, TimeUnit.SECONDS).addTag(habitName).setInputData(data).build();
+        workManager.enqueue(request);
+    }
+
+    public void failHabit(int id) {
+        getUser().getTracker().getHabitProgress(id).setHabitStatus(HabitStatus.ENABLED);
+        saveHabits();
     }
 }

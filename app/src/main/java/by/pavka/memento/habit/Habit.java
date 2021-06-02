@@ -8,6 +8,7 @@ import java.util.Objects;
 public class Habit implements Serializable {
     private int id;
     private String name;
+    private String description;
     private int imageId;
     private int question;
     private int better;
@@ -18,6 +19,7 @@ public class Habit implements Serializable {
 
     public Habit(String name, int imageId, int question, int better) {
         this.name = name;
+        this.description = name;
         this.imageId = imageId;
         this.question = question;
         this.better = better;
@@ -25,6 +27,7 @@ public class Habit implements Serializable {
 
     public Habit(String name, int imageId) {
         this.name = name;
+        this.description = name;
         this.imageId = imageId;
         this.question = - 1;
     }
@@ -67,6 +70,14 @@ public class Habit implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override

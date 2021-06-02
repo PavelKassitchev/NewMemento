@@ -11,7 +11,7 @@ public class HabitProgress {
     private Calendar startDate;
     private Calendar endDate;
     private boolean[] week;
-//    private LocalTime time;
+    //    private LocalTime time;
     private int hour;
     private int minute;
 
@@ -73,6 +73,13 @@ public class HabitProgress {
 
     public void setHabitStatus(HabitStatus habitStatus) {
         this.habitStatus = habitStatus;
+
+        week = new boolean[7];
+        startDate = null;
+        endDate = null;
+        hour = 0;
+        minute = 0;
+
     }
 
 //    public LocalDate getStartDate() {

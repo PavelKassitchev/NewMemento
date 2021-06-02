@@ -1,5 +1,7 @@
 package by.pavka.memento.util;
 
+import android.util.Log;
+
 import java.text.DateFormat;
 import java.util.Calendar;
 
@@ -26,5 +28,12 @@ public class CalendarConverter {
         String h = hour < 10? "0" + hour : "" + hour;
         String m = minute < 10? "0" + minute : "" + minute;
         return h + ":" + m;
+    }
+
+    public static int showProgress(Calendar start, Calendar end) {
+        Calendar now = Calendar.getInstance();
+        int progress = (int)(100 * (now.getTimeInMillis() - start.getTimeInMillis()) / (end.getTimeInMillis() - start.getTimeInMillis()));
+        Log.d("MYSTERY", "Progress = " + progress);
+        return progress;
     }
 }

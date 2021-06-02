@@ -57,6 +57,8 @@
     <string name="all">все</string>
     <string name="done">Готово</string>
     <string name="fail">Неудача</string>
+    <string name="success">Успех!</string>
+    <string name="wrong_end">Установите корректный срок выработки привычки (в будущем)</string>
 
     <string-array name="months">
         <item>Январь</item>

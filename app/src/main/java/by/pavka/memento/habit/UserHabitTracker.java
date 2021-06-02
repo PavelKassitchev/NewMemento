@@ -78,6 +78,11 @@ public class UserHabitTracker {
         return null;
     }
 
+    public void clearHabitProgress(int id) {
+        Habit habit = getHabit(id);
+        habits.put(habit, new HabitProgress(HabitStatus.ENABLED));
+    }
+
     public Map<Habit, HabitProgress> getHabits() {
         return habits;
     }

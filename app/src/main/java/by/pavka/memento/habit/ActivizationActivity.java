@@ -7,12 +7,15 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -26,6 +29,7 @@ import by.pavka.memento.BottomNavigationListener;
 import by.pavka.memento.R;
 import by.pavka.memento.databinding.ActivityActivizationBinding;
 import by.pavka.memento.util.CalendarConverter;
+import by.pavka.memento.util.Validator;
 
 public class ActivizationActivity extends AppCompatActivity implements View.OnClickListener,
         DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, CompoundButton.OnCheckedChangeListener {
@@ -33,6 +37,7 @@ public class ActivizationActivity extends AppCompatActivity implements View.OnCl
     private Button endDay;
     private Button time;
     private CheckBox mo, tue, wed, thu, fri, sat, snd, all;
+    private TextView description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +46,8 @@ public class ActivizationActivity extends AppCompatActivity implements View.OnCl
         View view = binding.getRoot();
         setContentView(view);
         viewModel = new ViewModelProvider(this).get(ActivizationViewModel.class);
+        Intent intent = getIntent();
         if (viewModel.getEnd() == null) {
-            Intent intent = getIntent();
             Habit habit = (Habit) intent.getSerializableExtra("habit");
             viewModel.setHabit(habit);
         }
@@ -57,6 +62,9 @@ public class ActivizationActivity extends AppCompatActivity implements View.OnCl
         buttonCancel.setOnClickListener(this);
         Button buttonOk = binding.buttonOk;
         buttonOk.setOnClickListener(this);
+
+        description = binding.description;
+        description.setText(viewModel.getDescription());
 
         endDay = binding.endDay;
         endDay.setOnClickListener(this);
@@ -88,6 +96,16 @@ public class ActivizationActivity extends AppCompatActivity implements View.OnCl
         } else {
             cleanUIData();
         }
+        Log.d("MYSTERY", "In Activization Failed? " + intent.getBooleanExtra("failure", false));
+        if (intent.getBooleanExtra("failure", false)) {
+            cleanUIData();
+            Intent failureIntent = new Intent();
+            failureIntent.putExtra("habit", viewModel.getHabit());
+            Log.d("MYSTERY", "After notification clearance is " + viewModel.isClearance());
+            viewModel.resetProgress(viewModel.isClearance());
+            setResult(RESULT_OK, intent);
+            finish();
+        }
 
     }
 
@@ -103,11 +121,15 @@ public class ActivizationActivity extends AppCompatActivity implements View.OnCl
                 finish();
                 break;
             case R.id.button_ok:
-                Intent intent = new Intent();
-                intent.putExtra("habit", viewModel.getHabit());
-                viewModel.resetProgress(viewModel.isClearance());
-                setResult(RESULT_OK, intent);
-                finish();
+                if (viewModel.validateSchedule() || viewModel.isClearance()) {
+                    Intent intent = new Intent();
+                    intent.putExtra("habit", viewModel.getHabit());
+                    viewModel.resetProgress(viewModel.isClearance());
+                    setResult(RESULT_OK, intent);
+                    finish();
+                } else {
+                    Validator.showSnackbar(R.string.wrong_end, endDay);
+                }
                 break;
             case R.id.end_day:
                 Calendar today = Calendar.getInstance();

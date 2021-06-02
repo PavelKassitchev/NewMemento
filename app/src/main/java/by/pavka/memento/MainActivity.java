@@ -21,6 +21,7 @@ import by.pavka.memento.calculator.Questionnaire;
 import by.pavka.memento.calculator.impl.LifeSpanCalculatorImpl;
 import by.pavka.memento.calculator.impl.PreCalculatorImpl;
 import by.pavka.memento.databinding.ActivityMainBinding;
+import by.pavka.memento.habit.Habit;
 import by.pavka.memento.user.User;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, DialogInterface.OnClickListener {
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         application = (MementoApplication) getApplication();
         BottomNavigationView bottomNavigationView = binding.bottomNavigation.getRoot();
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationListener(this));
+        successHabit(getIntent());
     }
 
     @Override
@@ -101,6 +103,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
         }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        successHabit(intent);
     }
 
     private void clearUser() {
@@ -165,5 +173,66 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void clearUserQuestionnaire() {
         application.getUser().cleanQuestionnaire();
+    }
+
+    private void successHabit(Intent intent) {
+        if (intent != null && intent.getSerializableExtra("habit") != null) {
+            Habit habit = (Habit) intent.getSerializableExtra("habit");
+            User user = application.getUser();
+
+            user.setHabitCustomized(true);
+            application.customizeHabits(true);
+            int[] answers = user.getAnswers();
+            answers[habit.getQuestion()] = -habit.getBetter();
+            user.setAnswers(answers);
+            application.saveAnswers(answers);
+            user.getTracker().updateWithAnswers(answers, false);
+            application.saveHabits();
+
+            Calendar birthDate = user.getBirthDate();
+            Calendar end = null;
+            if (birthDate != null) {
+                PreCalculator preCalculator = new PreCalculatorImpl();
+                LifeSpanCalculator calculator = new LifeSpanCalculatorImpl();
+                end = calculator.tuneLifeDaySpan(user.getGender(), birthDate, user.getWeight(), user.getHeight(),
+                        null, preCalculator, application.getQuestionnaire(), answers);
+                setButtons(true);
+            } else {
+                setButtons(false);
+            }
+            setForecast(end);
+            setHeader(user);
+
+//            if (user.getBirthDate() != null) {
+//                user.setHabitCustomized(true);
+//                application.customizeHabits(true);
+//                int[] answers = user.getAnswers();
+//                answers[habit.getQuestion()] = - habit.getBetter();
+//                user.setAnswers(answers);
+//                application.saveAnswers(answers);
+//                user.getTracker().updateWithAnswers(answers, false);
+//                application.saveHabits();
+//            }
+
+
+//            Calendar birthDate = user.getBirthDate();
+//            Calendar end = null;
+//            if (birthDate != null) {
+//                int gender = user.getGender();
+//                Questionnaire questionnaire = application.getQuestionnaire();
+//                int[] answers = user.getAnswers();
+//                int weight = user.getWeight();
+//                int height = user.getHeight();
+//                PreCalculator preCalculator = new PreCalculatorImpl();
+//                LifeSpanCalculator calculator = new LifeSpanCalculatorImpl();
+//                end = calculator.tuneLifeDaySpan(gender, birthDate, weight, height, null, preCalculator, questionnaire, answers);
+//                setButtons(true);
+//            } else {
+//                setButtons(false);
+//            }
+//            setForecast(end);
+//            setHeader(user);
+//            user.setHabitCustomized(true);
+        }
     }
 }

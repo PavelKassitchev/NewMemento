@@ -12,6 +12,7 @@ import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Map;
 
 import by.pavka.memento.MementoApplication;
@@ -27,6 +28,7 @@ public class ActivizationViewModel extends AndroidViewModel {
     //private LocalTime time;
     private int hour;
     private int minute;
+    private String description;
     private boolean clearance;
     DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
 
@@ -51,7 +53,6 @@ public class ActivizationViewModel extends AndroidViewModel {
         habit = null;
         end = null;
         week = null;
-        //time = null;
         hour = 0;
         minute = 0;
         clearance = false;
@@ -59,10 +60,12 @@ public class ActivizationViewModel extends AndroidViewModel {
 
     public void setHabit(Habit habit) {
         this.habit = habit;
+        description = habit.getName();
         User user = app.getUser();
         Map<Habit, HabitProgress> habits = user.getTracker().getHabits();
+        Log.d("MYSTERY", "Habits: " + habits + " habit: " + habit);
         HabitProgress progress = habits.get(habit);
-        //end = progress.getEndDate() == null ? LocalDate.now().plusDays(MementoApplication.DAYS_FOR_HABIT) : progress.getEndDate();
+        Log.d("MYSTERY", "Progress: " + progress);
         if (progress.getEndDate() != null) {
             end = progress.getEndDate();
             week = progress.getWeek();
@@ -78,6 +81,15 @@ public class ActivizationViewModel extends AndroidViewModel {
         }
     }
 
+    public boolean validateSchedule() {
+        Calendar now = Calendar.getInstance();
+        Calendar finish = new GregorianCalendar(end.get(Calendar.YEAR), end.get(Calendar.MONTH), end.get(Calendar.DAY_OF_MONTH), hour, minute);
+        if (now.before(finish)) {
+            return true;
+        }
+        return false;
+    }
+
     public void resetProgress(boolean cleared) {
         User user = app.getUser();
         Map<Habit, HabitProgress> habits = user.getTracker().getHabits();
@@ -86,6 +98,8 @@ public class ActivizationViewModel extends AndroidViewModel {
         } else {
             end.set(Calendar.HOUR_OF_DAY, hour);
             end.set(Calendar.MINUTE, minute);
+            end.set(Calendar.SECOND, 0);
+            end.set(Calendar.MILLISECOND, 0);
             habits.put(habit, new HabitProgress(HabitStatus.ACTIVE, Calendar.getInstance(), end, week, hour, minute));
             user.setHabitCustomized(true);
             app.customizeHabits(true);
@@ -142,4 +156,7 @@ public class ActivizationViewModel extends AndroidViewModel {
         this.minute = minute;
     }
 
+    public String getDescription() {
+        return description;
+    }
 }
