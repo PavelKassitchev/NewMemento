@@ -33,7 +33,13 @@ public class CalendarConverter {
     public static int showProgress(Calendar start, Calendar end) {
         Calendar now = Calendar.getInstance();
         int progress = (int)(100 * (now.getTimeInMillis() - start.getTimeInMillis()) / (end.getTimeInMillis() - start.getTimeInMillis()));
-        Log.d("MYSTERY", "Progress = " + progress);
+
+        return progress;
+    }
+
+    public static int showProgress (Calendar start, Calendar end, int initial) {
+        Calendar now = Calendar.getInstance();
+        int progress = initial + (int)((100 - initial) * (now.getTimeInMillis() - start.getTimeInMillis()) / (end.getTimeInMillis() - start.getTimeInMillis()));
         return progress;
     }
 }

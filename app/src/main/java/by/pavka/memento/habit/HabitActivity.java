@@ -82,7 +82,6 @@ public class  HabitActivity extends AppCompatActivity {
             adapter.notifyDataSetChanged();
             application.saveHabits();
             Habit habit = (Habit)data.getSerializableExtra("habit");
-            //application.setNextNotification(habit.getId(), true);
             application.launchNotification(habit.getId(), true);
         }
     }

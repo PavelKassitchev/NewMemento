@@ -43,7 +43,7 @@ public class MementoWorker extends Worker {
         int id = getInputData().getInt("id", -1);
         Habit habit = context.getUser().getTracker().getHabit(id);
         String habitName = habit.getName();
-        context.cancelWork(habitName + id);
+        context.cancelWork(habitName);
 
         Intent intent = new Intent(context, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, id, intent, 0);
@@ -51,7 +51,7 @@ public class MementoWorker extends Worker {
         Intent failed = new Intent(context, DoneReceiver.class);
         failed.setAction("by.pavka.fail");
         failed.putExtra("habit", habit);
-        PendingIntent pendingFailed = PendingIntent.getBroadcast(context,id, failed, 0);
+        PendingIntent pendingFailed = PendingIntent.getBroadcast(context, id, failed, 0);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, MementoApplication.MEMENTO_CHANNEL_ID);
         builder.setSmallIcon(R.drawable.ic_notification)
@@ -60,7 +60,8 @@ public class MementoWorker extends Worker {
                 .setLargeIcon(obtainIcon(id))
                 .setPriority(PRIORITY_HIGH)
                 .setAutoCancel(false)
-                .setContentIntent(pendingIntent);
+                .setContentIntent(pendingIntent)
+                .setDeleteIntent(pendingFailed);
         if (!contentText.equals(context.getSuccess())) {
             Intent done = new Intent(context, DoneReceiver.class);
             done.setAction("by.pavka.done");

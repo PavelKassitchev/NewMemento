@@ -4,7 +4,7 @@
 
     <application
         android:name=".MementoApplication"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@drawable/ic_sand_clock"
         android:label="@string/app_name"
         android:roundIcon="@drawable/ic_sand_clock"

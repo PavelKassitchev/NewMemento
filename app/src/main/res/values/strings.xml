@@ -3,7 +3,7 @@
     <string name="header_main">Здравствуйте, %s!</string>
     <string name="forecast">В среднем человек вашего возраста, пола и привычек доживет до %s года.</string>
     <string name="invitation">Вы можете перейти к заполнению анкеты</string>
-    <string name="clear">Очистить Анкету</string>
+    <string name="clear">Очистить Профиль</string>
     <string name="update">Вновь пройти опрос</string>
     <string name="start">Пройти опрос</string>
     <string name="general">Для определения продолжительности жизни нужно ответить на ряд вопросов. \nВы можете перейти к заполнению анкеты</string>
@@ -39,7 +39,7 @@
     <string name="ok">сохранить</string>
     <string name="disabled">Привычка уже обретена. Очистите или измените профиль для активизации</string>
     <string name="clearance">очистка данных</string>
-    <string name="confidence">выхотите удалить только данные опросника или также прогресс привычек?</string>
+    <string name="confidence">вы хотите удалить только данные опросника или также прогресс привычек?</string>
     <string name="quest_only">очистить опросник</string>
     <string name="clear_all">очистить все</string>
     <string name="set_end">Дата фиксации привычки</string>
@@ -59,6 +59,7 @@
     <string name="fail">Неудача</string>
     <string name="success">Успех!</string>
     <string name="wrong_end">Установите корректный срок выработки привычки (в будущем)</string>
+    <string name="confidence_short">вы хотите удалить весь прогресс привычек?</string>
 
     <string-array name="months">
         <item>Январь</item>

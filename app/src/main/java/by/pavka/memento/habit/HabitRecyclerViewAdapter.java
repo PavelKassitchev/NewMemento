@@ -85,16 +85,17 @@ public class HabitRecyclerViewAdapter extends RecyclerView.Adapter<HabitRecycler
 //                holder.itemView.setBackgroundColor(0xFFFF693B);
 //                holder.start.setText(CalendarConverter.showDate(prog.getStartDate()));
 //                holder.end.setText(CalendarConverter.showDate(prog.getEndDate()));
-                String timePeriod = CalendarConverter.showDate(prog.getStartDate()) + " - " + CalendarConverter.showDate(prog.getEndDate());
+                String timePeriod = CalendarConverter.showDate(prog.getStartDate()) + "-" + CalendarConverter.showDate(prog.getEndDate());
                 holder.period.setText(timePeriod);
-                Drawable background = new ColorDrawable(Color.YELLOW);
-                Drawable progress = new ScaleDrawable(new ColorDrawable(Color.GREEN), Gravity.LEFT, 1, -1);
-                LayerDrawable layerDrawable = new LayerDrawable(new Drawable[] {background, progress});
-                layerDrawable.setId(0, android.R.id.background);
-                layerDrawable.setId(1, android.R.id.progress);
-                holder.progressBar.setProgressDrawable(layerDrawable);
+//                holder.period.setTextColor(0xFFFF0000);
+//                Drawable background = new ColorDrawable(Color.YELLOW);
+//                Drawable progress = new ScaleDrawable(new ColorDrawable(Color.GREEN), Gravity.LEFT, 1, -1);
+//                LayerDrawable layerDrawable = new LayerDrawable(new Drawable[] {background, progress});
+//                layerDrawable.setId(0, android.R.id.background);
+//                layerDrawable.setId(1, android.R.id.progress);
+//                holder.progressBar.setProgressDrawable(layerDrawable);
                 //holder.progressBar.getProgressDrawable().setColorFilter(0xFF00FF00, PorterDuff.Mode.SRC_IN);
-                holder.progressBar.setProgress(CalendarConverter.showProgress(prog.getStartDate(), prog.getEndDate()));
+                holder.progressBar.setProgress(CalendarConverter.showProgress(prog.getStartDate(), prog.getEndDate(), 8));
                 break;
             default:
 //                holder.start.setText("");

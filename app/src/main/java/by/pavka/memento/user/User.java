@@ -89,13 +89,13 @@ public class User {
         setHabitCustomized(true);
     }
 
-    public boolean isProgressing() {
+    public boolean allHabitsClear() {
         for (HabitProgress progress : tracker.getHabits().values()) {
-            if (progress.getHabitStatus() == HabitStatus.ACTIVE) {
-                return true;
+            if (progress.getHabitStatus() != HabitStatus.ENABLED) {
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     public void cleanQuestionnaire() {

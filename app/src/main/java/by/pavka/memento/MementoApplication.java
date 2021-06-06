@@ -203,7 +203,6 @@ public class MementoApplication extends MultiDexApplication {
         HabitProgress progress = tracker.getHabitProgress(id);
         boolean[] week = progress.getWeek();
         String habitName = habit.getName();
-        Log.d("MYSTERY", "WEEK = " + week);
         int hour = progress.getHour();
         int minute = progress.getMinute();
         WorkManager workManager = WorkManager.getInstance(this);
@@ -213,7 +212,6 @@ public class MementoApplication extends MultiDexApplication {
             workManager.cancelAllWorkByTag(habitName);
         }
         if (progress.getHabitStatus() == HabitStatus.ACTIVE) {
-            Log.d("MYSTERY", "RAW DELAY = " + delay);
             long end = alarmer.tillEnd(progress.getEndDate());
             String contentText;
             long tillNext;
@@ -247,5 +245,6 @@ public class MementoApplication extends MultiDexApplication {
     public void failHabit(int id) {
         getUser().getTracker().getHabitProgress(id).setHabitStatus(HabitStatus.ENABLED);
         saveHabits();
+        Log.d("MYSTERY", "APP HABIT FAILED");
     }
 }

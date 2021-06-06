@@ -20,13 +20,13 @@ public class DoneReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-//        int id = intent.getIntExtra("id", -1);
+
         Habit habit = (Habit) intent.getSerializableExtra("habit");
+        Log.d("MYSTERY", "In DoneReceiver habit = " + habit);
         NotificationManagerCompat notifyManager = NotificationManagerCompat.from(context);
         notifyManager.cancel(habit.getId());
         String tag = habit.getName();
         String action = intent.getAction();
-
         if ("by.pavka.fail".equals(action)) {
             Intent failureIntent = new Intent(context, HabitActivity.class);
             failureIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -51,7 +51,6 @@ public class DoneReceiver extends BroadcastReceiver {
             Log.d("MYSTERY", "Expire intent = " + failureIntent);
             context.startActivity(failureIntent);
             ((MementoApplication)(context.getApplicationContext())).failHabit(habit.getId());
-
         }
         ((MementoApplication) context.getApplicationContext()).cancelWork(tag);
     }

@@ -7,6 +7,7 @@ import androidx.multidex.MultiDex;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         User user = application.getUser();
         Calendar birthDate = user.getBirthDate();
         Calendar end = null;
+        Log.d("PROF", "Now " + birthDate + " " + user.isHabitCustomized());
         if (birthDate != null) {
             int gender = user.getGender();
             Questionnaire questionnaire = application.getQuestionnaire();
@@ -73,6 +75,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             int height = user.getHeight();
             end = calculator.tuneLifeDaySpan(gender, birthDate, weight, height, null, preCalculator, questionnaire, answers);
             setButtons(true);
+        } else if (user.isHabitCustomized() && !user.allHabitsClear()) {
+            setButtons(true);
+            buttonUpdate.setText(getResources().getString(R.string.start));
         } else {
             setButtons(false);
         }
@@ -88,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivityForResult(intent, REQUEST_CODE);
                 break;
             case R.id.button_clear:
-                if (application.getUser().isProgressing()) {
+                if (application.getUser().getBirthDate() != null) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setTitle(getString(R.string.clearance)).setMessage(getString(R.string.confidence))
                             .setNegativeButton(getString(R.string.cancel), this)
@@ -96,10 +101,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             .setPositiveButton(getString(R.string.clear_all), this);
                     builder.create().show();
                 } else {
-                    clearUser();
-                    setHeader(null);
-                    setForecast(null);
-                    setButtons(false);
+                    if (application.getUser().isHabitCustomized()) {
+                        Log.d("MYSTERY", "HABIT CUSTOMIZED");
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        builder.setTitle(getString(R.string.clearance)).setMessage(getString(R.string.confidence_short))
+                                .setNegativeButton(getString(R.string.cancel), this)
+                                .setPositiveButton(getString(R.string.clear_all), this);
+                        builder.create().show();
+                    } else {
+                        clearUser();
+                        setHeader(null);
+                        setForecast(null);
+                        setButtons(false);
+                    }
                 }
                 break;
         }
