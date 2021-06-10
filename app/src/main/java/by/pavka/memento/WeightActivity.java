@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -31,6 +32,7 @@ public class WeightActivity extends AppCompatActivity implements View.OnClickLis
     private TextView bmi;
     private Button calculate;
     private Button forward;
+    private SeekBar seekBar;
     private User user;
 
     @Override
@@ -46,6 +48,8 @@ public class WeightActivity extends AppCompatActivity implements View.OnClickLis
         calculate.setOnClickListener(this);
         forward = binding.forward;
         forward.setOnClickListener(this);
+        seekBar = binding.seekBar;
+        seekBar.setEnabled(false);
         application = (MementoApplication) getApplication();
         user = application.getUser();
         BottomNavigationView bottomNavigationView = binding.bottomNavigation.getRoot();

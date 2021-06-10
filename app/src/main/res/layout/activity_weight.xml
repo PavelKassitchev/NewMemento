@@ -58,6 +58,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/calculate" />
 
+    <SeekBar
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:id="@+id/seek_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:progressDrawable="@drawable/vector_bmi_bar"
+        android:thumb="@drawable/weights"
+        app:layout_constraintBottom_toTopOf="@+id/forward"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bmi" />
+
+
     <Button
         android:id="@+id/forward"
         android:layout_width="wrap_content"
@@ -73,7 +88,7 @@
         layout="@layout/bottom_navigation" />
 
     <TextView
-        android:id="@+id/lavel_weight"
+        android:id="@+id/label_weight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:labelFor="@id/weight"

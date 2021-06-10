@@ -63,16 +63,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="0"-->
-<!--                android:layout_marginStart="4dp"-->
-<!--                android:layout_marginEnd="4dp"-->
-<!--                android:id="@+id/start"-->
-<!--                android:text="text1"-->
-<!--                android:gravity="center"-->
-<!--                style="@style/TextAppearance.AppCompat.Small"/>-->
             <ProgressBar
                 android:id="@+id/progressBar"
                 style="@android:style/Widget.ProgressBar.Horizontal"
