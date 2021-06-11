@@ -1,5 +1,6 @@
 package by.pavka.memento;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -34,6 +35,7 @@ public class WeightActivity extends AppCompatActivity implements View.OnClickLis
     private Button forward;
     private SeekBar seekBar;
     private User user;
+    private double bodyMassIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +56,16 @@ public class WeightActivity extends AppCompatActivity implements View.OnClickLis
         user = application.getUser();
         BottomNavigationView bottomNavigationView = binding.bottomNavigation.getRoot();
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationListener(this));
+        if (savedInstanceState != null) {
+            bodyMassIndex = savedInstanceState.getDouble("BMI");
+        }
         setInterface();
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putDouble("BMI", bodyMassIndex);
     }
 
     @Override
@@ -76,15 +87,11 @@ public class WeightActivity extends AppCompatActivity implements View.OnClickLis
         int id = v.getId();
         switch (id) {
             case R.id.calculate:
-                //Just to try gson
-                SharedPreferences.Editor editor = getSharedPreferences(MementoApplication.APP_PREF, MODE_PRIVATE).edit();
-                GsonBuilder builder = new GsonBuilder();
-                builder.enableComplexMapKeySerialization();
-                builder.setDateFormat("MM-dd-yyyy");
-                Gson gson = builder.create();
-                String date = gson.toJson(Calendar.getInstance());
-                Log.d("MYSTERY", "Date = " + date);
-                //TODO
+                bodyMassIndex = calculateBMI();
+                if (bodyMassIndex != 0) {
+                    bmi.setText(String.format(getResources().getString(R.string.bmi), bodyMassIndex));
+                }
+                seekBar.setProgress((int) (bodyMassIndex - 14));
                 break;
             case R.id.forward:
                 if (validateHeight() && validateWeight()) {
@@ -98,6 +105,25 @@ public class WeightActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    private double calculateBMI() {
+        if (!weight.getText().toString().isEmpty() && !height.getText().toString().isEmpty()) {
+            int wt = Integer.parseInt(weight.getText().toString());
+            int ht = Integer.parseInt(height.getText().toString());
+            return wt * 10000.0 / ht / ht;
+        }
+        return 0;
+    }
+
+    private void setScale() {
+        if (bodyMassIndex == 0) {
+            bodyMassIndex = calculateBMI();
+        }
+        if (bodyMassIndex != 0) {
+            bmi.setText(String.format(getResources().getString(R.string.bmi), bodyMassIndex));
+        }
+        seekBar.setProgress((int) (bodyMassIndex - 14));
+    }
+
     private void setInterface() {
         int w = user.getWeight();
         int h = user.getHeight();
@@ -105,6 +131,7 @@ public class WeightActivity extends AppCompatActivity implements View.OnClickLis
             weight.setText(String.valueOf(w));
             height.setText(String.valueOf(h));
         }
+        setScale();
     }
 
     private boolean validateWeight() {
@@ -113,7 +140,7 @@ public class WeightActivity extends AppCompatActivity implements View.OnClickLis
         }
         int w = Integer.parseInt(weight.getText().toString());
         if (w < 2) {
-          return false;
+            return false;
         }
         return true;
     }

@@ -22,10 +22,8 @@ public class ActivizationViewModel extends AndroidViewModel {
 
     private MementoApplication app;
     private Habit habit;
-    //private LocalDate end;
     private Calendar end;
     private boolean[] week;
-    //private LocalTime time;
     private int hour;
     private int minute;
     private String description;
