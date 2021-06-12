@@ -4,19 +4,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Calendar;
 
@@ -24,7 +20,7 @@ import by.pavka.memento.calculator.PreCalculator;
 import by.pavka.memento.databinding.ActivityIntroductionBinding;
 import by.pavka.memento.user.User;
 import by.pavka.memento.util.CalendarConverter;
-import by.pavka.memento.util.Validator;
+import by.pavka.memento.util.Displayer;
 
 public class IntroductionActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int REQUEST_CODE = 1;
@@ -63,9 +59,9 @@ public class IntroductionActivity extends AppCompatActivity implements View.OnCl
             Intent intent = new Intent(this, WeightActivity.class);
             startActivityForResult(intent, REQUEST_CODE);
         } else if (!validateDate()){
-            Validator.showSnackbar(R.string.limit_age, v);
+            Displayer.showSnackbar(R.string.limit_age, v);
         } else {
-            Validator.showSnackbar(R.string.limit_gender, v);
+            Displayer.showSnackbar(R.string.limit_gender, v);
         }
     }
 

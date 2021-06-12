@@ -58,6 +58,7 @@
     <string name="done">Готово</string>
     <string name="fail">Неудача</string>
     <string name="success">Успех!</string>
+    <string name="date">Дата</string>
     <string name="wrong_end">Установите корректный срок выработки привычки (в будущем)</string>
     <string name="confidence_short">вы хотите удалить весь прогресс привычек?</string>
     <string name="mass_info">\u0020до 16 : Выраженный дефицит массы тела\n

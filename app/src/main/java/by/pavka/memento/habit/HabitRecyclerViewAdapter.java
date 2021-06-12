@@ -2,37 +2,22 @@ package by.pavka.memento.habit;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
-import android.graphics.drawable.ScaleDrawable;
-import android.net.Uri;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.snackbar.BaseTransientBottomBar;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import by.pavka.memento.R;
 import by.pavka.memento.util.CalendarConverter;
-import by.pavka.memento.util.Validator;
+import by.pavka.memento.util.Displayer;
 
 public class HabitRecyclerViewAdapter extends RecyclerView.Adapter<HabitRecyclerViewAdapter.HabitViewHolder> {
     private List<Habit> habits;
@@ -138,7 +123,7 @@ public class HabitRecyclerViewAdapter extends RecyclerView.Adapter<HabitRecycler
                 public void onClick(View v) {
                     HabitProgress habitProgress = progress.get(getLayoutPosition());
                     if (habitProgress.getHabitStatus() == HabitStatus.DISABLED) {
-                        Validator.showSnackbar(R.string.disabled, v);
+                        Displayer.showSnackbar(R.string.disabled, v);
                     } else {
                         Habit habit = habits.get(getLayoutPosition());
                         HabitActivity habitActivity = (HabitActivity) (adapter.context);

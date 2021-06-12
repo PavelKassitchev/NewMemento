@@ -10,13 +10,16 @@
         android:roundIcon="@drawable/ic_sand_clock"
         android:supportsRtl="true"
         android:theme="@style/Theme.Memento">
+        <activity android:name=".MeasureActivity"></activity>
+
         <receiver
             android:name=".notification.DoneReceiver"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true" />
 
-        <activity android:name=".habit.ActivizationActivity"
-            android:launchMode="singleTask"/>
+        <activity
+            android:name=".habit.ActivizationActivity"
+            android:launchMode="singleTask" />
         <activity
             android:name=".habit.HabitActivity"
             android:launchMode="singleTask" />

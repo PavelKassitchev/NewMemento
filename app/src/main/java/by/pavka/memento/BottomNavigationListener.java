@@ -28,6 +28,9 @@ public class BottomNavigationListener implements BottomNavigationView.OnNavigati
             case R.id.habit:
                 intent = new Intent(activity, HabitActivity.class);
                 break;
+            case R.id.weights:
+                intent = new Intent(activity, MeasureActivity.class);
+                break;
         }
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         activity.startActivity(intent);

@@ -14,22 +14,18 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 
 import by.pavka.memento.BottomNavigationListener;
 import by.pavka.memento.R;
 import by.pavka.memento.databinding.ActivityActivizationBinding;
 import by.pavka.memento.util.CalendarConverter;
-import by.pavka.memento.util.Validator;
+import by.pavka.memento.util.Displayer;
 
 public class ActivizationActivity extends AppCompatActivity implements View.OnClickListener,
         DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, CompoundButton.OnCheckedChangeListener {
@@ -128,7 +124,7 @@ public class ActivizationActivity extends AppCompatActivity implements View.OnCl
                     setResult(RESULT_OK, intent);
                     finish();
                 } else {
-                    Validator.showSnackbar(R.string.wrong_end, endDay);
+                    Displayer.showSnackbar(R.string.wrong_end, endDay);
                 }
                 break;
             case R.id.end_day:
