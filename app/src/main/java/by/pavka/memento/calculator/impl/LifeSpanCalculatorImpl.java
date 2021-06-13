@@ -17,7 +17,7 @@ public class LifeSpanCalculatorImpl implements LifeSpanCalculator {
     }
 
     @Override
-    public Calendar tuneLifeDaySpan(int gender, Calendar birthDate, int weight, int height, Locale locale, PreCalculator preCalculator, Questionnaire questionnaire, int[] answers) {
+    public Calendar tuneLifeDaySpan(int gender, Calendar birthDate, double weight, double height, Locale locale, PreCalculator preCalculator, Questionnaire questionnaire, int[] answers) {
         //TODO account weight and height
         birthDate.set(Calendar.DAY_OF_MONTH, 15);
         int totalDaysRaw = preCalculator.findLifeDaySpan(gender, birthDate, locale);

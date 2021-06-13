@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MeasureActivity">
 
-    <EditText
+    <Button
         android:id="@+id/measure_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,7 +16,6 @@
         android:autofillHints=""
         android:ems="10"
         android:gravity="center"
-        android:inputType="date"
         android:maxLength="10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,16 +48,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/measure_result" />
-
-    <TextView
-        android:id="@+id/label_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:labelFor="@id/label_date"
-        android:text="@string/date"
-        app:layout_constraintBottom_toBottomOf="@+id/measure_date"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/label_weights"

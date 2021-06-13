@@ -2,7 +2,6 @@ package by.pavka.memento;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.multidex.MultiDex;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -71,8 +70,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             int gender = user.getGender();
             Questionnaire questionnaire = application.getQuestionnaire();
             int[] answers = user.getAnswers();
-            int weight = user.getWeight();
-            int height = user.getHeight();
+            double weight = user.getWeight();
+            double height = user.getHeight();
             end = calculator.tuneLifeDaySpan(gender, birthDate, weight, height, null, preCalculator, questionnaire, answers);
             setButtons(true);
         } else if (user.isHabitCustomized() && !user.allHabitsClear()) {

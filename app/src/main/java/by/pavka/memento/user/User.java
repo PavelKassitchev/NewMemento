@@ -1,9 +1,7 @@
 package by.pavka.memento.user;
 
 import java.util.Calendar;
-import java.util.Map;
 
-import by.pavka.memento.habit.Habit;
 import by.pavka.memento.habit.HabitProgress;
 import by.pavka.memento.habit.HabitStatus;
 import by.pavka.memento.habit.UserHabitTracker;
@@ -12,8 +10,8 @@ public class User {
     private String name;
     private int gender;
     private Calendar birthDate;
-    private int weight;
-    private int height;
+    private double weight;
+    private double height;
 
     private int[] answers;
     private UserHabitTracker tracker;
@@ -27,19 +25,19 @@ public class User {
         this.name = name;
     }
 
-    public int getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 
-    public int getHeight() {
+    public double getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
+    public void setHeight(double height) {
         this.height = height;
     }
 

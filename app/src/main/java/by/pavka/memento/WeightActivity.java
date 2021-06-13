@@ -100,9 +100,9 @@ public class WeightActivity extends AppCompatActivity implements View.OnClickLis
 
     private double calculateBMI() {
         if (!weight.getText().toString().isEmpty() && !height.getText().toString().isEmpty()) {
-            int wt = Integer.parseInt(weight.getText().toString());
-            int ht = Integer.parseInt(height.getText().toString());
-            return wt * 10000.0 / ht / ht;
+            double wt = Double.parseDouble(weight.getText().toString());
+            double ht = Double.parseDouble(height.getText().toString());
+            return wt * 10000 / ht / ht;
         }
         return 0;
     }
@@ -118,8 +118,8 @@ public class WeightActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void setInterface() {
-        int w = user.getWeight();
-        int h = user.getHeight();
+        double w = user.getWeight();
+        double h = user.getHeight();
         if (w != 0 && h != 0) {
             weight.setText(String.valueOf(w));
             height.setText(String.valueOf(h));

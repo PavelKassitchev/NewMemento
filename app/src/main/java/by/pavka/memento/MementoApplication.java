@@ -5,7 +5,6 @@ import android.app.NotificationManager;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.multidex.MultiDexApplication;
 import androidx.work.Data;
@@ -15,11 +14,6 @@ import androidx.work.WorkManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.time.DayOfWeek;
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
