@@ -1,6 +1,7 @@
 package by.pavka.memento;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -36,5 +37,13 @@ public class MeasureViewModel extends AndroidViewModel {
 
     public void setWeight(double weight) {
         this.weight = weight;
+    }
+
+    public void updateChronicler() {
+        if (app.getUser().getChronicler().addRecord(measureDate, weight)) {
+            app.getUser().setWeight(weight);
+            Log.d("WEIGHT", "Weight is " + weight);
+        }
+        app.saveChronicler();
     }
 }

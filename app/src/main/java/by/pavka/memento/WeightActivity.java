@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.Calendar;
+
 import by.pavka.memento.databinding.ActivityWeightBinding;
 import by.pavka.memento.user.User;
 import by.pavka.memento.util.Displayer;
@@ -65,11 +67,13 @@ public class WeightActivity extends AppCompatActivity implements View.OnClickLis
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            int w = Integer.parseInt(weight.getText().toString());
+            double w = Double.parseDouble(weight.getText().toString());
             user.setWeight(w);
-            int h = Integer.parseInt(height.getText().toString());
+            double h = Double.parseDouble(height.getText().toString());
             user.setHeight(h);
             application.saveBMIData(w, h);
+            user.getChronicler().addRecord(Calendar.getInstance(), w);
+            application.saveChronicler();
             setResult(RESULT_OK, getIntent());
             finish();
         }
@@ -131,7 +135,7 @@ public class WeightActivity extends AppCompatActivity implements View.OnClickLis
         if (weight.getText().toString().isEmpty()) {
             return false;
         }
-        int w = Integer.parseInt(weight.getText().toString());
+        double w = Double.parseDouble(weight.getText().toString());
         if (w < 2) {
             return false;
         }
@@ -142,7 +146,7 @@ public class WeightActivity extends AppCompatActivity implements View.OnClickLis
         if (height.getText().toString().isEmpty()) {
             return false;
         }
-        int h = Integer.parseInt(height.getText().toString());
+        double h = Double.parseDouble(height.getText().toString());
         if (h < 30) {
             return false;
         }

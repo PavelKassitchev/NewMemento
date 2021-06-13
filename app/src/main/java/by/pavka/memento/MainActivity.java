@@ -215,37 +215,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             setForecast(end);
             setHeader(user);
-
-//            if (user.getBirthDate() != null) {
-//                user.setHabitCustomized(true);
-//                application.customizeHabits(true);
-//                int[] answers = user.getAnswers();
-//                answers[habit.getQuestion()] = - habit.getBetter();
-//                user.setAnswers(answers);
-//                application.saveAnswers(answers);
-//                user.getTracker().updateWithAnswers(answers, false);
-//                application.saveHabits();
-//            }
-
-
-//            Calendar birthDate = user.getBirthDate();
-//            Calendar end = null;
-//            if (birthDate != null) {
-//                int gender = user.getGender();
-//                Questionnaire questionnaire = application.getQuestionnaire();
-//                int[] answers = user.getAnswers();
-//                int weight = user.getWeight();
-//                int height = user.getHeight();
-//                PreCalculator preCalculator = new PreCalculatorImpl();
-//                LifeSpanCalculator calculator = new LifeSpanCalculatorImpl();
-//                end = calculator.tuneLifeDaySpan(gender, birthDate, weight, height, null, preCalculator, questionnaire, answers);
-//                setButtons(true);
-//            } else {
-//                setButtons(false);
-//            }
-//            setForecast(end);
-//            setHeader(user);
-//            user.setHabitCustomized(true);
         }
     }
 }

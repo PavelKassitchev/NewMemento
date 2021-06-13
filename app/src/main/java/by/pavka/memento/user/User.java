@@ -2,6 +2,7 @@ package by.pavka.memento.user;
 
 import java.util.Calendar;
 
+import by.pavka.memento.Chronicler;
 import by.pavka.memento.habit.HabitProgress;
 import by.pavka.memento.habit.HabitStatus;
 import by.pavka.memento.habit.UserHabitTracker;
@@ -12,10 +13,10 @@ public class User {
     private Calendar birthDate;
     private double weight;
     private double height;
-
     private int[] answers;
     private UserHabitTracker tracker;
     private boolean habitCustomized;
+    private Chronicler chronicler;
 
     public String getName() {
         return name;
@@ -80,6 +81,14 @@ public class User {
 
     public void setHabitCustomized(boolean habitCustomized) {
         this.habitCustomized = habitCustomized;
+    }
+
+    public Chronicler getChronicler() {
+        return chronicler;
+    }
+
+    public void setChronicler(Chronicler chronicler) {
+        this.chronicler = chronicler;
     }
 
     public void updateTracker(boolean cleanUser) {

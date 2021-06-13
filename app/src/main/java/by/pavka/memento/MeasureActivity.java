@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -64,6 +65,9 @@ public class MeasureActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.button_measure:
                 // TODO
+                viewModel.setWeight(Double.parseDouble(measureResult.getText().toString()));
+                Log.d("WEIGHT", "" + Double.parseDouble(measureResult.getText().toString()));
+                viewModel.updateChronicler();
                 startActivity(new Intent(this, MainActivity.class));
                 finish();
                 break;

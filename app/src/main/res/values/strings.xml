@@ -39,7 +39,7 @@
     <string name="ok">сохранить</string>
     <string name="disabled">Привычка уже обретена. Очистите или измените профиль для активизации</string>
     <string name="clearance">очистка данных</string>
-    <string name="confidence">вы хотите удалить только данные опросника или также прогресс привычек?</string>
+    <string name="confidence">вы хотите удалить только данные опросника или также динамику веса и привычек?</string>
     <string name="quest_only">очистить опросник</string>
     <string name="clear_all">очистить все</string>
     <string name="set_end">Дата фиксации привычки</string>

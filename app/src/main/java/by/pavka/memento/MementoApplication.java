@@ -42,6 +42,7 @@ public class MementoApplication extends MultiDexApplication {
     public static final String TRACKER = "tracker";
     public static final int DAYS_FOR_HABIT = 28;
     public static final int REACTION_GAP = 60;
+    private static final String CHRONICLER = "chronicler";
 
     private Questionnaire questionnaire;
     private User user;
@@ -84,8 +85,9 @@ public class MementoApplication extends MultiDexApplication {
             tracker = loadTracker();
         } else {
             tracker = new UserHabitTracker(this);
-            Log.d("MYSTERY", "CREATE USER NEW TRACKER");
         }
+        Chronicler chronicler = loadChronicler();
+        user.setChronicler(chronicler);
         String dateOfBirth = preferences.getString(DATE, null);
         String name = "";
         int length = getQuestionnaire().getLength();
@@ -94,9 +96,9 @@ public class MementoApplication extends MultiDexApplication {
             name = preferences.getString(NAME, name);
             int gender = preferences.getInt(GENDER, 0);
             user.setGender(gender);
-            int weight = preferences.getInt(WEIGHT, 0);
+            double weight = preferences.getFloat(WEIGHT, 0);
             user.setWeight(weight);
-            int height = preferences.getInt(HEIGHT, 0);
+            double height = preferences.getFloat(HEIGHT, 0);
             user.setHeight(height);
             Calendar birthDate = CalendarConverter.intoCalendar(dateOfBirth);
             user.setBirthDate(birthDate);
@@ -109,7 +111,6 @@ public class MementoApplication extends MultiDexApplication {
         user.setTracker(tracker);
         return user;
     }
-
 
     public void savePersonData(String name, String dateOfBirth, int gender) {
         SharedPreferences.Editor editor = getSharedPreferences(APP_PREF, MODE_PRIVATE).edit();
@@ -126,10 +127,10 @@ public class MementoApplication extends MultiDexApplication {
         editor.apply();
     }
 
-    public void saveBMIData(int weight, int height) {
+    public void saveBMIData(double weight, double height) {
         SharedPreferences.Editor editor = getSharedPreferences(APP_PREF, MODE_PRIVATE).edit();
-        editor.putInt(WEIGHT, weight);
-        editor.putInt(HEIGHT, height);
+        editor.putFloat(WEIGHT, (float)weight);
+        editor.putFloat(HEIGHT, (float)height);
         editor.apply();
     }
 
@@ -152,6 +153,29 @@ public class MementoApplication extends MultiDexApplication {
         SharedPreferences.Editor editor = getSharedPreferences(MementoApplication.APP_PREF, MODE_PRIVATE).edit();
         editor.remove(NAME).remove(GENDER).remove(DATE).remove(WEIGHT).remove(HEIGHT);
         editor.apply();
+    }
+
+    public void saveChronicler() {
+        SharedPreferences.Editor editor = getSharedPreferences(MementoApplication.APP_PREF, MODE_PRIVATE).edit();
+        GsonBuilder builder = new GsonBuilder();
+        builder.enableComplexMapKeySerialization();
+        Gson gson = builder.create();
+        Chronicler chronicler = user.getChronicler();
+        String sChronicler = gson.toJson(chronicler);
+        editor.putString(CHRONICLER, sChronicler);
+        editor.apply();
+    }
+
+    public Chronicler loadChronicler() {
+        SharedPreferences preferences = getSharedPreferences(MementoApplication.APP_PREF, MODE_PRIVATE);
+        String sChronicler = preferences.getString(CHRONICLER, null);
+        if (sChronicler == null) {
+            return new Chronicler();
+        }
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        Chronicler chronicler = gson.fromJson(sChronicler, Chronicler.class);
+        return chronicler;
     }
 
     public void saveHabits() {
