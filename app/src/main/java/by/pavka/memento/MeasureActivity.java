@@ -26,6 +26,7 @@ public class MeasureActivity extends AppCompatActivity implements View.OnClickLi
     private Button measureDate;
     private EditText measureResult;
     private Button buttonMeasure;
+    private Button buttonHistory;
     private MeasureViewModel viewModel;
     private MementoApplication application;
 
@@ -49,6 +50,8 @@ public class MeasureActivity extends AppCompatActivity implements View.OnClickLi
         }
         buttonMeasure = binding.buttonMeasure;
         buttonMeasure.setOnClickListener(this);
+        buttonHistory = binding.buttonHistory;
+        buttonHistory.setOnClickListener(this);
         BottomNavigationView bottomNavigationView = binding.bottomNavigation.getRoot();
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationListener(this));
         MenuItem item = bottomNavigationView.getMenu().findItem(R.id.weights);
@@ -60,8 +63,10 @@ public class MeasureActivity extends AppCompatActivity implements View.OnClickLi
         switch (v.getId()) {
             case R.id.measure_date:
                 Calendar today = Calendar.getInstance();
-                new DatePickerDialog(this, this, today.get(Calendar.YEAR),
-                        today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH)).show();
+                DatePickerDialog datePickerDialog = new DatePickerDialog(this, this, today.get(Calendar.YEAR),
+                        today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH));
+                datePickerDialog.getDatePicker().setMaxDate(today.getTimeInMillis());
+                datePickerDialog.show();
                 break;
             case R.id.button_measure:
                 // TODO
@@ -70,6 +75,9 @@ public class MeasureActivity extends AppCompatActivity implements View.OnClickLi
                 viewModel.updateChronicler();
                 startActivity(new Intent(this, MainActivity.class));
                 finish();
+                break;
+            case R.id.button_history:
+                startActivity(new Intent(this, HistoryActivity.class));
                 break;
         }
     }

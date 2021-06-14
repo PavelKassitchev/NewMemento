@@ -68,6 +68,7 @@
     30-35 : Ожирение 1 степени\n
     35-40 : Ожирение 2 степени\n
     40 и выше : Ожирение 3 степени</string>
+    <string name="history">К истории</string>
 
     <string-array name="months">
         <item>Январь</item>

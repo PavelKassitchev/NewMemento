@@ -10,7 +10,8 @@
         android:roundIcon="@drawable/ic_sand_clock"
         android:supportsRtl="true"
         android:theme="@style/Theme.Memento">
-        <activity android:name=".MeasureActivity"></activity>
+        <activity android:name=".HistoryActivity"></activity>
+        <activity android:name=".MeasureActivity" />
 
         <receiver
             android:name=".notification.DoneReceiver"

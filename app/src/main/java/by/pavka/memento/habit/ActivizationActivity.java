@@ -129,8 +129,10 @@ public class ActivizationActivity extends AppCompatActivity implements View.OnCl
                 break;
             case R.id.end_day:
                 Calendar today = Calendar.getInstance();
-                new DatePickerDialog(this, this, today.get(Calendar.YEAR),
-                        today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH)).show();
+                DatePickerDialog datePickerDialog = new DatePickerDialog(this, this, today.get(Calendar.YEAR),
+                        today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH));
+                datePickerDialog.getDatePicker().setMinDate(today.getTimeInMillis());
+                datePickerDialog.show();
                 break;
             case R.id.time:
                 Calendar now = Calendar.getInstance();
