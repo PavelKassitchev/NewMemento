@@ -28,6 +28,7 @@ public class HistoryActivity extends AppCompatActivity implements AdapterView.On
         Spinner period = binding.period;
         period.setOnItemSelectedListener(this);
         GraphView graphView = binding.graph;
+
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
                 new DataPoint(0, 1),
                 new DataPoint(1, 5),
@@ -35,6 +36,7 @@ public class HistoryActivity extends AppCompatActivity implements AdapterView.On
                 new DataPoint(3, 2),
                 new DataPoint(4, 6)
         });
+
         graphView.addSeries(series);
 
         BottomNavigationView bottomNavigationView = binding.bottomNavigation.getRoot();
