@@ -69,7 +69,8 @@ public class MeasureActivity extends AppCompatActivity implements View.OnClickLi
                 datePickerDialog.show();
                 break;
             case R.id.button_measure:
-                // TODO
+                // TODO empty string
+
                 viewModel.setWeight(Double.parseDouble(measureResult.getText().toString()));
                 Log.d("WEIGHT", "" + Double.parseDouble(measureResult.getText().toString()));
                 viewModel.updateChronicler();

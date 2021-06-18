@@ -1,7 +1,9 @@
 package by.pavka.memento;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -21,7 +23,8 @@ import java.util.Calendar;
 
 import by.pavka.memento.databinding.ActivityHistoryBinding;
 
-public class HistoryActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class HistoryActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,
+        DialogInterface.OnClickListener {
     private Chronicler chronicler;
     private GraphView graphView;
     private DataPoint[] data;
@@ -29,7 +32,7 @@ public class HistoryActivity extends AppCompatActivity implements AdapterView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        chronicler = ((MementoApplication)getApplication()).getUser().getChronicler();
+        chronicler = ((MementoApplication) getApplication()).getUser().getChronicler();
         ActivityHistoryBinding binding = ActivityHistoryBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
@@ -74,6 +77,19 @@ public class HistoryActivity extends AppCompatActivity implements AdapterView.On
                     start.add(Calendar.MONTH, -1);
                     index = chronicler.getTimeIndex(start);
                     break;
+                case 4:
+                    if (((MementoApplication) getApplication()).getUser().getBirthDate() == null) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        builder.setTitle(getString(R.string.history_clearance)).setMessage(getString(R.string.history_confidence_short))
+                                .setNegativeButton(getString(R.string.cancel), this)
+                                .setPositiveButton(getString(R.string.yes), this);
+                        builder.create().show();
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        builder.setTitle(getString(R.string.history_clearance)).setMessage(getString(R.string.main_clearance));
+                        builder.create().show();
+                    }
+                    break;
                 default:
                     break;
             }
@@ -85,5 +101,20 @@ public class HistoryActivity extends AppCompatActivity implements AdapterView.On
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        switch (which) {
+            case DialogInterface.BUTTON_NEGATIVE:
+                break;
+            case DialogInterface.BUTTON_POSITIVE:
+                chronicler = new Chronicler();
+                ((MementoApplication) getApplication()).getUser().setChronicler(chronicler);
+                ((MementoApplication) getApplication()).saveChronicler();
+//                data = chronicler.getDataSeries();
+//                graphView.onDataChanged(false, false);
+                graphView.removeAllSeries();
+        }
     }
 }

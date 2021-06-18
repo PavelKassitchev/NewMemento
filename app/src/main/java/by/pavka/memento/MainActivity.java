@@ -101,7 +101,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     builder.create().show();
                 } else {
                     if (application.getUser().isHabitCustomized()) {
-                        Log.d("MYSTERY", "HABIT CUSTOMIZED");
                         AlertDialog.Builder builder = new AlertDialog.Builder(this);
                         builder.setTitle(getString(R.string.clearance)).setMessage(getString(R.string.confidence_short))
                                 .setNegativeButton(getString(R.string.cancel), this)
