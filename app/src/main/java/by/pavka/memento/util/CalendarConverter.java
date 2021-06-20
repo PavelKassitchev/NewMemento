@@ -3,7 +3,9 @@ package by.pavka.memento.util;
 import android.util.Log;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.Calendar;
+import java.util.Date;
 
 public class CalendarConverter {
     private static DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
@@ -21,7 +23,21 @@ public class CalendarConverter {
     }
 
     public static String showDate(Calendar end) {
+        if (end == null) {
+            return "";
+        }
         return df.format(end.getTime());
+    }
+
+    public static Calendar fromString(String sDate) {
+        Calendar calendar = Calendar.getInstance();
+        try {
+            Date date = df.parse(sDate);
+            calendar.setTime(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return calendar;
     }
 
     public static String showTime(int hour, int minute) {

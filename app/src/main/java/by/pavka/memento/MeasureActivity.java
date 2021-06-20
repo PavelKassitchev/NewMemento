@@ -69,12 +69,14 @@ public class MeasureActivity extends AppCompatActivity implements View.OnClickLi
                 datePickerDialog.show();
                 break;
             case R.id.button_measure:
-                // TODO empty string
+                if (!measureResult.getText().toString().isEmpty()) {
+                    viewModel.setWeight(Double.parseDouble(measureResult.getText().toString()));
+                    viewModel.updateChronicler();
+                } else {
+                    viewModel.removeRecord(viewModel.getMeasureDate());
+                }
 
-                viewModel.setWeight(Double.parseDouble(measureResult.getText().toString()));
-                Log.d("WEIGHT", "" + Double.parseDouble(measureResult.getText().toString()));
-                viewModel.updateChronicler();
-                startActivity(new Intent(this, MainActivity.class));
+                startActivity(new Intent(this, HistoryActivity.class));
                 finish();
                 break;
             case R.id.button_history:

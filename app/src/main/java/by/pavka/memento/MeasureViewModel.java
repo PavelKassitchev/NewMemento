@@ -42,8 +42,13 @@ public class MeasureViewModel extends AndroidViewModel {
     public void updateChronicler() {
         if (app.getUser().getChronicler().addRecord(measureDate, weight)) {
             app.getUser().setWeight(weight);
-            Log.d("WEIGHT", "Weight is " + weight);
         }
+        app.saveChronicler();
+    }
+
+    public void removeRecord(Calendar calendar) {
+        weight = app.getUser().getChronicler().removeRecord(calendar);
+        app.getUser().setWeight(weight);
         app.saveChronicler();
     }
 }
