@@ -94,7 +94,7 @@ public class HistoryActivity extends AppCompatActivity implements AdapterView.On
                     break;
             }
             graphView.getViewport().setMinX(data[index].getX());
-            graphView.onDataChanged(false, false);
+            graphView.onDataChanged(true, false);
         }
     }
 
