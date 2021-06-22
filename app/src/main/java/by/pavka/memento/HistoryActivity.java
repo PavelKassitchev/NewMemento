@@ -11,20 +11,26 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.DataPointInterface;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.OnDataPointTapListener;
+import com.jjoe64.graphview.series.Series;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import by.pavka.memento.databinding.ActivityHistoryBinding;
+import by.pavka.memento.util.CalendarConverter;
 
 public class HistoryActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,
-        DialogInterface.OnClickListener {
+        DialogInterface.OnClickListener, OnDataPointTapListener {
     private Chronicler chronicler;
     private GraphView graphView;
     private DataPoint[] data;
@@ -43,10 +49,12 @@ public class HistoryActivity extends AppCompatActivity implements AdapterView.On
         data = chronicler.getDataSeries();
         if (data.length > 0) {
             LineGraphSeries<DataPoint> series = new LineGraphSeries<>(data);
+            series.setDrawDataPoints(true);
+            series.setOnDataPointTapListener(this);
             graphView.addSeries(series);
             graphView.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(this));
-            graphView.getGridLabelRenderer().setNumHorizontalLabels(3);
-            graphView.getViewport().setMaxX(data[data.length - 1].getX());
+            graphView.getGridLabelRenderer().setNumHorizontalLabels(4);
+            graphView.getViewport().setMaxX(data[data.length - 1].getX() + 1000 * 3600 * 24);
             graphView.getViewport().setXAxisBoundsManual(true);
             graphView.getGridLabelRenderer().setHumanRounding(false);
             graphView.getGridLabelRenderer().setVerticalAxisTitle(getResources().getString(R.string.weight));
@@ -112,9 +120,13 @@ public class HistoryActivity extends AppCompatActivity implements AdapterView.On
                 chronicler = new Chronicler();
                 ((MementoApplication) getApplication()).getUser().setChronicler(chronicler);
                 ((MementoApplication) getApplication()).saveChronicler();
-//                data = chronicler.getDataSeries();
-//                graphView.onDataChanged(false, false);
                 graphView.removeAllSeries();
         }
+    }
+
+    @Override
+    public void onTap(Series series, DataPointInterface dataPoint) {
+        Toast.makeText(this, CalendarConverter.showDate(new Date((long)(dataPoint.getX())))
+                + ", " + getResources().getString(R.string.weight) + ": " + dataPoint.getY(), Toast.LENGTH_SHORT).show();
     }
 }

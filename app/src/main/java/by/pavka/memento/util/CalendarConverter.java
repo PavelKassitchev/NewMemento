@@ -29,6 +29,13 @@ public class CalendarConverter {
         return df.format(end.getTime());
     }
 
+    public static String showDate(Date date) {
+        if (date == null) {
+            return "";
+        }
+        return df.format(date);
+    }
+
     public static Calendar fromString(String sDate) {
         Calendar calendar = Calendar.getInstance();
         try {
