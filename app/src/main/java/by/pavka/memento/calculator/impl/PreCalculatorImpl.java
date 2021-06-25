@@ -7,8 +7,8 @@ import java.util.concurrent.TimeUnit;
 import by.pavka.memento.calculator.PreCalculator;
 
 public class PreCalculatorImpl implements PreCalculator {
-    private static final double AVG_MALE = 68.583;
-    private static final double AVG_FEMALE = 77.953;
+    private static final double AVG_MALE = 69.0;
+    private static final double AVG_FEMALE = 78.0;
 
     private final Calendar now;
 

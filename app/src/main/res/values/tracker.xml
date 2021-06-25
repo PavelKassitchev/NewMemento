@@ -6,13 +6,19 @@
         <item>нет алкоголю</item>
         <item>нет наркотикам</item>
         <item>да спорту</item>
+        <item>достаточный сон</item>
+        <item>вода натощак</item>
+        <item>время учиться</item>
     </string-array>
     <integer-array name="link">
         <item>0</item>
-        <item>4</item>
-        <item>5</item>
-        <item>11</item>
-        <item>19</item>
+        <item>1</item>
+        <item>2</item>
+        <item>8</item>
+        <item>16</item>
+        <item>3</item>
+        <item>17</item>
+        <item>18</item>
     </integer-array>
     <integer-array name="influence">
         <item>1</item>
@@ -20,6 +26,9 @@
         <item>1</item>
         <item>1</item>
         <item>1</item>
+        <item>-1</item>
+        <item>-1</item>
+        <item>-1</item>
     </integer-array>
     <integer-array name="pics">
         <item>@drawable/ic_no_smoking</item>
@@ -27,5 +36,8 @@
         <item>@drawable/ic_no_alcohol</item>
         <item>@drawable/ic_no_drugs</item>
         <item>@drawable/ic_bike</item>
+        <item>@drawable/ic_sleeping</item>
+        <item>@drawable/ic_water</item>
+        <item>@drawable/ic_education</item>
     </integer-array>
 </resources>
