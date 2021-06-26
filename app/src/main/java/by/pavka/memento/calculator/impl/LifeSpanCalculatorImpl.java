@@ -1,5 +1,7 @@
 package by.pavka.memento.calculator.impl;
 
+import android.util.Log;
+
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -27,7 +29,6 @@ public class LifeSpanCalculatorImpl implements LifeSpanCalculator {
         double factor = 365.2 * leftDays / totalDaysRaw;
         int i = 0;
         do {
-            System.out.println("I = " + i);
             switch (answers[i]) {
                 case -1:
                     leftDays += (int) (factor * questionnaire.getNegative());
@@ -40,7 +41,48 @@ public class LifeSpanCalculatorImpl implements LifeSpanCalculator {
             }
             i++;
         } while (questionnaire.next());
+        Log.d("COR", "BEFORE = "+ leftDays);
+        leftDays += (int)(factor * findBMICorrection(birthDate,weight, height));
+        Log.d("COR", "AFTER = "+ leftDays);
         now.add(Calendar.DAY_OF_MONTH, leftDays);
         return now;
+    }
+
+    private int findBMICorrection(Calendar birthDate, double weight, double height) {
+        Calendar now = Calendar.getInstance();
+        double ageInYears = (TimeUnit.MILLISECONDS.toDays(now.getTimeInMillis() - birthDate.getTimeInMillis())) / 365.25;
+        int correction = 0;
+        if (ageInYears < 5) {
+            return correction;
+        }
+        double BMI = weight * 10000 / (height * height);
+        Log.d("COR", "BMI = " + BMI);
+        if (ageInYears < 12) {
+            BMI += 1;
+        }
+        if (ageInYears > 52) {
+            BMI -= 1;
+        }
+        if (BMI < 16) {
+            correction = (int)(-2 + (BMI - 16) * 0.5);
+            Log.d("COR", "<16");
+        } else if (BMI < 18) {
+            correction = (int) (2 * (BMI - 18) / 2);
+            Log.d("COR", "<18");
+        } else if (BMI < 19) {
+            correction = (int)(BMI - 18) * 2;
+            Log.d("COR", "<19");
+        } else if (BMI < 25) {
+            correction = 2;
+            Log.d("COR", "<25");
+        } else if (BMI < 40) {
+            correction = (int)(2 - (BMI - 25) * 0.27);
+            Log.d("COR", "<40");
+        } else {
+            correction = - 2;
+            Log.d("COR", ">40");
+        }
+        Log.d("COR", "correction = " + correction);
+        return correction;
     }
 }

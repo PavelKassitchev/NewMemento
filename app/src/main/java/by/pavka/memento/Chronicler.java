@@ -84,16 +84,17 @@ public class Chronicler {
     public int getTimeIndex(Calendar calendar) {
         TreeMap<String, Double> copy = new TreeMap<>(chronicle);
         int index = 0;
-        while (CalendarConverter.fromString(copy.pollFirstEntry().getKey()).before(calendar)) {
+        while (!copy.isEmpty() && CalendarConverter.fromString(copy.pollFirstEntry().getKey()).before(calendar)) {
             index++;
         }
+        Log.d("POLL", "index = " + index);
         return index;
     }
 
     @Override
     public String toString() {
         String result = "";
-        for (Map.Entry<String, Double> entry: chronicle.entrySet()) {
+        for (Map.Entry<String, Double> entry : chronicle.entrySet()) {
             result += " " + entry.getKey() + " hash: " + entry.getKey().hashCode() + ": " + entry.getValue();
         }
         return result;
@@ -101,7 +102,7 @@ public class Chronicler {
 
     public String toString(Calendar calendar) {
         String result = "";
-        for (Map.Entry<String, Double> entry: chronicle.entrySet()) {
+        for (Map.Entry<String, Double> entry : chronicle.entrySet()) {
             result += " " + entry.getKey() + " hash: " + entry.getKey().hashCode() + ": " + entry.getValue() + " is Equal? "
                     + entry.getKey().equals(CalendarConverter.showDate(calendar)) + " Same hash? "
                     + (entry.getKey().hashCode() == CalendarConverter.showDate(calendar).hashCode());

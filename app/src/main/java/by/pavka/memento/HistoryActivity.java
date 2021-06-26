@@ -54,7 +54,8 @@ public class HistoryActivity extends AppCompatActivity implements AdapterView.On
             graphView.addSeries(series);
             graphView.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(this));
             graphView.getGridLabelRenderer().setNumHorizontalLabels(4);
-            graphView.getViewport().setMaxX(data[data.length - 1].getX() + 1000 * 3600 * 24);
+//            graphView.getViewport().setMaxX(data[data.length - 1].getX() + 1000 * 3600 * 24);
+            graphView.getViewport().setMaxX(new Date().getTime() + 1000 * 3600 * 24);
             graphView.getViewport().setXAxisBoundsManual(true);
             graphView.getGridLabelRenderer().setHumanRounding(false);
             graphView.getGridLabelRenderer().setVerticalAxisTitle(getResources().getString(R.string.weight));
@@ -73,6 +74,10 @@ public class HistoryActivity extends AppCompatActivity implements AdapterView.On
             int index = 0;
             Calendar start = Calendar.getInstance();
             switch (choice) {
+                case 0:
+                    start.setTimeInMillis((long)data[0].getX());
+                    Log.d("CHRON", start.getTime().toString());
+                    break;
                 case 1:
                     start.add(Calendar.MONTH, -6);
                     index = chronicler.getTimeIndex(start);
@@ -101,7 +106,12 @@ public class HistoryActivity extends AppCompatActivity implements AdapterView.On
                 default:
                     break;
             }
-            graphView.getViewport().setMinX(data[index].getX());
+//            if (data.length > index) {
+//                graphView.getViewport().setMinX(data[index].getX());
+                graphView.getViewport().setMinX(start.getTimeInMillis());
+                graphView.getViewport().setMaxX(new Date().getTime() + 1000 * 3600 * 24);
+                graphView.getViewport().setXAxisBoundsManual(true);
+//            }
             graphView.onDataChanged(true, false);
         }
     }
