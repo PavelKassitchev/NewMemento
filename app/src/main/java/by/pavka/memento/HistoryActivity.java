@@ -58,7 +58,6 @@ public class HistoryActivity extends AppCompatActivity implements AdapterView.On
             DateFormat df = new SimpleDateFormat("d/M/yy", Locale.getDefault());
             graphView.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(this, df));
             graphView.getGridLabelRenderer().setNumHorizontalLabels(4);
-//            graphView.getViewport().setMaxX(data[data.length - 1].getX() + 1000 * 3600 * 24);
             graphView.getViewport().setMaxX(new Date().getTime() + 1000 * 3600 * 24);
             graphView.getViewport().setXAxisBoundsManual(true);
             graphView.getGridLabelRenderer().setHumanRounding(false);
