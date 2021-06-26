@@ -23,8 +23,11 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.series.OnDataPointTapListener;
 import com.jjoe64.graphview.series.Series;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import by.pavka.memento.databinding.ActivityHistoryBinding;
 import by.pavka.memento.util.CalendarConverter;
@@ -52,7 +55,8 @@ public class HistoryActivity extends AppCompatActivity implements AdapterView.On
             series.setDrawDataPoints(true);
             series.setOnDataPointTapListener(this);
             graphView.addSeries(series);
-            graphView.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(this));
+            DateFormat df = new SimpleDateFormat("d/M/yy", Locale.getDefault());
+            graphView.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(this, df));
             graphView.getGridLabelRenderer().setNumHorizontalLabels(4);
 //            graphView.getViewport().setMaxX(data[data.length - 1].getX() + 1000 * 3600 * 24);
             graphView.getViewport().setMaxX(new Date().getTime() + 1000 * 3600 * 24);
