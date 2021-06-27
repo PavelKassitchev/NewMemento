@@ -227,7 +227,7 @@ public class MementoApplication extends MultiDexApplication {
         MementoAlarmer alarmer = new MementoAlarmer();
         long delay = alarmer.tillNextAlarm(week, hour, minute, resetting);
         if (resetting) {
-            workManager.cancelAllWorkByTag(habitName);
+            workManager.cancelAllWorkByTag(habitName + id);
         }
         if (progress.getHabitStatus() == HabitStatus.ACTIVE) {
             long end = alarmer.tillEnd(progress.getEndDate());
