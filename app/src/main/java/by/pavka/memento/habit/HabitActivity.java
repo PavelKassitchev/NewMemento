@@ -17,6 +17,8 @@ import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.Map;
+
 import by.pavka.memento.BottomNavigationListener;
 import by.pavka.memento.MementoApplication;
 import by.pavka.memento.R;
@@ -65,7 +67,7 @@ public class  HabitActivity extends AppCompatActivity {
             tracker.clearHabitProgress(habit.getId());
             Log.d("MYSTERY", "In HabitActivity status = " + tracker.getHabitProgress(habit.getId()).getHabitStatus());
             adapter.setTracker(tracker);
-            adapter.notifyDataSetChanged();
+            adapter.notifyItemChanged(adapter.habits.indexOf(habit));
             application.saveHabits();
             if (intent.getBooleanExtra("expire", false)) {
                 Log.d("MYSTERY", "In Habit Activity exprire = true");
@@ -78,11 +80,15 @@ public class  HabitActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            adapter.setTracker(application.getUser().getTracker());
-            adapter.notifyDataSetChanged();
-            application.saveHabits();
             Habit habit = (Habit)data.getSerializableExtra("habit");
             application.launchNotification(habit.getId(), true);
+            application.saveHabits();
+            adapter.setTracker(application.getUser().getTracker());
+            for (Map.Entry<Habit, HabitProgress> entry : application.getUser().getTracker().getHabits().entrySet()) {
+                Log.d("MYSTERY", entry.getKey().getName() + " - " + entry.getValue().getHabitStatus());
+            }
+//            adapter.notifyDataSetChanged();
+            adapter.notifyItemChanged(adapter.habits.indexOf(habit));
         }
     }
 }

@@ -2,6 +2,7 @@ package by.pavka.memento.habit;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import by.pavka.memento.R;
@@ -20,12 +22,15 @@ import by.pavka.memento.util.CalendarConverter;
 import by.pavka.memento.util.Displayer;
 
 public class HabitRecyclerViewAdapter extends RecyclerView.Adapter<HabitRecyclerViewAdapter.HabitViewHolder> {
-    private List<Habit> habits;
+    List<Habit> habits;
     List<HabitProgress> progress;
     private LayoutInflater inflater;
     private Context context;
 
     public HabitRecyclerViewAdapter(Context context, UserHabitTracker tracker) {
+        Log.d("Tracker", " " + tracker);
+        Log.d("Tracker1", " " + tracker.getHabits().keySet());
+        Log.d("Tracker2", " " + tracker.getHabits());
         habits = new ArrayList<>(tracker.getHabits().keySet());
         progress = new ArrayList<>(tracker.getHabits().values());
         this.context = context;
@@ -50,15 +55,18 @@ public class HabitRecyclerViewAdapter extends RecyclerView.Adapter<HabitRecycler
             case ENABLED:
                 holder.period.setText("");
                 holder.progressBar.setProgress(0);
+                Log.d("STATUS", "ENABLED");
                 break;
             case ACTIVE:
                 String timePeriod = CalendarConverter.showDate(prog.getStartDate()) + "-" + CalendarConverter.showDate(prog.getEndDate());
                 holder.period.setText(timePeriod);
                 holder.progressBar.setProgress(CalendarConverter.showProgress(prog.getStartDate(), prog.getEndDate(), 8));
+                Log.d("STATUS", "ACTIVE");
                 break;
             case DISABLED:
                 holder.period.setText("");
                 holder.progressBar.setVisibility(View.GONE);
+                Log.d("STATUS", "DISABLED");
                 break;
         }
     }

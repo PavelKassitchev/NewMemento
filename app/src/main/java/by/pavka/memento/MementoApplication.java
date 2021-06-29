@@ -41,7 +41,7 @@ public class MementoApplication extends MultiDexApplication {
     public static final String HABITS_CUSTOMIZED = "customized";
     public static final String TRACKER = "tracker";
     public static final int DAYS_FOR_HABIT = 28;
-    public static final int REACTION_GAP = 60*60*3;
+    public static final int REACTION_GAP = 60;
     private static final String CHRONICLER = "chronicler";
 
     private Questionnaire questionnaire;
@@ -161,8 +161,10 @@ public class MementoApplication extends MultiDexApplication {
         builder.enableComplexMapKeySerialization();
         Gson gson = builder.create();
         Chronicler chronicler = user.getChronicler();
+        double weight = chronicler.findLastWeight();
         String sChronicler = gson.toJson(chronicler);
         editor.putString(CHRONICLER, sChronicler);
+        editor.putFloat(WEIGHT, (float)weight);
         editor.apply();
     }
 
@@ -204,7 +206,9 @@ public class MementoApplication extends MultiDexApplication {
 
     private void createNotificationChannel() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            channel = new NotificationChannel(MEMENTO_CHANNEL_ID, "Memento Notification", NotificationManager.IMPORTANCE_DEFAULT);
+            channel = new NotificationChannel(MEMENTO_CHANNEL_ID, "Memento Notification", NotificationManager.IMPORTANCE_HIGH);
+            channel.enableLights(true);
+            channel.enableVibration(true);
         }
         NotificationManagerCompat notifyManager = NotificationManagerCompat.from(getApplicationContext());
         notifyManager.createNotificationChannel(channel);
@@ -228,6 +232,9 @@ public class MementoApplication extends MultiDexApplication {
         long delay = alarmer.tillNextAlarm(week, hour, minute, resetting);
         if (resetting) {
             workManager.cancelAllWorkByTag(habitName + id);
+            workManager.cancelAllWorkByTag(habitName);
+            NotificationManagerCompat notifyManager = NotificationManagerCompat.from(this);
+            notifyManager.cancel(id);
         }
         if (progress.getHabitStatus() == HabitStatus.ACTIVE) {
             long end = alarmer.tillEnd(progress.getEndDate());
