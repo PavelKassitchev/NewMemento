@@ -21,7 +21,7 @@
 
         <activity
             android:name=".habit.ActivizationActivity"
-            android:launchMode="singleTask" />
+            />
         <activity
             android:name=".habit.HabitActivity"
             android:launchMode="singleTask" />

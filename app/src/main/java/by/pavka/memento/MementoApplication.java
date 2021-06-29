@@ -83,9 +83,12 @@ public class MementoApplication extends MultiDexApplication {
         UserHabitTracker tracker;
         if (habitsCustomized) {
             tracker = loadTracker();
+            Log.d("TRACKER", "In APP Tracker customized");
         } else {
             tracker = new UserHabitTracker(this);
+            Log.d("TRACKER", "In APP Tracker NOT customized");
         }
+        Log.d("TRACKER", "In APP tracker = " + tracker);
         Chronicler chronicler = loadChronicler();
         user.setChronicler(chronicler);
         String dateOfBirth = preferences.getString(DATE, null);
@@ -186,7 +189,9 @@ public class MementoApplication extends MultiDexApplication {
         builder.enableComplexMapKeySerialization();
         Gson gson = builder.create();
         UserHabitTracker habitTracker = user.getTracker();
+        Log.d("TRACKER", "While saving habits: " + habitTracker);
         String sTracker = gson.toJson(habitTracker);
+        Log.d("TRACKER", "While saving habits string = " + sTracker);
         editor.putString(TRACKER, sTracker);
         editor.apply();
     }
@@ -194,6 +199,7 @@ public class MementoApplication extends MultiDexApplication {
     private UserHabitTracker loadTracker() {
         SharedPreferences preferences = getSharedPreferences(MementoApplication.APP_PREF, MODE_PRIVATE);
         String tracker = preferences.getString(TRACKER, null);
+        Log.d("TRACKER", "In APP LOADING = " + tracker);
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         UserHabitTracker habitTracker = gson.fromJson(tracker, UserHabitTracker.class);

@@ -103,6 +103,7 @@ public class HabitRecyclerViewAdapter extends RecyclerView.Adapter<HabitRecycler
                         Intent intent = new Intent(habitActivity, ActivizationActivity.class);
                         intent.putExtra("habit", habit);
                         habitActivity.startActivityForResult(intent, REQUEST_CODE);
+                        Log.d("TRACKER", "Start Activization");
                     }
                 }
             });
