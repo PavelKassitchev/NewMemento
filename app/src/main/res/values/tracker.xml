@@ -14,11 +14,11 @@
         <item>0</item>
         <item>1</item>
         <item>2</item>
-        <item>8</item>
-        <item>16</item>
+        <item>7</item>
+        <item>15</item>
         <item>3</item>
+        <item>16</item>
         <item>17</item>
-        <item>18</item>
     </integer-array>
     <integer-array name="influence">
         <item>1</item>
