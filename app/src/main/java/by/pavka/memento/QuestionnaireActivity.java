@@ -1,6 +1,7 @@
 package by.pavka.memento;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -16,7 +17,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import by.pavka.memento.databinding.ActivityQuestionnaireBinding;
 import by.pavka.memento.user.User;
 
-public class QuestionnaireActivity extends AppCompatActivity implements View.OnClickListener {
+public class QuestionnaireActivity extends MementoActivity implements View.OnClickListener {
 
     private ActivityQuestionnaireBinding binding;
     private QuestionnaireViewModel viewModel;
@@ -36,6 +37,8 @@ public class QuestionnaireActivity extends AppCompatActivity implements View.OnC
         binding = ActivityQuestionnaireBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        Toolbar toolbar = binding.toolbar.getRoot();
+        setSupportActionBar(toolbar);
         viewModel = new ViewModelProvider(this).get(QuestionnaireViewModel.class);
         question = binding.question;
         question.setText(viewModel.getText());

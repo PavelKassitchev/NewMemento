@@ -2,6 +2,7 @@ package by.pavka.memento.habit;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,11 +21,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.Map;
 
 import by.pavka.memento.BottomNavigationListener;
+import by.pavka.memento.MementoActivity;
 import by.pavka.memento.MementoApplication;
 import by.pavka.memento.R;
 import by.pavka.memento.databinding.ActivityHabbitBinding;
 
-public class  HabitActivity extends AppCompatActivity {
+public class  HabitActivity extends MementoActivity {
 
     private MementoApplication application;
     private RecyclerView recycler;
@@ -37,6 +39,8 @@ public class  HabitActivity extends AppCompatActivity {
         ActivityHabbitBinding binding = ActivityHabbitBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        Toolbar toolbar = binding.toolbar.getRoot();
+        setSupportActionBar(toolbar);
         application = (MementoApplication) getApplication();
         BottomNavigationView bottomNavigationView = binding.bottomNavigation.getRoot();
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationListener(this));

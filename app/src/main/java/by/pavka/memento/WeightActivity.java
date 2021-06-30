@@ -3,6 +3,7 @@ package by.pavka.memento;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,7 +21,7 @@ import by.pavka.memento.databinding.ActivityWeightBinding;
 import by.pavka.memento.user.User;
 import by.pavka.memento.util.Displayer;
 
-public class WeightActivity extends AppCompatActivity implements View.OnClickListener {
+public class WeightActivity extends MementoActivity implements View.OnClickListener {
     private static final int REQUEST_CODE = 1;
     private MementoApplication application;
     private EditText weight;
@@ -38,6 +39,8 @@ public class WeightActivity extends AppCompatActivity implements View.OnClickLis
         ActivityWeightBinding binding = ActivityWeightBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        Toolbar toolbar = binding.toolbar.getRoot();
+        setSupportActionBar(toolbar);
         weight = binding.weight;
         height = binding.height;
         bmi = binding.bmi;

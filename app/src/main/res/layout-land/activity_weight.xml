@@ -6,6 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".WeightActivity">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"/>
+
     <EditText
         android:id="@+id/weight"
         android:layout_width="wrap_content"
@@ -17,7 +21,7 @@
         android:inputType="number|numberDecimal"
         android:maxLength="5"
         app:layout_constraintStart_toEndOf="@+id/label_weight"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <EditText
         android:id="@+id/height"
@@ -40,7 +44,7 @@
         android:layout_marginEnd="8dp"
         android:text="@string/calculate"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <TextView
         android:id="@+id/bmi"

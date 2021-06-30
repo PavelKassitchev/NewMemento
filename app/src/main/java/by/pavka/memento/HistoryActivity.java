@@ -2,6 +2,7 @@ package by.pavka.memento;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -32,7 +33,7 @@ import java.util.Locale;
 import by.pavka.memento.databinding.ActivityHistoryBinding;
 import by.pavka.memento.util.CalendarConverter;
 
-public class HistoryActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,
+public class HistoryActivity extends MementoActivity implements AdapterView.OnItemSelectedListener,
         DialogInterface.OnClickListener, OnDataPointTapListener {
     private Chronicler chronicler;
     private GraphView graphView;
@@ -45,6 +46,8 @@ public class HistoryActivity extends AppCompatActivity implements AdapterView.On
         ActivityHistoryBinding binding = ActivityHistoryBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        Toolbar toolbar = binding.toolbar.getRoot();
+        setSupportActionBar(toolbar);
         Spinner period = binding.period;
         period.setOnItemSelectedListener(this);
         graphView = binding.graph;

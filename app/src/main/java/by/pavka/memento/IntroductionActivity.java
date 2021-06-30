@@ -2,6 +2,7 @@ package by.pavka.memento;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,7 +23,7 @@ import by.pavka.memento.user.User;
 import by.pavka.memento.util.CalendarConverter;
 import by.pavka.memento.util.Displayer;
 
-public class IntroductionActivity extends AppCompatActivity implements View.OnClickListener {
+public class IntroductionActivity extends MementoActivity implements View.OnClickListener {
     private static final int REQUEST_CODE = 1;
 
     private MementoApplication application;
@@ -39,6 +40,8 @@ public class IntroductionActivity extends AppCompatActivity implements View.OnCl
         ActivityIntroductionBinding binding = ActivityIntroductionBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        Toolbar toolbar = binding.toolbar.getRoot();
+        setSupportActionBar(toolbar);
         name = binding.name;
         year = binding.year;
         month = binding.month;

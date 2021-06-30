@@ -1,12 +1,16 @@
 package by.pavka.memento;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -16,12 +20,14 @@ import android.widget.EditText;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Calendar;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import by.pavka.memento.databinding.ActivityMeasureBinding;
 import by.pavka.memento.habit.ActivizationViewModel;
 import by.pavka.memento.util.CalendarConverter;
 
-public class MeasureActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
+public class MeasureActivity extends MementoActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
 
     private Button measureDate;
     private EditText measureResult;
@@ -36,6 +42,9 @@ public class MeasureActivity extends AppCompatActivity implements View.OnClickLi
         ActivityMeasureBinding binding = ActivityMeasureBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        Toolbar toolbar = binding.toolbar.getRoot();
+        setSupportActionBar(toolbar);
+//        toolbar.inflateMenu(R.menu.bar_menu);
         viewModel = new ViewModelProvider(this).get(MeasureViewModel.class);
         application = (MementoApplication) getApplication();
         measureDate = binding.measureDate;
@@ -56,6 +65,23 @@ public class MeasureActivity extends AppCompatActivity implements View.OnClickLi
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationListener(this));
         MenuItem item = bottomNavigationView.getMenu().findItem(R.id.weights);
         item.setChecked(true);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.bar_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_help) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(R.string.help);
+            builder.setMessage(R.string.helptext);
+            builder.create().show();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

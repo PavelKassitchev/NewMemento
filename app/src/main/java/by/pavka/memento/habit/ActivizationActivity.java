@@ -1,6 +1,7 @@
 package by.pavka.memento.habit;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.DatePickerDialog;
@@ -22,12 +23,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.Calendar;
 
 import by.pavka.memento.BottomNavigationListener;
+import by.pavka.memento.MementoActivity;
 import by.pavka.memento.R;
 import by.pavka.memento.databinding.ActivityActivizationBinding;
 import by.pavka.memento.util.CalendarConverter;
 import by.pavka.memento.util.Displayer;
 
-public class ActivizationActivity extends AppCompatActivity implements View.OnClickListener,
+public class ActivizationActivity extends MementoActivity implements View.OnClickListener,
         DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, CompoundButton.OnCheckedChangeListener {
     private ActivizationViewModel viewModel;
     private Button endDay;
@@ -41,6 +43,8 @@ public class ActivizationActivity extends AppCompatActivity implements View.OnCl
         ActivityActivizationBinding binding = ActivityActivizationBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        Toolbar toolbar = binding.toolbar.getRoot();
+        setSupportActionBar(toolbar);
         viewModel = new ViewModelProvider(this).get(ActivizationViewModel.class);
         Intent intent = getIntent();
         if (viewModel.getEnd() == null) {

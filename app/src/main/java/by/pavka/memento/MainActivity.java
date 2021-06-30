@@ -2,6 +2,7 @@ package by.pavka.memento;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,7 +25,7 @@ import by.pavka.memento.databinding.ActivityMainBinding;
 import by.pavka.memento.habit.Habit;
 import by.pavka.memento.user.User;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, DialogInterface.OnClickListener {
+public class MainActivity extends MementoActivity implements View.OnClickListener, DialogInterface.OnClickListener {
 
     private static final int REQUEST_CODE = 1;
     private TextView header;
@@ -45,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        Toolbar toolbar = binding.toolbar.getRoot();
+        setSupportActionBar(toolbar);
         header = binding.header;
         forecast = binding.forecast;
         buttonUpdate = binding.buttonUpdate;
