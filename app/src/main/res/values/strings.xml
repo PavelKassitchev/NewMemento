@@ -72,7 +72,8 @@
     <string name="history_clearance">Очистка истории</string>
     <string name="history_confidence_short">Вы хотите удалить историю взвешиваний?</string>
     <string name="main_clearance">Очистите профиль на главной странице</string>
-    <string name="help">Справка</string>
+    <string name="help">Как это работает</string>
+    <string name="settings">Настройки</string>
 
     <string-array name="months">
         <item>Январь</item>
@@ -112,17 +113,20 @@
         <item>!Очистить историю!</item>
     </string-array>
 
-    <string name="helptext">Вопрос интернационализации пользовательского интерфейса - один из важных вопросов при разработке приложения. Для этого недостаточно использовать Unicode и перевести на нужный язык все сообщения пользовательского интерфейса. Интернационализация приложения означает нечто большее, чем поддержка Unicode. Дата, время, денежные суммы и даже числа могут по-разному представляться на различных языках.
+    <string name="helptext">Тут будет размещаться рассказ о том, как пользоваться приложением</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
 
-Широкое распространение получили условные сокращения терминов интернационализации и локализации приложений i18n и l10n, в которых цифра означает количество символов между первой и последней позицией:
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
 
-i18n - интернационализация (internationalization);
-l10n - локализация (localization).
-В отдельной литературе делают акцент на этих двух определениях, под которыми понимается :
-
-Интернационализация - это процесс разработки приложения такой структуры, при которой дополнение нового языка не требует перестройки и перекомпиляции (сборки) всего приложения.
-Локализация предполагает адаптацию интерфейса приложения под несколько языков. Добавление нового языка может внести определенные сложности в локализацию интерфейса.
-Java - первый язык программирования, в котором изначально были предусмотрены средства интернационализации. Строки формируются из символов Unicode. Поддержка этого стандарта кодирования позволяет создавать Java-приложения, обрабатывающие тексты на любом из существующих в мире языков.
-
-Большинство фреймворков, используемые в Java 2EE, поддерживает интернационализацию приложений с использованием Java-технологии, существенно снижая трудозатраты при разработке Web-приложения, "говорящего" на нескольких языках.</string>
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="delay">Время реагирования на оповещения</string>
 </resources>

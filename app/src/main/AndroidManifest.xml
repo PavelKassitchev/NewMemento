@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="by.pavka.memento">
 
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:name=".MementoApplication"
         android:allowBackup="false"
@@ -11,7 +12,8 @@
         android:roundIcon="@drawable/ic_sand_clock"
         android:supportsRtl="true"
         android:theme="@style/Theme.Memento">
-        <activity android:name=".HistoryActivity"/>
+        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".HistoryActivity" />
         <activity android:name=".MeasureActivity" />
 
         <receiver
@@ -19,9 +21,7 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity
-            android:name=".habit.ActivizationActivity"
-            />
+        <activity android:name=".habit.ActivizationActivity" />
         <activity
             android:name=".habit.HabitActivity"
             android:launchMode="singleTask" />

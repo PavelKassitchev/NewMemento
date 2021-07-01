@@ -7,6 +7,7 @@ import android.util.Log;
 
 import androidx.core.app.NotificationManagerCompat;
 import androidx.multidex.MultiDexApplication;
+import androidx.preference.PreferenceManager;
 import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
@@ -55,6 +56,7 @@ public class MementoApplication extends MultiDexApplication {
         super.onCreate();
         createNotificationChannel();
         success = getString(R.string.success);
+        PreferenceManager.setDefaultValues(this, R.xml.root_preferences, false);
     }
 
     public Questionnaire getQuestionnaire() {
@@ -264,12 +266,14 @@ public class MementoApplication extends MultiDexApplication {
     }
 
     public void countDown(int id) {
-        Log.d("MYSTERY", "Inside countDown");
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        int gap = 60 * Integer.parseInt(preferences.getString("delay", "180"));
+        Log.d("MYSTERY", "Inside countDown gap = " + gap + " delay = " + preferences.getString("delay", ""));
         String habitName = getUser().getTracker().getHabit(id).getName();
         WorkManager workManager = WorkManager.getInstance(this);
         Data data = new Data.Builder().putInt("id", id).putString("name", habitName).build();
         OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(CountDownWorker.class)
-                .setInitialDelay(REACTION_GAP, TimeUnit.SECONDS).addTag(habitName).setInputData(data).build();
+                .setInitialDelay(gap, TimeUnit.SECONDS).addTag(habitName).setInputData(data).build();
         workManager.enqueue(request);
     }
 
