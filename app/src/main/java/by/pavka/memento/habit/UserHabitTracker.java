@@ -51,6 +51,7 @@ public class UserHabitTracker {
                     progress.setHabitStatus(HabitStatus.ENABLED);
                 } else {
                     progress.setHabitStatus(HabitStatus.DISABLED);
+                    app.cancelWork(habit.getName(), habit.getName() + habit.getId(), habit.getId());
                 }
             } else {
                 if (progress.getHabitStatus() == HabitStatus.DISABLED) {

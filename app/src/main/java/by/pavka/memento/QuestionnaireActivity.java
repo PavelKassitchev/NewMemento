@@ -61,17 +61,6 @@ public class QuestionnaireActivity extends MementoActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         if (v.equals(buttonNext)) {
-//            int buttonId = radioGroup.getCheckedRadioButtonId();
-//            switch (buttonId) {
-//                case R.id.yes:
-//                    viewModel.setReply(1);
-//                    break;
-//                case R.id.no:
-//                    viewModel.setReply(-1);
-//                    break;
-//                default:
-//                    viewModel.setReply(0);
-//            }
             obtainReply();
             if (viewModel.getPage() == viewModel.getLength() - 1) {
                 saveAnswers();

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="habits">
-        <item>нет курению</item>
-        <item>нет нездоровой пище</item>
-        <item>нет алкоголю</item>
-        <item>стоп наркотики</item>
-        <item>да спорту</item>
-        <item>здоровый сон</item>
-        <item>вода натощак</item>
-        <item>время учиться</item>
+        <item>Нет курению</item>
+        <item>Нет нездоровой пище</item>
+        <item>Нет алкоголю</item>
+        <item>Стоп наркотики</item>
+        <item>Да спорту</item>
+        <item>Соблюдай режим</item>
+        <item>Вода натощак</item>
+        <item>Время учиться</item>
     </string-array>
     <integer-array name="link">
         <item>0</item>

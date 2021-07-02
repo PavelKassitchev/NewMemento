@@ -85,12 +85,9 @@ public class MementoApplication extends MultiDexApplication {
         UserHabitTracker tracker;
         if (habitsCustomized) {
             tracker = loadTracker();
-            Log.d("TRACKER", "In APP Tracker customized");
         } else {
             tracker = new UserHabitTracker(this);
-            Log.d("TRACKER", "In APP Tracker NOT customized");
         }
-        Log.d("TRACKER", "In APP tracker = " + tracker);
         Chronicler chronicler = loadChronicler();
         user.setChronicler(chronicler);
         String dateOfBirth = preferences.getString(DATE, null);
@@ -227,6 +224,14 @@ public class MementoApplication extends MultiDexApplication {
         workManager.cancelAllWorkByTag(tag);
     }
 
+    public void cancelWork(String tag1, String tag2, int id) {
+        WorkManager workManager = WorkManager.getInstance(this);
+        workManager.cancelAllWorkByTag(tag1);
+        workManager.cancelAllWorkByTag(tag2);
+        NotificationManagerCompat notifyManager = NotificationManagerCompat.from(this);
+        notifyManager.cancel(id);
+    }
+
     public void launchNotification(int id, boolean resetting) {
         UserHabitTracker tracker = getUser().getTracker();
         Habit habit = tracker.getHabit(id);
@@ -239,10 +244,7 @@ public class MementoApplication extends MultiDexApplication {
         MementoAlarmer alarmer = new MementoAlarmer();
         long delay = alarmer.tillNextAlarm(week, hour, minute, resetting);
         if (resetting) {
-            workManager.cancelAllWorkByTag(habitName + id);
-            workManager.cancelAllWorkByTag(habitName);
-            NotificationManagerCompat notifyManager = NotificationManagerCompat.from(this);
-            notifyManager.cancel(id);
+            cancelWork(habitName + id, habitName, id);
         }
         if (progress.getHabitStatus() == HabitStatus.ACTIVE) {
             long end = alarmer.tillEnd(progress.getEndDate());
@@ -267,13 +269,13 @@ public class MementoApplication extends MultiDexApplication {
 
     public void countDown(int id) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        int gap = 60 * Integer.parseInt(preferences.getString("delay", "180"));
+        int gap = Integer.parseInt(preferences.getString("delay", "180"));
         Log.d("MYSTERY", "Inside countDown gap = " + gap + " delay = " + preferences.getString("delay", ""));
         String habitName = getUser().getTracker().getHabit(id).getName();
         WorkManager workManager = WorkManager.getInstance(this);
         Data data = new Data.Builder().putInt("id", id).putString("name", habitName).build();
         OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(CountDownWorker.class)
-                .setInitialDelay(gap, TimeUnit.SECONDS).addTag(habitName).setInputData(data).build();
+                .setInitialDelay(gap, TimeUnit.MINUTES).addTag(habitName).setInputData(data).build();
         workManager.enqueue(request);
     }
 

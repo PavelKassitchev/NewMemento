@@ -55,7 +55,7 @@
     <string name="sat">сб</string>
     <string name="sun">вс</string>
     <string name="all">все</string>
-    <string name="done">Готово</string>
+    <string name="done">Сделано</string>
     <string name="fail">Неудача</string>
     <string name="success">Успех!</string>
     <string name="date">Дата</string>
@@ -113,20 +113,20 @@
         <item>!Очистить историю!</item>
     </string-array>
 
-    <string name="helptext">Тут будет размещаться рассказ о том, как пользоваться приложением</string>
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
-
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
-
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    <string name="helptext">ВАЖНО: Данное приложение не претендует на предсказание продолжительности жизни пользователя. Оно
+        оценивает только СРЕДНЮЮ продолжительность жизни людей с датой рождения и привычками, как у пользователя.
+        Три закладки нижней навигационной панели отвечают за три связанных между собой аспекта. В закладке ПРОФИЛЬ проводится начальное
+        анкетирование и отображается средняя продолжительность жизни. Закладка ПРИВЫЧКИ позволяет отслеживать привычки пользователя, влияющие
+        на продолжительность жизни: избавляться от вредных и приобретать полезные. Закладка ВЕС отслеживает вес пользователя и отображает
+        историю его изменения. При этом данные всех трех закладок синхронизированы и обретение новой привычки или изменение веса влияют
+        на данные профиля. Контроль за изменением привычек производится через оповещения. ВАЖНО: Перед использование этой функции убедитесь,
+        что системные настройки этого приложения на конкретном устройстве разрешают автозапуск и позволяют получать оповещения в фоне. Для
+        подтверждения прогресса в выработки привычки необходимо нажать на соответствующую кнопку в оповещении. ВАЖНО: Если кнопка не нажата,
+        через какое-то время прогресс привычки будет сброшен. По умолчанию это время составляет 3 часа, но может быть изменено в настройках приложения.
+        Также в настройках может быть изменен стандартный срок выработки привычки (по умолчанию 5 недель). Кроме того, для каждой конкретной привычки он
+        может быть изменен вручную.
     </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+
     <string name="delay">Время реагирования на оповещения</string>
+    <string name="period">Срок выработки привычки по умолчанию</string>
 </resources>

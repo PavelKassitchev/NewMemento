@@ -68,7 +68,6 @@ public class MainActivity extends MementoActivity implements View.OnClickListene
         User user = application.getUser();
         Calendar birthDate = user.getBirthDate();
         Calendar end = null;
-        Log.d("PROF", "Now " + birthDate + " " + user.isHabitCustomized());
         if (birthDate != null) {
             int gender = user.getGender();
             Questionnaire questionnaire = application.getQuestionnaire();
@@ -194,7 +193,6 @@ public class MainActivity extends MementoActivity implements View.OnClickListene
         if (intent != null && intent.getSerializableExtra("habit") != null) {
             Habit habit = (Habit) intent.getSerializableExtra("habit");
             User user = application.getUser();
-
             user.setHabitCustomized(true);
             application.customizeHabits(true);
             int[] answers = user.getAnswers();

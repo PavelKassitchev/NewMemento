@@ -47,35 +47,28 @@ public class  HabitActivity extends MementoActivity {
         MenuItem item = bottomNavigationView.getMenu().findItem(R.id.habit);
         item.setChecked(true);
         tracker = application.getUser().getTracker();
-        Log.d("TRACKER", "In activity tracker = " + tracker);
         recycler = findViewById(R.id.recyclerView);
         adapter = new HabitRecyclerViewAdapter(this, tracker);
         recycler.setAdapter(adapter);
         recycler.setLayoutManager(new GridLayoutManager(this, getResources().getConfiguration().orientation * 2));
         Intent intent = getIntent();
-        Log.d("MYSTERY", "On Create Intent = " + intent);
         clearHabit(intent);
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        Log.d("MYSTERY", "OnNewIntent");
         clearHabit(intent);
     }
 
     private void clearHabit(Intent intent) {
-        Log.d("MYSTERY", "In ClearHabit Intent habit = " + intent.getSerializableExtra("habit"));
         if (intent != null && intent.getSerializableExtra("habit") != null) {
             Habit habit = (Habit)intent.getSerializableExtra("habit");
-            Log.d("MYSTERY", "In HabitActivity habit id = " + habit.getId());
             tracker.clearHabitProgress(habit.getId());
-            Log.d("MYSTERY", "In HabitActivity status = " + tracker.getHabitProgress(habit.getId()).getHabitStatus());
             adapter.setTracker(tracker);
             adapter.notifyItemChanged(adapter.habits.indexOf(habit));
             application.saveHabits();
             if (intent.getBooleanExtra("expire", false)) {
-                Log.d("MYSTERY", "In Habit Activity exprire = true");
                 finish();
             }
         }
@@ -84,9 +77,7 @@ public class  HabitActivity extends MementoActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("TRACKER", "RESULT...");
         if (resultCode == RESULT_OK) {
-            Log.d("TRACKER", "RESULT OK");
             Habit habit = (Habit)data.getSerializableExtra("habit");
             application.launchNotification(habit.getId(), true);
             application.saveHabits();
@@ -94,7 +85,6 @@ public class  HabitActivity extends MementoActivity {
             for (Map.Entry<Habit, HabitProgress> entry : application.getUser().getTracker().getHabits().entrySet()) {
                 Log.d("MYSTERY", entry.getKey().getName() + " - " + entry.getValue().getHabitStatus());
             }
-//            adapter.notifyDataSetChanged();
             adapter.notifyItemChanged(adapter.habits.indexOf(habit));
         }
     }

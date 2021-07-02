@@ -1,10 +1,12 @@
 package by.pavka.memento.habit;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.preference.PreferenceManager;
 
 import java.text.DateFormat;
 import java.time.LocalDate;
@@ -70,11 +72,13 @@ public class ActivizationViewModel extends AndroidViewModel {
             hour = progress.getHour();
             minute = progress.getMinute();
         } else {
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(app);
+            int period = Integer.parseInt(preferences.getString("period", "35"));
             week = new boolean[]{false, false, false, false, false, false, false};
             Calendar last = Calendar.getInstance();
             hour = last.get(Calendar.HOUR_OF_DAY);
             minute = last.get(Calendar.MINUTE);
-            last.add(Calendar.DATE, MementoApplication.DAYS_FOR_HABIT);
+            last.add(Calendar.DATE, period);
             end = last;
         }
     }
