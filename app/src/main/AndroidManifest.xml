@@ -14,7 +14,8 @@
         android:theme="@style/Theme.Memento">
         <activity android:name=".SettingsActivity"></activity>
         <activity android:name=".HistoryActivity" />
-        <activity android:name=".MeasureActivity" />
+        <activity android:name=".MeasureActivity"
+            android:launchMode="singleTask"/>
 
         <receiver
             android:name=".notification.DoneReceiver"

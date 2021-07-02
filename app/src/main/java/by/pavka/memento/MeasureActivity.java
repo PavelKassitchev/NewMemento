@@ -101,9 +101,8 @@ public class MeasureActivity extends MementoActivity implements View.OnClickList
                 } else {
                     viewModel.removeRecord(viewModel.getMeasureDate());
                 }
-
                 startActivity(new Intent(this, HistoryActivity.class));
-                finish();
+                //finish();
                 break;
             case R.id.button_history:
                 startActivity(new Intent(this, HistoryActivity.class));
