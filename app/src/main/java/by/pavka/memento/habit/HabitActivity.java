@@ -39,6 +39,7 @@ public class  HabitActivity extends MementoActivity {
         ActivityHabbitBinding binding = ActivityHabbitBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        setBackOverridden();
         Toolbar toolbar = binding.toolbar.getRoot();
         setSupportActionBar(toolbar);
         application = (MementoApplication) getApplication();

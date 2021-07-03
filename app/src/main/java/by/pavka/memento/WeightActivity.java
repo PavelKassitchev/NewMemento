@@ -90,6 +90,8 @@ public class WeightActivity extends MementoActivity implements View.OnClickListe
                 bodyMassIndex = calculateBMI();
                 if (bodyMassIndex != 0) {
                     bmi.setText(String.format(getResources().getString(R.string.bmi), bodyMassIndex));
+                } else {
+                    bmi.setText("");
                 }
                 seekBar.setProgress((int) (bodyMassIndex - 14));
                 break;
@@ -107,9 +109,16 @@ public class WeightActivity extends MementoActivity implements View.OnClickListe
 
     private double calculateBMI() {
         if (!weight.getText().toString().isEmpty() && !height.getText().toString().isEmpty()) {
-            double wt = Double.parseDouble(weight.getText().toString());
-            double ht = Double.parseDouble(height.getText().toString());
-            return wt * 10000 / ht / ht;
+            try {
+                double wt = Double.parseDouble(weight.getText().toString());
+                double ht = Double.parseDouble(height.getText().toString());
+                if (wt == 0 || ht == 0) {
+                    return 0;
+                }
+                return wt * 10000 / ht / ht;
+            } catch (NumberFormatException e) {
+                return 0;
+            }
         }
         return 0;
     }
@@ -138,7 +147,12 @@ public class WeightActivity extends MementoActivity implements View.OnClickListe
         if (weight.getText().toString().isEmpty()) {
             return false;
         }
-        double w = Double.parseDouble(weight.getText().toString());
+        double w = 0;
+        try {
+            w = Double.parseDouble(weight.getText().toString());
+        } catch (NumberFormatException e) {
+            return false;
+        }
         if (w < 2) {
             return false;
         }
@@ -149,7 +163,12 @@ public class WeightActivity extends MementoActivity implements View.OnClickListe
         if (height.getText().toString().isEmpty()) {
             return false;
         }
-        double h = Double.parseDouble(height.getText().toString());
+        double h = 0;
+        try {
+            h = Double.parseDouble(height.getText().toString());
+        } catch (NumberFormatException e) {
+            return false;
+        }
         if (h < 30) {
             return false;
         }

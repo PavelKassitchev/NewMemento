@@ -34,11 +34,11 @@ public class MainActivity extends MementoActivity implements View.OnClickListene
     private Button buttonClear;
     private MementoApplication application;
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finishAffinity();
-    }
+//    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//        finishAffinity();
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,7 @@ public class MainActivity extends MementoActivity implements View.OnClickListene
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        setBackOverridden();
         Toolbar toolbar = binding.toolbar.getRoot();
         setSupportActionBar(toolbar);
         header = binding.header;
@@ -217,4 +218,5 @@ public class MainActivity extends MementoActivity implements View.OnClickListene
             setHeader(user);
         }
     }
+
 }

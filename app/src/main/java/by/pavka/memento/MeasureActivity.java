@@ -26,6 +26,7 @@ import java.util.ResourceBundle;
 import by.pavka.memento.databinding.ActivityMeasureBinding;
 import by.pavka.memento.habit.ActivizationViewModel;
 import by.pavka.memento.util.CalendarConverter;
+import by.pavka.memento.util.Displayer;
 
 public class MeasureActivity extends MementoActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
 
@@ -42,6 +43,7 @@ public class MeasureActivity extends MementoActivity implements View.OnClickList
         ActivityMeasureBinding binding = ActivityMeasureBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        setBackOverridden();
         Toolbar toolbar = binding.toolbar.getRoot();
         setSupportActionBar(toolbar);
 //        toolbar.inflateMenu(R.menu.bar_menu);
@@ -95,9 +97,23 @@ public class MeasureActivity extends MementoActivity implements View.OnClickList
                 datePickerDialog.show();
                 break;
             case R.id.button_measure:
+                Log.d("WEIGHT", "Yes!");
                 if (!measureResult.getText().toString().isEmpty()) {
-                    viewModel.setWeight(Double.parseDouble(measureResult.getText().toString()));
-                    viewModel.updateChronicler();
+                    double weight = 0;
+                    try {
+                        weight = Double.parseDouble(measureResult.getText().toString());
+                    } catch (NumberFormatException e) {
+                        Displayer.showSnackbar(R.string.weight_valid, v);
+                        return;
+                    }
+                    if (weight > 2) {
+                        viewModel.setWeight(Double.parseDouble(measureResult.getText().toString()));
+                        viewModel.updateChronicler();
+                    } else {
+                        Log.d("WEIGHT", String.valueOf(weight));
+                        Displayer.showSnackbar(R.string.weight_valid, v);
+                        return;
+                    }
                 } else {
                     viewModel.removeRecord(viewModel.getMeasureDate());
                 }

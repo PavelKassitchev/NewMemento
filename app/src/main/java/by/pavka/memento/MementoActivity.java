@@ -2,15 +2,22 @@ package by.pavka.memento;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import by.pavka.memento.util.Displayer;
+
 public class MementoActivity extends AppCompatActivity {
+
+    private long backPressed;
+    private boolean backOverridden;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -31,5 +38,25 @@ public class MementoActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    protected void setBackOverridden() {
+        backOverridden = true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (backOverridden) {
+            if (backPressed + 2000 > System.currentTimeMillis()) {
+                super.onBackPressed();
+                finishAffinity();
+            } else {
+                Displayer.showSnackbar(R.string.back, findViewById(android.R.id.content));
+            }
+            backPressed = System.currentTimeMillis();
+        }
+        else {
+            super.onBackPressed();
+        }
     }
 }
