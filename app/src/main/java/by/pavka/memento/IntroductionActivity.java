@@ -22,6 +22,7 @@ import by.pavka.memento.databinding.ActivityIntroductionBinding;
 import by.pavka.memento.user.User;
 import by.pavka.memento.util.CalendarConverter;
 import by.pavka.memento.util.Displayer;
+import by.pavka.memento.util.MementoValidator;
 
 public class IntroductionActivity extends MementoActivity implements View.OnClickListener {
     private static final int REQUEST_CODE = 1;
@@ -58,10 +59,10 @@ public class IntroductionActivity extends MementoActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        if (validateDate() && validateGender()) {
-            Intent intent = new Intent(this, WeightActivity.class);
+        if (MementoValidator.validateDate(year, month) && MementoValidator.validateGender(genderChoice)) {
+            Intent intent = new Intent(this, WeightActivity2.class);
             startActivityForResult(intent, REQUEST_CODE);
-        } else if (!validateDate()){
+        } else if (!MementoValidator.validateDate(year, month)){
             Displayer.showSnackbar(R.string.limit_age, v);
         } else {
             Displayer.showSnackbar(R.string.limit_gender, v);
@@ -121,26 +122,26 @@ public class IntroductionActivity extends MementoActivity implements View.OnClic
         }
     }
 
-    private boolean validateDate() {
-        String birthYear = year.getText().toString();
-        if (birthYear.length() < 4) {
-            return false;
-        }
-        int year = Integer.parseInt(birthYear);
-        int birthMonth = month.getSelectedItemPosition();
-        Calendar now = Calendar.getInstance();
-        int nowYear = now.get(Calendar.YEAR);
-        int nowMonth = now.get(Calendar.MONTH);
-        if (year > nowYear || (year == nowYear && birthMonth > nowMonth) || (nowYear - year > PreCalculator.MAX_AGE)) {
-            return false;
-        }
-        return true;
-    }
-
-    private boolean validateGender() {
-        if (!male.isChecked() && !female.isChecked()) {
-            return false;
-        }
-        return true;
-    }
+//    private boolean validateDate() {
+//        String birthYear = year.getText().toString();
+//        if (birthYear.length() < 4) {
+//            return false;
+//        }
+//        int year = Integer.parseInt(birthYear);
+//        int birthMonth = month.getSelectedItemPosition();
+//        Calendar now = Calendar.getInstance();
+//        int nowYear = now.get(Calendar.YEAR);
+//        int nowMonth = now.get(Calendar.MONTH);
+//        if (year > nowYear || (year == nowYear && birthMonth > nowMonth) || (nowYear - year > PreCalculator.MAX_AGE)) {
+//            return false;
+//        }
+//        return true;
+//    }
+//
+//    private boolean validateGender() {
+//        if (!male.isChecked() && !female.isChecked()) {
+//            return false;
+//        }
+//        return true;
+//    }
 }

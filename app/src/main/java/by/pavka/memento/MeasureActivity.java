@@ -76,17 +76,6 @@ public class MeasureActivity extends MementoActivity implements View.OnClickList
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.action_help) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(R.string.help);
-            builder.setMessage(R.string.helptext);
-            builder.create().show();
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.measure_date:
@@ -118,7 +107,6 @@ public class MeasureActivity extends MementoActivity implements View.OnClickList
                     viewModel.removeRecord(viewModel.getMeasureDate());
                 }
                 startActivity(new Intent(this, HistoryActivity.class));
-                //finish();
                 break;
             case R.id.button_history:
                 startActivity(new Intent(this, HistoryActivity.class));
