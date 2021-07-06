@@ -2,9 +2,11 @@ package by.pavka.memento;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,7 +33,9 @@ public class MementoActivity extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(R.string.help);
             builder.setMessage(R.string.helptext);
-            builder.create().show();
+            AlertDialog dialog = builder.create();
+            dialog.show();
+            ((TextView)dialog.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
         } else {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);

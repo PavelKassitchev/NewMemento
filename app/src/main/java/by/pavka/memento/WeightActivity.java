@@ -73,13 +73,6 @@ public class WeightActivity extends MementoActivity implements View.OnClickListe
                 } else {
                     Displayer.showSnackbar(R.string.bmi_valid, v);
                 }
-//                bodyMassIndex = calculateBMI();
-//                if (bodyMassIndex != 0) {
-//                    bmi.setText(String.format(getResources().getString(R.string.bmi), bodyMassIndex));
-//                } else {
-//                    bmi.setText("");
-//                }
-//                seekBar.setProgress((int) (bodyMassIndex - 14));
                 break;
             case R.id.forward:
                 if (MementoValidator.validateWeight(weight) && MementoValidator.validateHeight(height)) {
@@ -113,37 +106,5 @@ public class WeightActivity extends MementoActivity implements View.OnClickListe
             height.setText(String.valueOf(h));
         }
         setScale();
-    }
-
-    private boolean validateWeight() {
-        if (weight.getText().toString().isEmpty()) {
-            return false;
-        }
-        double w = 0;
-        try {
-            w = Double.parseDouble(weight.getText().toString());
-        } catch (NumberFormatException e) {
-            return false;
-        }
-        if (w < 2) {
-            return false;
-        }
-        return true;
-    }
-
-    private boolean validateHeight() {
-        if (height.getText().toString().isEmpty()) {
-            return false;
-        }
-        double h = 0;
-        try {
-            h = Double.parseDouble(height.getText().toString());
-        } catch (NumberFormatException e) {
-            return false;
-        }
-        if (h < 30) {
-            return false;
-        }
-        return true;
     }
 }
