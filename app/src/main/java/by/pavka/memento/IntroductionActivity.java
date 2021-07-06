@@ -1,7 +1,6 @@
 package by.pavka.memento;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
@@ -17,7 +16,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Calendar;
 
-import by.pavka.memento.calculator.PreCalculator;
 import by.pavka.memento.databinding.ActivityIntroductionBinding;
 import by.pavka.memento.user.User;
 import by.pavka.memento.util.CalendarConverter;
@@ -60,7 +58,7 @@ public class IntroductionActivity extends MementoActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         if (MementoValidator.validateDate(year, month) && MementoValidator.validateGender(genderChoice)) {
-            Intent intent = new Intent(this, WeightActivity2.class);
+            Intent intent = new Intent(this, WeightActivity.class);
             startActivityForResult(intent, REQUEST_CODE);
         } else if (!MementoValidator.validateDate(year, month)){
             Displayer.showSnackbar(R.string.limit_age, v);

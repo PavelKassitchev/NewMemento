@@ -1,13 +1,10 @@
 package by.pavka.memento;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
+import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,24 +12,20 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.util.Calendar;
-
 import by.pavka.memento.databinding.ActivityWeightBinding;
-import by.pavka.memento.user.User;
 import by.pavka.memento.util.Displayer;
+import by.pavka.memento.util.MementoValidator;
 
 public class WeightActivity extends MementoActivity implements View.OnClickListener {
     private static final int REQUEST_CODE = 1;
-    private MementoApplication application;
     private EditText weight;
     private EditText height;
     private TextView bmi;
     private Button calculate;
     private Button forward;
     private SeekBar seekBar;
-    private User user;
     private double bodyMassIndex;
+    private WeightViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +35,7 @@ public class WeightActivity extends MementoActivity implements View.OnClickListe
         setContentView(view);
         Toolbar toolbar = binding.toolbar.getRoot();
         setSupportActionBar(toolbar);
+        viewModel = new ViewModelProvider(this).get(WeightViewModel.class);
         weight = binding.weight;
         height = binding.height;
         bmi = binding.bmi;
@@ -51,29 +45,9 @@ public class WeightActivity extends MementoActivity implements View.OnClickListe
         forward.setOnClickListener(this);
         seekBar = binding.seekBar;
         seekBar.setEnabled(false);
-        application = (MementoApplication) getApplication();
-        user = application.getUser();
         BottomNavigationView bottomNavigationView = binding.bottomNavigation.getRoot();
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationListener(this));
-        if (savedInstanceState != null) {
-            bodyMassIndex = savedInstanceState.getDouble("BMI");
-            Log.d("BMI", "bmi = " + bodyMassIndex);
-        }
         setInterface();
-        Log.d("BMI", "after onCreate weight = " + weight.getText().toString());
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d("BMI", "after onStart weight = " + weight.getText().toString());
-    }
-
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putDouble("BMI", bodyMassIndex);
-        Log.d("BMI", "writing in bundle bmi = " + bodyMassIndex);
     }
 
     @Override
@@ -81,12 +55,8 @@ public class WeightActivity extends MementoActivity implements View.OnClickListe
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             double w = Double.parseDouble(weight.getText().toString());
-            user.setWeight(w);
             double h = Double.parseDouble(height.getText().toString());
-            user.setHeight(h);
-            application.saveBMIData(w, h);
-            user.getChronicler().addRecord(Calendar.getInstance(), w);
-            application.saveChronicler();
+            viewModel.resetBMIData(w, h);
             setResult(RESULT_OK, getIntent());
             finish();
         }
@@ -97,16 +67,24 @@ public class WeightActivity extends MementoActivity implements View.OnClickListe
         int id = v.getId();
         switch (id) {
             case R.id.calculate:
-                bodyMassIndex = calculateBMI();
-                if (bodyMassIndex != 0) {
-                    bmi.setText(String.format(getResources().getString(R.string.bmi), bodyMassIndex));
+                if (MementoValidator.validateWeight(weight) && MementoValidator.validateHeight(height)) {
+                    viewModel.recalculateBMI(Double.parseDouble(weight.getText().toString()), Double.parseDouble(height.getText().toString()));
+                    setInterface();
                 } else {
-                    bmi.setText("");
+                    Displayer.showSnackbar(R.string.bmi_valid, v);
                 }
-                seekBar.setProgress((int) (bodyMassIndex - 14));
+//                bodyMassIndex = calculateBMI();
+//                if (bodyMassIndex != 0) {
+//                    bmi.setText(String.format(getResources().getString(R.string.bmi), bodyMassIndex));
+//                } else {
+//                    bmi.setText("");
+//                }
+//                seekBar.setProgress((int) (bodyMassIndex - 14));
                 break;
             case R.id.forward:
-                if (validateHeight() && validateWeight()) {
+                if (MementoValidator.validateWeight(weight) && MementoValidator.validateHeight(height)) {
+                    viewModel.recalculateBMI(Double.parseDouble(weight.getText().toString()), Double.parseDouble(height.getText().toString()));
+                    setInterface();
                     Intent intent = new Intent(this, QuestionnaireActivity.class);
                     startActivityForResult(intent, REQUEST_CODE);
                 } else {
@@ -117,27 +95,8 @@ public class WeightActivity extends MementoActivity implements View.OnClickListe
         }
     }
 
-    private double calculateBMI() {
-        if (!weight.getText().toString().isEmpty() && !height.getText().toString().isEmpty()) {
-            try {
-                double wt = Double.parseDouble(weight.getText().toString());
-                Log.d("BMI", "while calculating bmi weight = " + wt);
-                double ht = Double.parseDouble(height.getText().toString());
-                if (wt == 0 || ht == 0) {
-                    return 0;
-                }
-                return wt * 10000 / ht / ht;
-            } catch (NumberFormatException e) {
-                return 0;
-            }
-        }
-        return 0;
-    }
-
     private void setScale() {
-        if (bodyMassIndex == 0) {
-            bodyMassIndex = calculateBMI();
-        }
+        bodyMassIndex = viewModel.getBmi();
         if (bodyMassIndex != 0) {
             bmi.setText(String.format(getResources().getString(R.string.bmi), bodyMassIndex));
         } else {
@@ -147,13 +106,10 @@ public class WeightActivity extends MementoActivity implements View.OnClickListe
     }
 
     private void setInterface() {
-        double w = user.getWeight();
-        double h = user.getHeight();
-        Log.d("BMI", "weight: " + w + " height: " + h + " condition = " + (w != 0 && h != 0));
+        double w = viewModel.getWeight();
+        double h = viewModel.getHeight();
         if (w != 0 && h != 0) {
-            Log.d("BMI", "w = " + w);
             weight.setText(String.valueOf(w));
-            Log.d("BMI", "weight view set on " + weight.getText().toString());
             height.setText(String.valueOf(h));
         }
         setScale();
