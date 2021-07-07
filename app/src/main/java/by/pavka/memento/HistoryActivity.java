@@ -68,7 +68,7 @@ public class HistoryActivity extends MementoActivity implements AdapterView.OnIt
         }
 
         BottomNavigationView bottomNavigationView = binding.bottomNavigation.getRoot();
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationListener(this));
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
         MenuItem item = bottomNavigationView.getMenu().findItem(R.id.weights);
         item.setChecked(true);
     }

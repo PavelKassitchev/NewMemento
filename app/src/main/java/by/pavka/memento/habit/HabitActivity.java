@@ -44,7 +44,7 @@ public class  HabitActivity extends MementoActivity {
         setSupportActionBar(toolbar);
         application = (MementoApplication) getApplication();
         BottomNavigationView bottomNavigationView = binding.bottomNavigation.getRoot();
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationListener(this));
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
         MenuItem item = bottomNavigationView.getMenu().findItem(R.id.habit);
         item.setChecked(true);
         tracker = application.getUser().getTracker();

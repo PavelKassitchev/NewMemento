@@ -14,9 +14,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import by.pavka.memento.habit.HabitActivity;
 import by.pavka.memento.util.Displayer;
 
-public class MementoActivity extends AppCompatActivity {
+public class MementoActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private long backPressed;
     private boolean backOverridden;
@@ -64,4 +67,23 @@ public class MementoActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Intent intent = null;
+        switch (item.getItemId()) {
+            case R.id.profile:
+                intent = new Intent(this, MainActivity.class);
+                break;
+            case R.id.habit:
+                intent = new Intent(this, HabitActivity.class);
+                break;
+            case R.id.weights:
+                intent = new Intent(this, MeasureActivity.class);
+                break;
+        }
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+        return true;
+    }
 }

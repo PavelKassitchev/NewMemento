@@ -51,7 +51,7 @@ public class IntroductionActivity extends MementoActivity implements View.OnClic
         buttonWeight.setOnClickListener(this);
         application = (MementoApplication)getApplication();
         BottomNavigationView bottomNavigationView = binding.bottomNavigation.getRoot();
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationListener(this));
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
         setInterface();
     }
 

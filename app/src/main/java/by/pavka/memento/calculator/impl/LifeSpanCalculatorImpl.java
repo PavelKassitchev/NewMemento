@@ -42,7 +42,7 @@ public class LifeSpanCalculatorImpl implements LifeSpanCalculator {
             i++;
         } while (questionnaire.next());
         Log.d("COR", "BEFORE = "+ leftDays);
-        leftDays += (int)(factor * findBMICorrection(birthDate,weight, height));
+        leftDays += (int)(factor * findBMICorrection(birthDate, weight, height));
         Log.d("COR", "AFTER = "+ leftDays);
         now.add(Calendar.DAY_OF_MONTH, leftDays);
         return now;

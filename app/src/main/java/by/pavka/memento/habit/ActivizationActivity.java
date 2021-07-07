@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -35,7 +36,7 @@ public class ActivizationActivity extends MementoActivity implements View.OnClic
     private Button endDay;
     private Button time;
     private CheckBox mo, tue, wed, thu, fri, sat, snd, all;
-    private TextView description;
+    private EditText description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,7 @@ public class ActivizationActivity extends MementoActivity implements View.OnClic
             viewModel.setHabit(habit);
         }
         BottomNavigationView bottomNavigationView = binding.bottomNavigation.getRoot();
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationListener(this));
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
         MenuItem item = bottomNavigationView.getMenu().findItem(R.id.habit);
         item.setChecked(true);
 

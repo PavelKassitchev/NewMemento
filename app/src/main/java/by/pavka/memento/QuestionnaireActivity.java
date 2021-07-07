@@ -54,7 +54,7 @@ public class QuestionnaireActivity extends MementoActivity implements View.OnCli
         unknown = binding.unknown;
         application = (MementoApplication) getApplication();
         BottomNavigationView bottomNavigationView = binding.bottomNavigation.getRoot();
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationListener(this));
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
         setReply();
     }
 

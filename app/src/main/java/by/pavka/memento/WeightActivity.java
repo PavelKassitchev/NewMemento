@@ -46,7 +46,7 @@ public class WeightActivity extends MementoActivity implements View.OnClickListe
         seekBar = binding.seekBar;
         seekBar.setEnabled(false);
         BottomNavigationView bottomNavigationView = binding.bottomNavigation.getRoot();
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationListener(this));
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
         setInterface();
     }
 

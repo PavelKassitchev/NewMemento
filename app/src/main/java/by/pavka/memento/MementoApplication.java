@@ -41,8 +41,6 @@ public class MementoApplication extends MultiDexApplication {
     public static final String INDEX = "index";
     public static final String HABITS_CUSTOMIZED = "customized";
     public static final String TRACKER = "tracker";
-    public static final int DAYS_FOR_HABIT = 28;
-    public static final int REACTION_GAP = 60;
     private static final String CHRONICLER = "chronicler";
 
     private Questionnaire questionnaire;
