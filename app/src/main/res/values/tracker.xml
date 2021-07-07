@@ -9,6 +9,7 @@
         <item>Соблюдай режим</item>
         <item>Вода натощак</item>
         <item>Время учиться</item>
+        <item>Береги зубы</item>
     </string-array>
     <integer-array name="link">
         <item>0</item>
@@ -19,6 +20,7 @@
         <item>3</item>
         <item>16</item>
         <item>17</item>
+        <item>6</item>
     </integer-array>
     <integer-array name="influence">
         <item>1</item>
@@ -26,6 +28,7 @@
         <item>1</item>
         <item>1</item>
         <item>1</item>
+        <item>-1</item>
         <item>-1</item>
         <item>-1</item>
         <item>-1</item>
@@ -39,5 +42,6 @@
         <item>@drawable/ic_sleeping</item>
         <item>@drawable/ic_water</item>
         <item>@drawable/ic_education</item>
+        <item>@drawable/ic_floss</item>
     </integer-array>
 </resources>

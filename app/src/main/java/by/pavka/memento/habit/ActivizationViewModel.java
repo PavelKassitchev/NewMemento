@@ -30,7 +30,6 @@ public class ActivizationViewModel extends AndroidViewModel {
     private int minute;
     private String description;
     private boolean clearance;
-    DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
 
     public ActivizationViewModel(@NonNull Application application) {
         super(application);
