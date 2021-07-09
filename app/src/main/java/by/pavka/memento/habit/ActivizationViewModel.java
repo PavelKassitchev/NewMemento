@@ -28,6 +28,7 @@ public class ActivizationViewModel extends AndroidViewModel {
     private boolean[] week;
     private int hour;
     private int minute;
+    private String name;
     private String description;
     private boolean clearance;
 
@@ -59,7 +60,8 @@ public class ActivizationViewModel extends AndroidViewModel {
 
     public void setHabit(Habit habit) {
         this.habit = habit;
-        description = habit.getName();
+        description = habit.getDescription();
+        name = habit.getName();
         User user = app.getUser();
         Map<Habit, HabitProgress> habits = user.getTracker().getHabits();
         Log.d("MYSTERY", "Habits: " + habits + " habit: " + habit);
@@ -92,20 +94,32 @@ public class ActivizationViewModel extends AndroidViewModel {
     }
 
     public void resetProgress(boolean cleared) {
+        habit.updateName(cleared);
+        Log.d("CHANGE1.5", "Cleared: " + cleared);
         User user = app.getUser();
         Map<Habit, HabitProgress> habits = user.getTracker().getHabits();
         if (cleared) {
+            if (habit.getQuestion() < 0) {
+                habits.remove(habit);
+            }
             habits.put(habit, new HabitProgress(HabitStatus.ENABLED));
         } else {
             end.set(Calendar.HOUR_OF_DAY, hour);
             end.set(Calendar.MINUTE, minute);
             end.set(Calendar.SECOND, 0);
             end.set(Calendar.MILLISECOND, 0);
+            if (habit.getQuestion() < 0) {
+                habits.remove(habit);
+            }
             habits.put(habit, new HabitProgress(HabitStatus.ACTIVE, Calendar.getInstance(), end, week, hour, minute));
             user.setHabitCustomized(true);
             app.customizeHabits(true);
         }
         clearHabit();
+    }
+
+    public boolean isHabitChangeable() {
+        return habit.getQuestion() < 0;
     }
 
     public void setEnd(Calendar end) {
@@ -159,5 +173,14 @@ public class ActivizationViewModel extends AndroidViewModel {
 
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+        habit.setDescription(description);
+    }
+
+    public String getName() {
+        return name;
     }
 }

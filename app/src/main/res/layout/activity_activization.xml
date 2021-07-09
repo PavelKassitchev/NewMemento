@@ -27,6 +27,8 @@
         android:layout_marginTop="6dp"
         android:layout_marginEnd="8dp"
         android:gravity="center"
+        android:inputType="textCapSentences|textAutoCorrect"
+        android:hint="@string/name_habit"
         style="@style/TextAppearance.AppCompat.Medium"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

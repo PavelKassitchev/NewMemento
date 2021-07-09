@@ -8,6 +8,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -66,6 +67,11 @@ public class ActivizationActivity extends MementoActivity implements View.OnClic
 
         description = binding.description;
         description.setText(viewModel.getDescription());
+        if (!viewModel.getDescription().isEmpty()) {
+            description.setCursorVisible(false);
+            description.setFocusable(false);
+            description.setInputType(InputType.TYPE_NULL);
+        }
 
         endDay = binding.endDay;
         endDay.setOnClickListener(this);
@@ -107,7 +113,6 @@ public class ActivizationActivity extends MementoActivity implements View.OnClic
             setResult(RESULT_OK, intent);
             finish();
         }
-
     }
 
     @Override
@@ -122,14 +127,23 @@ public class ActivizationActivity extends MementoActivity implements View.OnClic
                 finish();
                 break;
             case R.id.button_ok:
-                if (viewModel.validateSchedule() || viewModel.isClearance()) {
-                    Intent intent = new Intent();
-                    intent.putExtra("habit", viewModel.getHabit());
-                    viewModel.resetProgress(viewModel.isClearance());
-                    setResult(RESULT_OK, intent);
-                    finish();
+                if ((description.getText().toString()).isEmpty() && !viewModel.isClearance()) {
+                    Displayer.showSnackbar(R.string.name_habit, v);
                 } else {
-                    Displayer.showSnackbar(R.string.wrong_end, endDay);
+                    if (viewModel.validateSchedule() || viewModel.isClearance()) {
+                        Log.d("CHANGE", "Before check " + viewModel.getDescription());
+                        if (viewModel.isHabitChangeable()) {
+                            viewModel.setDescription(description.getText().toString());
+                            Log.d("CHANGE1", "after check " + viewModel.getDescription() + " clearance " + viewModel.isClearance());
+                        }
+                        Intent intent = new Intent();
+                        intent.putExtra("habit", viewModel.getHabit());
+                        viewModel.resetProgress(viewModel.isClearance());
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    } else {
+                        Displayer.showSnackbar(R.string.wrong_end, endDay);
+                    }
                 }
                 break;
             case R.id.end_day:
@@ -250,5 +264,8 @@ public class ActivizationActivity extends MementoActivity implements View.OnClic
         endDay.setText("");
         time.setText("");
         checkWeek(false);
+        if (viewModel.isHabitChangeable()) {
+            description.setText("");
+        }
     }
 }

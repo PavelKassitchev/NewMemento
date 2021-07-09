@@ -44,18 +44,20 @@ public class UserHabitTracker {
             Habit habit = entry.getKey();
             int question = habit.getQuestion();
             int better = habit.getBetter();
-            int answer = answers[question];
-            HabitProgress progress = entry.getValue();
-            if (!cleanUser) {
-                if (better * answer >= 0) {
-                    progress.setHabitStatus(HabitStatus.ENABLED);
+            if (question > -1) {
+                int answer = answers[question];
+                HabitProgress progress = entry.getValue();
+                if (!cleanUser) {
+                    if (better * answer >= 0) {
+                        progress.setHabitStatus(HabitStatus.ENABLED);
+                    } else {
+                        progress.setHabitStatus(HabitStatus.DISABLED);
+                        app.cancelWork(habit.getName(), habit.getName() + habit.getId(), habit.getId());
+                    }
                 } else {
-                    progress.setHabitStatus(HabitStatus.DISABLED);
-                    app.cancelWork(habit.getName(), habit.getName() + habit.getId(), habit.getId());
-                }
-            } else {
-                if (progress.getHabitStatus() == HabitStatus.DISABLED) {
-                    progress.setHabitStatus(HabitStatus.ENABLED);
+                    if (progress.getHabitStatus() == HabitStatus.DISABLED) {
+                        progress.setHabitStatus(HabitStatus.ENABLED);
+                    }
                 }
             }
         }

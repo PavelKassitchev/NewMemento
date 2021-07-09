@@ -47,6 +47,7 @@ public class HabitRecyclerViewAdapter extends RecyclerView.Adapter<HabitRecycler
     @Override
     public void onBindViewHolder(@NonNull HabitViewHolder holder, int position) {
         Habit habit = habits.get(position);
+        Log.d("CHANGE???", "position = " + position + " habit = " + habit.getName() + " descr = " + habit.getDescription());
         holder.habitName.setText(habit.getName());
         HabitProgress prog = progress.get(position);
         HabitStatus status = prog.getHabitStatus();

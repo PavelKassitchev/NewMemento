@@ -10,6 +10,9 @@
         <item>Вода натощак</item>
         <item>Время учиться</item>
         <item>Береги зубы</item>
+        <item>Новая привычка</item>
+        <item>Новая привычка</item>
+        <item>Новая привычка</item>
     </string-array>
     <integer-array name="link">
         <item>0</item>
@@ -21,6 +24,10 @@
         <item>16</item>
         <item>17</item>
         <item>6</item>
+        <item>-1</item>
+        <item>-2</item>
+        <item>-3</item>
+
     </integer-array>
     <integer-array name="influence">
         <item>1</item>
@@ -32,6 +39,9 @@
         <item>-1</item>
         <item>-1</item>
         <item>-1</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
     </integer-array>
     <integer-array name="pics">
         <item>@drawable/ic_no_smoking</item>
@@ -43,5 +53,9 @@
         <item>@drawable/ic_water</item>
         <item>@drawable/ic_education</item>
         <item>@drawable/ic_floss</item>
+        <item>@drawable/ic_healthy_lifestyle</item>
+        <item>@drawable/ic_healthy_lifestyle</item>
+        <item>@drawable/ic_healthy_lifestyle</item>
+
     </integer-array>
 </resources>

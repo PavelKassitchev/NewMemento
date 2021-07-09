@@ -1,11 +1,14 @@
 package by.pavka.memento.habit;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 public class Habit implements Serializable {
+    public static final String NEW = "Новая привычка";
     private int id;
     private String name;
     private String description;
@@ -19,7 +22,11 @@ public class Habit implements Serializable {
 
     public Habit(String name, int imageId, int question, int better) {
         this.name = name;
-        this.description = name;
+        if (question > -1) {
+            this.description = name;
+        } else {
+            description = "";
+        }
         this.imageId = imageId;
         this.question = question;
         this.better = better;
@@ -29,7 +36,7 @@ public class Habit implements Serializable {
         this.name = name;
         this.description = name;
         this.imageId = imageId;
-        this.question = - 1;
+        this.question = -1;
     }
 
     public String getName() {
@@ -80,6 +87,21 @@ public class Habit implements Serializable {
         this.description = description;
     }
 
+    public void updateName(boolean clean) {
+        Log.d("CHANGE2.5", "question = " + question);
+        if (question < 0) {
+            if (clean) {
+                Log.d("CHANGE2.3", "clean " + name);
+                name = NEW;
+
+            } else {
+                Log.d("CHANGE2", "Name = " + name + " descr = " + description);
+                name = description;
+                Log.d("CHANGE21", name);
+            }
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -87,18 +109,18 @@ public class Habit implements Serializable {
         Habit habit = (Habit) o;
         return imageId == habit.imageId &&
                 question == habit.question &&
-                better == habit.better &&
-                name.equals(habit.name);
+                better == habit.better;
+//                && name.equals(habit.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, imageId, question, better);
+        return Objects.hash(imageId, question, better);
     }
 
     @NonNull
     @Override
     public String toString() {
-        return "{\"better\":" + better + ",\"imageId\":" + imageId + ",\"name\":\"" + name + "\",\"question\":" + question + "}";
+        return "{\"better\":" + better + ",\"imageId\":" + imageId + ",\"name\":\"" + name + "\",\"question\":" + question + " + }" + " descr= " + description;
     }
 }
