@@ -12,6 +12,7 @@ import by.pavka.memento.R;
 public class UserHabitTracker {
     private transient MementoApplication app;
     private Map<Habit, HabitProgress> habits;
+    private int obtainedCustomizedHabits;
 
     public UserHabitTracker(MementoApplication app) {
         this.app = app;
@@ -39,6 +40,15 @@ public class UserHabitTracker {
         imgs.recycle();
     }
 
+    public int getObtainedCustomizedHabits() {
+        return obtainedCustomizedHabits;
+    }
+
+    public int increment(Habit habit) {
+        getHabitProgress(habit.getId()).setHabitStatus(HabitStatus.DISABLED);
+        return ++obtainedCustomizedHabits;
+    }
+
     public void updateWithAnswers(int[] answers, boolean cleanUser) {
         for(Map.Entry<Habit, HabitProgress> entry: habits.entrySet()) {
             Habit habit = entry.getKey();
@@ -52,6 +62,7 @@ public class UserHabitTracker {
                         progress.setHabitStatus(HabitStatus.ENABLED);
                     } else {
                         progress.setHabitStatus(HabitStatus.DISABLED);
+                        Log.d("CANCEL", "Habit = " + habit + " app = " + app);
                         app.cancelWork(habit.getName(), habit.getName() + habit.getId(), habit.getId());
                     }
                 } else {

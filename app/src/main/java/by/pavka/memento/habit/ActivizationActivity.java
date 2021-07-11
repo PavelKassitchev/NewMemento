@@ -127,11 +127,32 @@ public class ActivizationActivity extends MementoActivity implements View.OnClic
                 finish();
                 break;
             case R.id.button_ok:
+                Log.d("CHANGE", "Before check " + viewModel.getDescription() + " validate = " + viewModel.validateSchedule());
                 if ((description.getText().toString()).isEmpty() && !viewModel.isClearance()) {
                     Displayer.showSnackbar(R.string.name_habit, v);
                 } else {
-                    if (viewModel.validateSchedule() || viewModel.isClearance()) {
-                        Log.d("CHANGE", "Before check " + viewModel.getDescription());
+//                    if (!viewModel.validateSchedule() && !viewModel.isClearance()) {
+//                        Displayer.showSnackbar(R.string.wrong_end, endDay);
+//                    } else {
+//                        if (viewModel.validateSchedule()) {
+//                            viewModel.setClearance(false);
+//                        }
+//                        if (viewModel.isHabitChangeable()) {
+//                            viewModel.setDescription(description.getText().toString());
+//                            Log.d("CHANGE1", "after check " + viewModel.getDescription() + " clearance " + viewModel.isClearance());
+//                        }
+//                        Intent intent = new Intent();
+//                        intent.putExtra("habit", viewModel.getHabit());
+//                        viewModel.resetProgress(viewModel.isClearance());
+//                        setResult(RESULT_OK, intent);
+//                        finish();
+//                    }
+
+
+                    if ((!endDay.getText().toString().isEmpty() && !time.getText().toString().isEmpty() &&
+                            viewModel.validateSchedule()) || viewModel.isClearance()) {
+                        Log.d("CHANGE", "Before check " + viewModel.getDescription() + " validate = " + viewModel.validateSchedule()
+                         + " clearance = " + viewModel.isClearance());
                         if (viewModel.isHabitChangeable()) {
                             viewModel.setDescription(description.getText().toString());
                             Log.d("CHANGE1", "after check " + viewModel.getDescription() + " clearance " + viewModel.isClearance());
@@ -233,6 +254,7 @@ public class ActivizationActivity extends MementoActivity implements View.OnClic
             default:
                 break;
         }
+//        viewModel.setClearance(false);
     }
 
     private void checkWeek(boolean check) {

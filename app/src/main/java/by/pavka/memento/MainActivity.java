@@ -73,9 +73,10 @@ public class MainActivity extends MementoActivity implements View.OnClickListene
             int gender = user.getGender();
             Questionnaire questionnaire = application.getQuestionnaire();
             int[] answers = user.getAnswers();
+            int obtainedHabits = user.getTracker().getObtainedCustomizedHabits();
             double weight = user.getWeight();
             double height = user.getHeight();
-            end = calculator.tuneLifeDaySpan(gender, birthDate, weight, height, null, preCalculator, questionnaire, answers);
+            end = calculator.tuneLifeDaySpan(gender, birthDate, weight, height, null, preCalculator, questionnaire, answers, obtainedHabits);
             setButtons(true);
         } else if (user.isHabitCustomized() && !user.allHabitsClear()) {
             setButtons(true);
@@ -197,11 +198,16 @@ public class MainActivity extends MementoActivity implements View.OnClickListene
             user.setHabitCustomized(true);
             application.customizeHabits(true);
 
+            int obtainedHabits = user.getTracker().getObtainedCustomizedHabits();
             int[] answers = user.getAnswers();
-            answers[habit.getQuestion()] = -habit.getBetter();
-            user.setAnswers(answers);
-            application.saveAnswers(answers);
-            user.getTracker().updateWithAnswers(answers, false);
+            if (habit.getQuestion() > -1) {
+                answers[habit.getQuestion()] = -habit.getBetter();
+                user.setAnswers(answers);
+                application.saveAnswers(answers);
+                user.getTracker().updateWithAnswers(answers, false);
+            } else {
+                obtainedHabits = user.getTracker().increment(habit);
+            }
             application.saveHabits();
 
             Calendar birthDate = user.getBirthDate();
@@ -210,7 +216,7 @@ public class MainActivity extends MementoActivity implements View.OnClickListene
                 PreCalculator preCalculator = new PreCalculatorImpl();
                 LifeSpanCalculator calculator = new LifeSpanCalculatorImpl();
                 end = calculator.tuneLifeDaySpan(user.getGender(), birthDate, user.getWeight(), user.getHeight(),
-                        null, preCalculator, application.getQuestionnaire(), answers);
+                        null, preCalculator, application.getQuestionnaire(), answers, obtainedHabits);
                 setButtons(true);
             } else {
                 setButtons(false);
