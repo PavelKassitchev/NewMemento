@@ -196,6 +196,7 @@ public class MainActivity extends MementoActivity implements View.OnClickListene
             User user = application.getUser();
             user.setHabitCustomized(true);
             application.customizeHabits(true);
+
             int[] answers = user.getAnswers();
             answers[habit.getQuestion()] = -habit.getBetter();
             user.setAnswers(answers);

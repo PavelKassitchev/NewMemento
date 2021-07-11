@@ -123,4 +123,5 @@
     <string name="weight_valid">Введите корректный вес (хотя бы больше 2 кг :))</string>
     <string name="back">Для выхода из приложения нажмите конпку НАЗАД дважды</string>
     <string name="name_habit">Назовите новую привычку</string>
+    <string name="habit_new">Новая привычка</string>
 </resources>

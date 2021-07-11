@@ -48,13 +48,19 @@ public class MementoApplication extends MultiDexApplication {
     private NotificationManager mNotifyManager;
     private NotificationChannel channel;
     private String success;
+    private static String newHabit;
 
     @Override
     public void onCreate() {
         super.onCreate();
         createNotificationChannel();
         success = getString(R.string.success);
+        newHabit = getString(R.string.habit_new);
         PreferenceManager.setDefaultValues(this, R.xml.root_preferences, false);
+    }
+
+    public static String getNewHabit() {
+        return newHabit;
     }
 
     public Questionnaire getQuestionnaire() {
@@ -129,8 +135,8 @@ public class MementoApplication extends MultiDexApplication {
 
     public void saveBMIData(double weight, double height) {
         SharedPreferences.Editor editor = getSharedPreferences(APP_PREF, MODE_PRIVATE).edit();
-        editor.putFloat(WEIGHT, (float)weight);
-        editor.putFloat(HEIGHT, (float)height);
+        editor.putFloat(WEIGHT, (float) weight);
+        editor.putFloat(HEIGHT, (float) height);
         editor.apply();
     }
 
@@ -164,7 +170,7 @@ public class MementoApplication extends MultiDexApplication {
         double weight = chronicler.findLastWeight();
         String sChronicler = gson.toJson(chronicler);
         editor.putString(CHRONICLER, sChronicler);
-        editor.putFloat(WEIGHT, (float)weight);
+        editor.putFloat(WEIGHT, (float) weight);
         editor.apply();
     }
 
@@ -241,9 +247,9 @@ public class MementoApplication extends MultiDexApplication {
         WorkManager workManager = WorkManager.getInstance(this);
         MementoAlarmer alarmer = new MementoAlarmer();
         long delay = alarmer.tillNextAlarm(week, hour, minute, resetting);
-        if (resetting) {
-            cancelWork(habitName + id, habitName, id);
-        }
+//        if (resetting) {
+//            cancelWork(habitName + id, habitName, id);
+//        }
         if (progress.getHabitStatus() == HabitStatus.ACTIVE) {
             long end = alarmer.tillEnd(progress.getEndDate());
             String contentText;
@@ -257,8 +263,6 @@ public class MementoApplication extends MultiDexApplication {
             }
             Data data = new Data.Builder().putString("habit", habit.getName())
                     .putString("result", contentText).putInt("id", habit.getId()).build();
-            Log.d("MYSTERY", "APP DELAY = " + delay + " APP TILL END DELAY = " + end
-                    + " APP TILL NEXT = " + tillNext + " resetting = " + resetting);
             OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(MementoWorker.class)
                     .setInitialDelay(tillNext, TimeUnit.SECONDS).setInputData(data).addTag(habitName + id).build();
             workManager.enqueue(request);

@@ -94,6 +94,7 @@ public class ActivizationViewModel extends AndroidViewModel {
     }
 
     public void resetProgress(boolean cleared) {
+        app.cancelWork(habit.getName() + habit.getId(), habit.getName(), habit.getId());
         habit.updateName(cleared);
         Log.d("CHANGE1.5", "Cleared: " + cleared);
         User user = app.getUser();

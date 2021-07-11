@@ -7,8 +7,9 @@ import androidx.annotation.NonNull;
 import java.io.Serializable;
 import java.util.Objects;
 
+import by.pavka.memento.MementoApplication;
+
 public class Habit implements Serializable {
-    public static final String NEW = "Новая привычка";
     private int id;
     private String name;
     private String description;
@@ -92,7 +93,7 @@ public class Habit implements Serializable {
         if (question < 0) {
             if (clean) {
                 Log.d("CHANGE2.3", "clean " + name);
-                name = NEW;
+                name = MementoApplication.getNewHabit();
 
             } else {
                 Log.d("CHANGE2", "Name = " + name + " descr = " + description);
