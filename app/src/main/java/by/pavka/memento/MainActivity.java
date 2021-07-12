@@ -69,6 +69,7 @@ public class MainActivity extends MementoActivity implements View.OnClickListene
         User user = application.getUser();
         Calendar birthDate = user.getBirthDate();
         Calendar end = null;
+        Log.d("BUTTON", "Habits customized = " + user.isHabitCustomized() + " Habits clear = " + user.allHabitsClear());
         if (birthDate != null) {
             int gender = user.getGender();
             Questionnaire questionnaire = application.getQuestionnaire();
@@ -158,6 +159,7 @@ public class MainActivity extends MementoActivity implements View.OnClickListene
     }
 
     private void setButtons(boolean status) {
+        Log.d("LOAD TRACKER", "Status = " + status);
         buttonClear.setEnabled(status);
         if (status) {
             buttonUpdate.setText(getResources().getString(R.string.update));

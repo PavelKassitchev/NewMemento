@@ -33,7 +33,9 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_clean" />
+        app:layout_constraintTop_toBottomOf="@+id/button_clean">
+        <requestFocus/>
+    </EditText>
 
     <TextView
         android:id="@+id/set_end"

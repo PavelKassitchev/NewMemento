@@ -44,7 +44,9 @@ public class LifeSpanCalculatorImpl implements LifeSpanCalculator {
         } while (questionnaire.next());
         Log.d("COR", "BEFORE = "+ leftDays);
         leftDays += (int)(factor * findBMICorrection(birthDate, weight, height));
-        Log.d("COR", "AFTER = "+ leftDays);
+        int habitEffect = (int)(firstHabitDays * ((Math.pow(habitFactor, obtainedCustomizedHabits) - 1) / (habitFactor - 1)));
+        Log.d("COR", "AFTER = "+ leftDays + " effect = " + habitEffect);
+        leftDays += habitEffect;
         now.add(Calendar.DAY_OF_MONTH, leftDays);
         return now;
     }

@@ -72,7 +72,9 @@ public class MementoApplication extends MultiDexApplication {
     }
 
     public User getUser() {
+        Log.d("LOAD TRACKER", "getting User");
         if (user == null) {
+            Log.d("LOAD TRACKER", "creating User");
             user = createUser();
         }
         return user;
@@ -88,7 +90,9 @@ public class MementoApplication extends MultiDexApplication {
         boolean habitsCustomized = preferences.getBoolean(HABITS_CUSTOMIZED, false);
         UserHabitTracker tracker;
         if (habitsCustomized) {
+            user.setHabitCustomized(true);
             tracker = loadTracker();
+            tracker.setApp(this);
         } else {
             tracker = new UserHabitTracker(this);
         }
@@ -115,6 +119,7 @@ public class MementoApplication extends MultiDexApplication {
         user.setName(name);
         user.setAnswers(answers);
         user.setTracker(tracker);
+        Log.d("LOAD TRACKER", "Tracker's app = " + tracker.getApp());
         return user;
     }
 
