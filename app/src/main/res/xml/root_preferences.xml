@@ -18,5 +18,15 @@
             app:title="@string/delay"
             app:useSimpleSummaryProvider="true" />
 
+        <SwitchPreference
+            app:key="confirm"
+            app:title="@string/confirm"
+            app:summaryOn="@string/confirm_on"
+            app:summaryOff="@string/confirm_off"
+            app:switchTextOn="@string/short_confirm_on"
+            app:switchTextOff="@string/short_confirm_off"
+            app:useSimpleSummaryProvider="true"/>
+
+
     </PreferenceCategory>
 </PreferenceScreen>

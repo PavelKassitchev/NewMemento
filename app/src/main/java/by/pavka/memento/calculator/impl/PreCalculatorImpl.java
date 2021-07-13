@@ -30,12 +30,18 @@ public class PreCalculatorImpl implements PreCalculator {
     }
 
     private long maleLifeDaySpan(double ageInYears, Locale locale) {
-//        return Math.round(365 * (0.00007 * Math.pow(ageInYears, 3) - 0.0037 * Math.pow(ageInYears, 2) + 0.1131 * ageInYears + AVG_MALE));
-        double resultYear = 0.0046 * ageInYears * ageInYears - 0.1552 * ageInYears + 70.87;
-        if (ageInYears < 4) {
-            resultYear -= 1;
+        double resultYear = 0.00007 * Math.pow(ageInYears, 3) - 0.0037 * Math.pow(ageInYears, 2) + 0.1131 * ageInYears + AVG_MALE;
+        if (ageInYears > 70) {
+            double correction = (ageInYears - 70) * 0.4;
+            resultYear -= correction;
         }
         return Math.round(365 * resultYear);
+//        double resultYear = 0.0046 * ageInYears * ageInYears - 0.1552 * ageInYears + 70.87;
+//        if (ageInYears < 4) {
+//            double correction = (4 - ageInYears) * 0.4;
+//            resultYear -= correction;
+//        }
+//        return Math.round(365 * resultYear);
     }
 
     private long femaleLifeDaySpan(double ageInYears, Locale locale) {

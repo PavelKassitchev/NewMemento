@@ -50,7 +50,7 @@ public class UserHabitTracker {
     }
 
     public void updateWithAnswers(int[] answers, boolean cleanUser) {
-        for(Map.Entry<Habit, HabitProgress> entry: habits.entrySet()) {
+        for (Map.Entry<Habit, HabitProgress> entry : habits.entrySet()) {
             Habit habit = entry.getKey();
             int question = habit.getQuestion();
             int better = habit.getBetter();
@@ -59,10 +59,13 @@ public class UserHabitTracker {
                 HabitProgress progress = entry.getValue();
                 if (!cleanUser) {
                     if (better * answer >= 0) {
-                        progress.setHabitStatus(HabitStatus.ENABLED);
+                        Log.d("STATUS", " HABIT: " + habit.getName() + " STATUS: " + progress.getHabitStatus());
+                        if (progress.getHabitStatus() == HabitStatus.DISABLED) {
+                            progress.setHabitStatus(HabitStatus.ENABLED);
+                        }
                     } else {
                         progress.setHabitStatus(HabitStatus.DISABLED);
-                        Log.d("CANCEL", "Habit = " + habit + " app = " + app);
+                        Log.d("STATUS", "Habit = " + habit + " status DISABLED");
                         app.cancelWork(habit.getName(), habit.getName() + habit.getId(), habit.getId());
                     }
                 } else {

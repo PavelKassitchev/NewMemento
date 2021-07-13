@@ -48,10 +48,13 @@ public class DoneReceiver extends BroadcastReceiver {
             failureIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             failureIntent.putExtra("habit", habit);
             failureIntent.putExtra("expire", true);
-            Log.d("MYSTERY", "Expire intent = " + failureIntent);
+            Log.d("PROBLEM", "Expire intent = " + failureIntent);
             context.startActivity(failureIntent);
+            Log.d("PROBLEM", "activity started");
             ((MementoApplication)(context.getApplicationContext())).failHabit(habit.getId());
         }
+        Log.d("PROBLEM", "if finished");
         ((MementoApplication) context.getApplicationContext()).cancelWork(tag);
+        Log.d("PROBLEM", "method finished");
     }
 }

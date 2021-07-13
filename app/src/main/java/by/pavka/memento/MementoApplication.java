@@ -49,18 +49,25 @@ public class MementoApplication extends MultiDexApplication {
     private NotificationChannel channel;
     private String success;
     private static String newHabit;
+    private static String habitInProgress;
+
 
     @Override
     public void onCreate() {
         super.onCreate();
         createNotificationChannel();
         success = getString(R.string.success);
+        habitInProgress = getString(R.string.progress);
         newHabit = getString(R.string.habit_new);
         PreferenceManager.setDefaultValues(this, R.xml.root_preferences, false);
     }
 
     public static String getNewHabit() {
         return newHabit;
+    }
+
+    public static String getHabitInProgress() {
+        return habitInProgress;
     }
 
     public Questionnaire getQuestionnaire() {
@@ -263,7 +270,7 @@ public class MementoApplication extends MultiDexApplication {
                 contentText = success;
                 tillNext = end;
             } else {
-                contentText = habitName;
+                contentText = habitInProgress;
                 tillNext = delay;
             }
             Data data = new Data.Builder().putString("habit", habit.getName())

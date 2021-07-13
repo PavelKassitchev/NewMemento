@@ -55,19 +55,21 @@ public class HabitRecyclerViewAdapter extends RecyclerView.Adapter<HabitRecycler
         switch (status) {
             case ENABLED:
                 holder.period.setText("");
+                holder.progressBar.setVisibility(View.VISIBLE);
                 holder.progressBar.setProgress(0);
-                Log.d("STATUS", "ENABLED");
+                Log.d("STATUS", "ENABLED " + habit.getName() + " position " + position);
                 break;
             case ACTIVE:
                 String timePeriod = CalendarConverter.showDate(prog.getStartDate()) + "-" + CalendarConverter.showDate(prog.getEndDate());
                 holder.period.setText(timePeriod);
+                holder.progressBar.setVisibility(View.VISIBLE);
                 holder.progressBar.setProgress(CalendarConverter.showProgress(prog.getStartDate(), prog.getEndDate(), 8));
-                Log.d("STATUS", "ACTIVE");
+                Log.d("STATUS", "ACTIVE " + habit.getName() + " position " + position);
                 break;
             case DISABLED:
                 holder.period.setText("");
                 holder.progressBar.setVisibility(View.GONE);
-                Log.d("STATUS", "DISABLED");
+                Log.d("STATUS", "DISABLED " + habit.getName() + " position " + position);
                 break;
         }
     }
