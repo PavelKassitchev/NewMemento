@@ -65,7 +65,6 @@ public class UserHabitTracker {
                         }
                     } else {
                         progress.setHabitStatus(HabitStatus.DISABLED);
-                        Log.d("STATUS", "Habit = " + habit + " status DISABLED");
                         app.cancelWork(habit.getName(), habit.getName() + habit.getId(), habit.getId());
                     }
                 } else {
