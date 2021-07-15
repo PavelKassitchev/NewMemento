@@ -77,7 +77,9 @@ public class MainActivity extends MementoActivity implements View.OnClickListene
             int obtainedHabits = user.getTracker().getObtainedCustomizedHabits();
             double weight = user.getWeight();
             double height = user.getHeight();
+            Log.d("CALENDAR", "Gender: " + gender + " birthdate: " + birthDate.getTime() + " weight: " + weight + " answers: " + answers);
             end = calculator.tuneLifeDaySpan(gender, birthDate, weight, height, null, preCalculator, questionnaire, answers, obtainedHabits);
+            Log.d("CALENDAR", "End date: " + end.getTime());
             setButtons(true);
         } else if (user.isHabitCustomized() && !user.allHabitsClear()) {
             setButtons(true);

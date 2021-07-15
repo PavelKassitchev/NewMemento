@@ -24,9 +24,18 @@ public class LifeSpanCalculatorImpl implements LifeSpanCalculator {
         //TODO account weight and height
         birthDate.set(Calendar.DAY_OF_MONTH, 15);
         int totalDaysRaw = preCalculator.findLifeDaySpan(gender, birthDate, locale);
+        Log.d("CALENDAR", "Raw days: " + totalDaysRaw);
         Calendar end = (Calendar) birthDate.clone();
         end.add(Calendar.DAY_OF_MONTH, totalDaysRaw);
-        int leftDays = (int) TimeUnit.MILLISECONDS.toDays(end.getTimeInMillis() - now.getTimeInMillis());
+        Log.d("CALENDAR", "End calendar set to : " + end.getTime() + " in millis: " + end.getTimeInMillis() + " now: " + now.getTime()
+        + " in millis: " + now.getTimeInMillis());
+        Log.d("CALENDAR", "Gap in millis: " + (end.getTimeInMillis() - now.getTimeInMillis())
+                + " in days: " + TimeUnit.MILLISECONDS.toDays(end.getTimeInMillis() - now.getTimeInMillis()));
+        Log.d("CALENDAR", "CHECK: " + TimeUnit.MILLISECONDS.toDays(1798761592456L));
+
+//        int leftDays = (int)(TimeUnit.MILLISECONDS.toDays(end.getTimeInMillis() - now.getTimeInMillis()));
+        int leftDays = (int)Math.round((end.getTimeInMillis() - now.getTimeInMillis()) / 1000.0 / 3600 / 24);
+        Log.d("CALENDAR", "Raw left days: " + leftDays);
         double factor = 365.2 * leftDays / totalDaysRaw;
         int i = 0;
         do {
@@ -47,6 +56,7 @@ public class LifeSpanCalculatorImpl implements LifeSpanCalculator {
         int habitEffect = (int)(firstHabitDays * ((Math.pow(habitFactor, obtainedCustomizedHabits) - 1) / (habitFactor - 1)));
         Log.d("COR", "AFTER = "+ leftDays + " effect = " + habitEffect);
         leftDays += habitEffect;
+        Log.d("CALENDAR", "Left days = " + leftDays);
         now.add(Calendar.DAY_OF_MONTH, leftDays);
         return now;
     }

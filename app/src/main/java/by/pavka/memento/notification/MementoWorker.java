@@ -63,6 +63,7 @@ public class MementoWorker extends Worker {
                 .setContentText(contentText)
                 .setLargeIcon(obtainIcon(id))
                 .setPriority(PRIORITY_HIGH)
+                .setVibrate(new long[] {0, 300, 300, 300})
                 .setDeleteIntent(pendingFailed);
 
         PendingIntent contentIntent;
