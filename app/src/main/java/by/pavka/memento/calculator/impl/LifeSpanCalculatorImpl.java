@@ -33,8 +33,8 @@ public class LifeSpanCalculatorImpl implements LifeSpanCalculator {
                 + " in days: " + TimeUnit.MILLISECONDS.toDays(end.getTimeInMillis() - now.getTimeInMillis()));
         Log.d("CALENDAR", "CHECK: " + TimeUnit.MILLISECONDS.toDays(1798761592456L));
 
-//        int leftDays = (int)(TimeUnit.MILLISECONDS.toDays(end.getTimeInMillis() - now.getTimeInMillis()));
-        int leftDays = (int)Math.round((end.getTimeInMillis() - now.getTimeInMillis()) / 1000.0 / 3600 / 24);
+        int leftDays = (int)(TimeUnit.MILLISECONDS.toDays(end.getTimeInMillis() - now.getTimeInMillis()));
+//        int leftDays = (int)Math.round((end.getTimeInMillis() - now.getTimeInMillis()) / 1000.0 / 3600 / 24);
         Log.d("CALENDAR", "Raw left days: " + leftDays);
         double factor = 365.2 * leftDays / totalDaysRaw;
         int i = 0;
