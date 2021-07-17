@@ -120,26 +120,4 @@ public class IntroductionActivity extends MementoActivity implements View.OnClic
         }
     }
 
-//    private boolean validateDate() {
-//        String birthYear = year.getText().toString();
-//        if (birthYear.length() < 4) {
-//            return false;
-//        }
-//        int year = Integer.parseInt(birthYear);
-//        int birthMonth = month.getSelectedItemPosition();
-//        Calendar now = Calendar.getInstance();
-//        int nowYear = now.get(Calendar.YEAR);
-//        int nowMonth = now.get(Calendar.MONTH);
-//        if (year > nowYear || (year == nowYear && birthMonth > nowMonth) || (nowYear - year > PreCalculator.MAX_AGE)) {
-//            return false;
-//        }
-//        return true;
-//    }
-//
-//    private boolean validateGender() {
-//        if (!male.isChecked() && !female.isChecked()) {
-//            return false;
-//        }
-//        return true;
-//    }
 }

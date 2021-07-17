@@ -34,11 +34,6 @@ public class MainActivity extends MementoActivity implements View.OnClickListene
     private Button buttonClear;
     private MementoApplication application;
 
-//    @Override
-//    public void onBackPressed() {
-//        super.onBackPressed();
-//        finishAffinity();
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +64,6 @@ public class MainActivity extends MementoActivity implements View.OnClickListene
         User user = application.getUser();
         Calendar birthDate = user.getBirthDate();
         Calendar end = null;
-        Log.d("BUTTON", "Habits customized = " + user.isHabitCustomized() + " Habits clear = " + user.allHabitsClear());
         if (birthDate != null) {
             int gender = user.getGender();
             Questionnaire questionnaire = application.getQuestionnaire();
@@ -77,9 +71,7 @@ public class MainActivity extends MementoActivity implements View.OnClickListene
             int obtainedHabits = user.getTracker().getObtainedCustomizedHabits();
             double weight = user.getWeight();
             double height = user.getHeight();
-            Log.d("CALENDAR", "Gender: " + gender + " birthdate: " + birthDate.getTime() + " weight: " + weight + " answers: " + answers);
             end = calculator.tuneLifeDaySpan(gender, birthDate, weight, height, null, preCalculator, questionnaire, answers, obtainedHabits);
-            Log.d("CALENDAR", "End date: " + end.getTime());
             setButtons(true);
         } else if (user.isHabitCustomized() && !user.allHabitsClear()) {
             setButtons(true);
@@ -161,7 +153,6 @@ public class MainActivity extends MementoActivity implements View.OnClickListene
     }
 
     private void setButtons(boolean status) {
-        Log.d("LOAD TRACKER", "Status = " + status);
         buttonClear.setEnabled(status);
         if (status) {
             buttonUpdate.setText(getResources().getString(R.string.update));

@@ -46,7 +46,6 @@ public class MeasureActivity extends MementoActivity implements View.OnClickList
         setBackOverridden();
         Toolbar toolbar = binding.toolbar.getRoot();
         setSupportActionBar(toolbar);
-//        toolbar.inflateMenu(R.menu.bar_menu);
         viewModel = new ViewModelProvider(this).get(MeasureViewModel.class);
         application = (MementoApplication) getApplication();
         measureDate = binding.measureDate;
@@ -86,7 +85,6 @@ public class MeasureActivity extends MementoActivity implements View.OnClickList
                 datePickerDialog.show();
                 break;
             case R.id.button_measure:
-                Log.d("WEIGHT", "Yes!");
                 if (!measureResult.getText().toString().isEmpty()) {
                     double weight = 0;
                     try {
@@ -99,7 +97,6 @@ public class MeasureActivity extends MementoActivity implements View.OnClickList
                         viewModel.setWeight(Double.parseDouble(measureResult.getText().toString()));
                         viewModel.updateChronicler();
                     } else {
-                        Log.d("WEIGHT", String.valueOf(weight));
                         Displayer.showSnackbar(R.string.weight_valid, v);
                         return;
                     }

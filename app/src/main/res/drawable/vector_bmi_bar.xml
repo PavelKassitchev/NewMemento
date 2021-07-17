@@ -3,7 +3,7 @@
     xmlns:aapt="http://schemas.android.com/aapt"
     android:width="200dp"
     android:height="24dp"
-    android:viewportWidth="230"
+    android:viewportWidth="200"
     android:viewportHeight="24">
     <path android:pathData="M0,870l0,-870l987,0l0,870z">
         <aapt:attr name="android:fillColor">

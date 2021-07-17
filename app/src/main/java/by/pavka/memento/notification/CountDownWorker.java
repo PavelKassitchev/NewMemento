@@ -37,7 +37,6 @@ public class CountDownWorker extends Worker {
         notifyManager.cancel(id);
 
         Habit habit = context.getUser().getTracker().getHabit(id);
-        Log.d("MYSTERY", "CountDownWorker habit = " + habit);
         Intent failed = new Intent(context, DoneReceiver.class);
         failed.setAction("by.pavka.expire");
         failed.putExtra("habit", habit);

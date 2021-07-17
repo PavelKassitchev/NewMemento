@@ -36,12 +36,6 @@ public class PreCalculatorImpl implements PreCalculator {
             resultYear -= correction;
         }
         return Math.round(365 * resultYear);
-//        double resultYear = 0.0046 * ageInYears * ageInYears - 0.1552 * ageInYears + 70.87;
-//        if (ageInYears < 4) {
-//            double correction = (4 - ageInYears) * 0.4;
-//            resultYear -= correction;
-//        }
-//        return Math.round(365 * resultYear);
     }
 
     private long femaleLifeDaySpan(double ageInYears, Locale locale) {

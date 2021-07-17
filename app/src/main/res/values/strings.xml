@@ -26,7 +26,7 @@
     <string name="weight">Ваш вес, кг</string>
     <string name="height">Ваш рост, см</string>
     <string name="limit_gender">Определитесь с полом</string>
-    <string name="bmi">Ваш индекс массы тела составляет %.1f</string>
+    <string name="bmi">Ваш ИМТ составляет %.1f</string>
     <string name="calculate">Рассчитать индекс массы тела</string>
     <string name="to_weight">Продолжить</string>
     <string name="bmi_valid">Введите корректные данные веса и роста</string>

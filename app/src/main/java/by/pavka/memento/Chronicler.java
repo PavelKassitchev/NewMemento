@@ -34,7 +34,6 @@ public class Chronicler {
         calendar.clear(Calendar.SECOND);
         calendar.clear(Calendar.MILLISECOND);
         String date = CalendarConverter.showDate(calendar);
-        Log.d("CHRON", "Add Record: " + date + ": " + weight);
         chronicle.put(date, weight);
         if (latestDate == null || latestDate.before(calendar) || latestDate.equals(calendar)) {
             latestDate = calendar;
@@ -49,14 +48,9 @@ public class Chronicler {
         calendar.clear(Calendar.SECOND);
         calendar.clear(Calendar.MILLISECOND);
         if (chronicle.size() > 1) {
-            Log.d("CHRON", "SUCCESSFUL REMOVE: "
-                    + toString(calendar) + " contains: "
-                    + CalendarConverter.showDate(calendar) + " hash: " + CalendarConverter.showDate(calendar).hashCode()
-                    + " " + chronicle.containsKey(CalendarConverter.showDate(calendar)));
             chronicle.remove(CalendarConverter.showDate(calendar));
             latestDate = findLastDate();
         }
-        Log.d("CHRON", "REMOVE: " + CalendarConverter.showDate(calendar) + " FROM " + toString());
         if (latestDate != null) {
             return chronicle.get(CalendarConverter.showDate(latestDate));
         } else {
@@ -64,11 +58,10 @@ public class Chronicler {
         }
     }
 
-    public Calendar getLatestDate() {
-        return latestDate;
-    }
-
     public double findLastWeight() {
+        if (latestDate == null) {
+            return 0;
+        }
         return chronicle.get(CalendarConverter.showDate(latestDate));
     }
 
@@ -86,7 +79,6 @@ public class Chronicler {
         for (int i = 0; i < dataSeries.length; i++) {
             Map.Entry<String, Double> entry = copy.pollFirstEntry();
             Date date = CalendarConverter.fromString(entry.getKey()).getTime();
-            Log.d("Date", "Date = " + date);
             double weight = entry.getValue();
             dataSeries[i] = new DataPoint(date, weight);
         }
@@ -109,7 +101,6 @@ public class Chronicler {
         while (!copy.isEmpty() && CalendarConverter.fromString(copy.pollFirstEntry().getKey()).before(calendar)) {
             index++;
         }
-        Log.d("POLL", "index = " + index);
         return index;
     }
 
@@ -122,17 +113,7 @@ public class Chronicler {
         return result;
     }
 
-    public String toString(Calendar calendar) {
-        String result = "";
-        for (Map.Entry<String, Double> entry : chronicle.entrySet()) {
-            result += " " + entry.getKey() + " hash: " + entry.getKey().hashCode() + ": " + entry.getValue() + " is Equal? "
-                    + entry.getKey().equals(CalendarConverter.showDate(calendar)) + " Same hash? "
-                    + (entry.getKey().hashCode() == CalendarConverter.showDate(calendar).hashCode());
-        }
-        return result;
-    }
-
-    private class ChronicleComaparator implements Comparator<String> {
+    private static class ChronicleComaparator implements Comparator<String> {
 
         @Override
         public int compare(String o1, String o2) {

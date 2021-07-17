@@ -95,41 +95,6 @@ public class MementoWorker extends Worker {
         builder.setContentIntent(contentIntent)
                 .addAction(R.drawable.ic_fail, context.getResources().getString(R.string.fail), pendingFailed);
 
-
-//        Intent intent = new Intent(context, MainActivity.class);
-//        PendingIntent pendingIntent = PendingIntent.getActivity(context, id, intent, 0);
-//
-//        Intent failed = new Intent(context, DoneReceiver.class);
-//        failed.setAction("by.pavka.fail");
-//        failed.putExtra("habit", habit);
-//        PendingIntent pendingFailed = PendingIntent.getBroadcast(context, id, failed, 0);
-//
-//        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, MementoApplication.MEMENTO_CHANNEL_ID);
-//        builder.setSmallIcon(R.drawable.ic_notification)
-//                .setContentTitle(habitName)
-//                .setContentText(contentText)
-//                .setLargeIcon(obtainIcon(id))
-//                .setPriority(PRIORITY_HIGH)
-//                .setAutoCancel(false)
-//                .setContentIntent(pendingIntent)
-//                .setDeleteIntent(pendingFailed);
-//        if (!contentText.equals(context.getSuccess())) {
-//            Intent done = new Intent(context, DoneReceiver.class);
-//            done.setAction("by.pavka.done");
-//            done.putExtra("habit", habit);
-//            PendingIntent pendingDone = PendingIntent.getBroadcast(context, id, done, 0);
-//            builder.addAction(R.drawable.ic_done, context.getResources().getString(R.string.done), pendingDone);
-//            context.launchNotification(id, false);
-//            context.countDown(id);
-//        } else {
-//            Intent finish = new Intent(context, DoneReceiver.class);
-//            finish.setAction("by.pavka.finish");
-//            finish.putExtra("habit", habit);
-//            PendingIntent pendingFinish = PendingIntent.getBroadcast(context, id, finish, 0);
-//            builder.addAction(R.drawable.thumb_up, context.getResources().getString(R.string.success), pendingFinish);
-//        }
-//        builder.addAction(R.drawable.ic_fail, context.getResources().getString(R.string.fail), pendingFailed);
-
         Notification notification = builder.build();
         NotificationManagerCompat notifyManager = NotificationManagerCompat.from(context);
         notifyManager.notify(id, notification);

@@ -52,24 +52,12 @@ public class Habit implements Serializable {
         return imageId;
     }
 
-    public void setImageId(int imageId) {
-        this.imageId = imageId;
-    }
-
     public int getQuestion() {
         return question;
     }
 
-    public void setQuestion(int question) {
-        this.question = question;
-    }
-
     public int getBetter() {
         return better;
-    }
-
-    public void setBetter(int better) {
-        this.better = better;
     }
 
     public int getId() {
@@ -89,16 +77,12 @@ public class Habit implements Serializable {
     }
 
     public void updateName(boolean clean) {
-        Log.d("CHANGE2.5", "question = " + question);
         if (question < 0) {
             if (clean) {
-                Log.d("CHANGE2.3", "clean " + name);
                 name = MementoApplication.getNewHabit();
 
             } else {
-                Log.d("CHANGE2", "Name = " + name + " descr = " + description);
                 name = description;
-                Log.d("CHANGE21", name);
             }
         }
     }
@@ -111,7 +95,6 @@ public class Habit implements Serializable {
         return imageId == habit.imageId &&
                 question == habit.question &&
                 better == habit.better;
-//                && name.equals(habit.name);
     }
 
     @Override

@@ -67,7 +67,7 @@
         android:layout_marginStart="48dp"
         android:layout_marginEnd="2dp"
         android:layout_marginTop="4dp"
-        android:progressDrawable="@drawable/vector_bmi_bar"
+        android:progressDrawable="@drawable/progress__b"
         android:max="30"
         android:thumb="@drawable/weights"
         app:layout_constraintEnd_toEndOf="parent"

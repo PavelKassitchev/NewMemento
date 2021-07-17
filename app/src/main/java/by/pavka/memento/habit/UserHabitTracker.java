@@ -59,7 +59,6 @@ public class UserHabitTracker {
                 HabitProgress progress = entry.getValue();
                 if (!cleanUser) {
                     if (better * answer >= 0) {
-                        Log.d("STATUS", " HABIT: " + habit.getName() + " STATUS: " + progress.getHabitStatus());
                         if (progress.getHabitStatus() == HabitStatus.DISABLED) {
                             progress.setHabitStatus(HabitStatus.ENABLED);
                         }

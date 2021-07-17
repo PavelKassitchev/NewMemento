@@ -28,9 +28,6 @@ public class HabitRecyclerViewAdapter extends RecyclerView.Adapter<HabitRecycler
     private Context context;
 
     public HabitRecyclerViewAdapter(Context context, UserHabitTracker tracker) {
-        Log.d("Tracker", " " + tracker);
-        Log.d("Tracker1", " " + tracker.getHabits().keySet());
-        Log.d("Tracker2", " " + tracker.getHabits());
         habits = new ArrayList<>(tracker.getHabits().keySet());
         progress = new ArrayList<>(tracker.getHabits().values());
         this.context = context;
@@ -47,7 +44,6 @@ public class HabitRecyclerViewAdapter extends RecyclerView.Adapter<HabitRecycler
     @Override
     public void onBindViewHolder(@NonNull HabitViewHolder holder, int position) {
         Habit habit = habits.get(position);
-        Log.d("CHANGE???", "position = " + position + " habit = " + habit.getName() + " descr = " + habit.getDescription());
         holder.habitName.setText(habit.getName());
         HabitProgress prog = progress.get(position);
         HabitStatus status = prog.getHabitStatus();
@@ -57,19 +53,16 @@ public class HabitRecyclerViewAdapter extends RecyclerView.Adapter<HabitRecycler
                 holder.period.setText("");
                 holder.progressBar.setVisibility(View.VISIBLE);
                 holder.progressBar.setProgress(0);
-                Log.d("STATUS", "ENABLED " + habit.getName() + " position " + position);
                 break;
             case ACTIVE:
                 String timePeriod = CalendarConverter.showDate(prog.getStartDate()) + "-" + CalendarConverter.showDate(prog.getEndDate());
                 holder.period.setText(timePeriod);
                 holder.progressBar.setVisibility(View.VISIBLE);
                 holder.progressBar.setProgress(CalendarConverter.showProgress(prog.getStartDate(), prog.getEndDate(), 8));
-                Log.d("STATUS", "ACTIVE " + habit.getName() + " position " + position);
                 break;
             case DISABLED:
                 holder.period.setText("");
                 holder.progressBar.setVisibility(View.GONE);
-                Log.d("STATUS", "DISABLED " + habit.getName() + " position " + position);
                 break;
         }
     }

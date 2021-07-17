@@ -34,7 +34,6 @@ public class QuestionnaireImpl implements Questionnaire {
 
     @Override
     public boolean next() {
-        System.out.println("Cursor = " + cursor + " size = " + size);
         if (cursor < size - 1) {
             cursor++;
             return true;
@@ -60,10 +59,5 @@ public class QuestionnaireImpl implements Questionnaire {
     @Override
     public void setCursor(int i) {
         cursor = i;
-    }
-
-    @Override
-    public int getCursor() {
-        return cursor;
     }
 }

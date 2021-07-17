@@ -77,24 +77,19 @@ public class HistoryActivity extends MementoActivity implements AdapterView.OnIt
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if (data.length > 0) {
             int choice = parent.getSelectedItemPosition();
-            int index = 0;
             Calendar start = Calendar.getInstance();
             switch (choice) {
                 case 0:
-                    start.setTimeInMillis((long)data[0].getX());
-                    Log.d("CHRON", start.getTime().toString());
+                    start.setTimeInMillis((long) data[0].getX());
                     break;
                 case 1:
                     start.add(Calendar.MONTH, -6);
-                    index = chronicler.getTimeIndex(start);
                     break;
                 case 2:
                     start.add(Calendar.MONTH, -3);
-                    index = chronicler.getTimeIndex(start);
                     break;
                 case 3:
                     start.add(Calendar.MONTH, -1);
-                    index = chronicler.getTimeIndex(start);
                     break;
                 case 4:
                     if (((MementoApplication) getApplication()).getUser().getBirthDate() == null) {
@@ -112,12 +107,10 @@ public class HistoryActivity extends MementoActivity implements AdapterView.OnIt
                 default:
                     break;
             }
-//            if (data.length > index) {
-//                graphView.getViewport().setMinX(data[index].getX());
-                graphView.getViewport().setMinX(start.getTimeInMillis());
-                graphView.getViewport().setMaxX(new Date().getTime() + 1000 * 3600 * 24);
-                graphView.getViewport().setXAxisBoundsManual(true);
-//            }
+
+            graphView.getViewport().setMinX(start.getTimeInMillis());
+            graphView.getViewport().setMaxX(new Date().getTime() + 1000 * 3600 * 24);
+            graphView.getViewport().setXAxisBoundsManual(true);
             graphView.onDataChanged(true, false);
         }
     }
@@ -142,7 +135,7 @@ public class HistoryActivity extends MementoActivity implements AdapterView.OnIt
 
     @Override
     public void onTap(Series series, DataPointInterface dataPoint) {
-        Toast.makeText(this, CalendarConverter.showDate(new Date((long)(dataPoint.getX())))
+        Toast.makeText(this, CalendarConverter.showDate(new Date((long) (dataPoint.getX())))
                 + ", " + getResources().getString(R.string.weight) + ": " + dataPoint.getY(), Toast.LENGTH_SHORT).show();
     }
 }

@@ -66,10 +66,6 @@ public class MementoApplication extends MultiDexApplication {
         return newHabit;
     }
 
-    public static String getHabitInProgress() {
-        return habitInProgress;
-    }
-
     public Questionnaire getQuestionnaire() {
         if (questionnaire == null) {
             questionnaire = new QuestionnaireImpl(this);
@@ -79,9 +75,7 @@ public class MementoApplication extends MultiDexApplication {
     }
 
     public User getUser() {
-        Log.d("LOAD TRACKER", "getting User");
         if (user == null) {
-            Log.d("LOAD TRACKER", "creating User");
             user = createUser();
         }
         return user;
@@ -126,7 +120,6 @@ public class MementoApplication extends MultiDexApplication {
         user.setName(name);
         user.setAnswers(answers);
         user.setTracker(tracker);
-        Log.d("LOAD TRACKER", "Tracker's app = " + tracker.getApp());
         return user;
     }
 
@@ -194,8 +187,7 @@ public class MementoApplication extends MultiDexApplication {
         }
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
-        Chronicler chronicler = gson.fromJson(sChronicler, Chronicler.class);
-        return chronicler;
+        return gson.fromJson(sChronicler, Chronicler.class);
     }
 
     public void saveHabits() {
@@ -204,9 +196,7 @@ public class MementoApplication extends MultiDexApplication {
         builder.enableComplexMapKeySerialization();
         Gson gson = builder.create();
         UserHabitTracker habitTracker = user.getTracker();
-        Log.d("TRACKER", "While saving habits: " + habitTracker);
         String sTracker = gson.toJson(habitTracker);
-        Log.d("TRACKER", "While saving habits string = " + sTracker);
         editor.putString(TRACKER, sTracker);
         editor.apply();
     }
@@ -214,7 +204,6 @@ public class MementoApplication extends MultiDexApplication {
     private UserHabitTracker loadTracker() {
         SharedPreferences preferences = getSharedPreferences(MementoApplication.APP_PREF, MODE_PRIVATE);
         String tracker = preferences.getString(TRACKER, null);
-        Log.d("TRACKER", "In APP LOADING = " + tracker);
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         UserHabitTracker habitTracker = gson.fromJson(tracker, UserHabitTracker.class);
@@ -259,9 +248,7 @@ public class MementoApplication extends MultiDexApplication {
         WorkManager workManager = WorkManager.getInstance(this);
         MementoAlarmer alarmer = new MementoAlarmer();
         long delay = alarmer.tillNextAlarm(week, hour, minute, resetting);
-//        if (resetting) {
-//            cancelWork(habitName + id, habitName, id);
-//        }
+
         if (progress.getHabitStatus() == HabitStatus.ACTIVE) {
             long end = alarmer.tillEnd(progress.getEndDate());
             String contentText;
@@ -284,7 +271,6 @@ public class MementoApplication extends MultiDexApplication {
     public void countDown(int id) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         int gap = Integer.parseInt(preferences.getString("delay", "180"));
-        Log.d("MYSTERY", "Inside countDown gap = " + gap + " delay = " + preferences.getString("delay", ""));
         String habitName = getUser().getTracker().getHabit(id).getName();
         WorkManager workManager = WorkManager.getInstance(this);
         Data data = new Data.Builder().putInt("id", id).putString("name", habitName).build();
@@ -296,6 +282,5 @@ public class MementoApplication extends MultiDexApplication {
     public void failHabit(int id) {
         getUser().getTracker().getHabitProgress(id).setHabitStatus(HabitStatus.ENABLED);
         saveHabits();
-        Log.d("MYSTERY", "APP HABIT FAILED");
     }
 }

@@ -64,9 +64,7 @@ public class ActivizationViewModel extends AndroidViewModel {
         name = habit.getName();
         User user = app.getUser();
         Map<Habit, HabitProgress> habits = user.getTracker().getHabits();
-        Log.d("MYSTERY", "Habits: " + habits + " habit: " + habit);
         HabitProgress progress = habits.get(habit);
-        Log.d("MYSTERY", "Progress: " + progress);
         if (progress.getEndDate() != null) {
             end = progress.getEndDate();
             week = progress.getWeek();
@@ -96,7 +94,6 @@ public class ActivizationViewModel extends AndroidViewModel {
     public void resetProgress(boolean cleared) {
         app.cancelWork(habit.getName() + habit.getId(), habit.getName(), habit.getId());
         habit.updateName(cleared);
-        Log.d("CHANGE1.5", "Cleared: " + cleared);
         User user = app.getUser();
         Map<Habit, HabitProgress> habits = user.getTracker().getHabits();
         if (cleared) {
@@ -146,15 +143,6 @@ public class ActivizationViewModel extends AndroidViewModel {
     public void setDay(int i, boolean isChecked) {
         week[i] = isChecked;
     }
-
-//    public LocalTime getTime() {
-//        return time;
-//    }
-//
-//    public void setTime(LocalTime time) {
-//        this.time = time;
-//    }
-
 
     public int getHour() {
         return hour;

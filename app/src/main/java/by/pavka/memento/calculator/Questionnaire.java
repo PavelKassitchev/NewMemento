@@ -7,5 +7,4 @@ public interface Questionnaire {
     double getPositive();
     double getNegative();
     void setCursor(int i);
-    int getCursor();
 }

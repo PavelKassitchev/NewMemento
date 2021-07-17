@@ -19,7 +19,6 @@ public class MementoAlarmer {
         next.set(Calendar.SECOND, 0);
         next.set(Calendar.MILLISECOND, 0);
         long diff = next.getTimeInMillis() - Calendar.getInstance().getTimeInMillis();
-        Log.d("MYSTERY", "DIFF = " + diff);
         if (!exact && diff < 300000) {
             diff = -1;
         }

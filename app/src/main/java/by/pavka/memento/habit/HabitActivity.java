@@ -80,13 +80,9 @@ public class  HabitActivity extends MementoActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             Habit habit = (Habit)data.getSerializableExtra("habit");
-            Log.d("CHANGE!!!", "HABIT = " + habit);
             application.launchNotification(habit.getId(), true);
             application.saveHabits();
             adapter.setTracker(application.getUser().getTracker());
-            for (Map.Entry<Habit, HabitProgress> entry : application.getUser().getTracker().getHabits().entrySet()) {
-                Log.d("MYSTERY", entry.getKey().getName() + " - " + entry.getValue().getHabitStatus());
-            }
             adapter.notifyItemChanged(adapter.habits.indexOf(habit));
             adapter.notifyDataSetChanged();
         }
