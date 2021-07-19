@@ -1,4 +1,4 @@
-package by.pavka.memento;
+package by.pavka.memento.profile;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
@@ -16,6 +16,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Calendar;
 
+import by.pavka.memento.MementoActivity;
+import by.pavka.memento.MementoApplication;
+import by.pavka.memento.R;
 import by.pavka.memento.databinding.ActivityIntroductionBinding;
 import by.pavka.memento.user.User;
 import by.pavka.memento.util.CalendarConverter;

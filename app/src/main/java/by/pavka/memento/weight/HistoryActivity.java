@@ -1,21 +1,17 @@
-package by.pavka.memento;
+package by.pavka.memento.weight;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
@@ -30,7 +26,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import by.pavka.memento.MementoActivity;
+import by.pavka.memento.MementoApplication;
+import by.pavka.memento.R;
 import by.pavka.memento.databinding.ActivityHistoryBinding;
+import by.pavka.memento.user.Chronicler;
 import by.pavka.memento.util.CalendarConverter;
 
 public class HistoryActivity extends MementoActivity implements AdapterView.OnItemSelectedListener,

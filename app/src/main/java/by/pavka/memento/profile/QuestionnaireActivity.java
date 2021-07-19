@@ -1,6 +1,5 @@
-package by.pavka.memento;
+package by.pavka.memento.profile;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -14,6 +13,9 @@ import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import by.pavka.memento.MementoActivity;
+import by.pavka.memento.MementoApplication;
+import by.pavka.memento.R;
 import by.pavka.memento.databinding.ActivityQuestionnaireBinding;
 import by.pavka.memento.user.User;
 

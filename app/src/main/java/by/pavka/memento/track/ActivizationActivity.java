@@ -1,6 +1,5 @@
-package by.pavka.memento.habit;
+package by.pavka.memento.track;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -9,7 +8,6 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -17,17 +15,17 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Calendar;
 
-import by.pavka.memento.BottomNavigationListener;
 import by.pavka.memento.MementoActivity;
+import by.pavka.memento.MementoApplication;
 import by.pavka.memento.R;
 import by.pavka.memento.databinding.ActivityActivizationBinding;
+import by.pavka.memento.habit.Habit;
 import by.pavka.memento.util.CalendarConverter;
 import by.pavka.memento.util.Displayer;
 
@@ -50,7 +48,7 @@ public class ActivizationActivity extends MementoActivity implements View.OnClic
         viewModel = new ViewModelProvider(this).get(ActivizationViewModel.class);
         Intent intent = getIntent();
         if (viewModel.getEnd() == null) {
-            Habit habit = (Habit) intent.getSerializableExtra("habit");
+            Habit habit = (Habit) intent.getSerializableExtra(MementoApplication.HABIT);
             viewModel.setHabit(habit);
         }
         BottomNavigationView bottomNavigationView = binding.bottomNavigation.getRoot();
@@ -106,7 +104,7 @@ public class ActivizationActivity extends MementoActivity implements View.OnClic
         if (intent.getBooleanExtra("failure", false)) {
             cleanUIData();
             Intent failureIntent = new Intent();
-            failureIntent.putExtra("habit", viewModel.getHabit());
+            failureIntent.putExtra(MementoApplication.HABIT, viewModel.getHabit());
             viewModel.resetProgress(viewModel.isClearance());
             setResult(RESULT_OK, intent);
             finish();
@@ -134,7 +132,7 @@ public class ActivizationActivity extends MementoActivity implements View.OnClic
                             viewModel.setDescription(description.getText().toString());
                         }
                         Intent intent = new Intent();
-                        intent.putExtra("habit", viewModel.getHabit());
+                        intent.putExtra(MementoApplication.HABIT, viewModel.getHabit());
                         viewModel.resetProgress(viewModel.isClearance());
                         setResult(RESULT_OK, intent);
                         finish();
@@ -156,6 +154,7 @@ public class ActivizationActivity extends MementoActivity implements View.OnClic
                 int minute = now.get(Calendar.MINUTE);
                 new TimePickerDialog(this, this, hour, minute, true).show();
                 break;
+            default:
         }
     }
 

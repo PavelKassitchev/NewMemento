@@ -1,23 +1,20 @@
-package by.pavka.memento.habit;
+package by.pavka.memento.track;
 
 import android.app.Application;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.preference.PreferenceManager;
 
-import java.text.DateFormat;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Map;
 
 import by.pavka.memento.MementoApplication;
+import by.pavka.memento.habit.Habit;
+import by.pavka.memento.habit.HabitProgress;
+import by.pavka.memento.habit.HabitStatus;
 import by.pavka.memento.user.User;
 
 public class ActivizationViewModel extends AndroidViewModel {
@@ -85,10 +82,7 @@ public class ActivizationViewModel extends AndroidViewModel {
     public boolean validateSchedule() {
         Calendar now = Calendar.getInstance();
         Calendar finish = new GregorianCalendar(end.get(Calendar.YEAR), end.get(Calendar.MONTH), end.get(Calendar.DAY_OF_MONTH), hour, minute);
-        if (now.before(finish)) {
-            return true;
-        }
-        return false;
+        return now.before(finish);
     }
 
     public void resetProgress(boolean cleared) {

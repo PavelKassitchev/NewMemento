@@ -1,4 +1,4 @@
-package by.pavka.memento;
+package by.pavka.memento.setting;
 
 import androidx.appcompat.app.AppCompatActivity;
 

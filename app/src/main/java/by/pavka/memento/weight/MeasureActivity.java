@@ -1,15 +1,11 @@
-package by.pavka.memento;
+package by.pavka.memento.weight;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,11 +16,11 @@ import android.widget.EditText;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Calendar;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
+import by.pavka.memento.MementoActivity;
+import by.pavka.memento.MementoApplication;
+import by.pavka.memento.R;
 import by.pavka.memento.databinding.ActivityMeasureBinding;
-import by.pavka.memento.habit.ActivizationViewModel;
 import by.pavka.memento.util.CalendarConverter;
 import by.pavka.memento.util.Displayer;
 

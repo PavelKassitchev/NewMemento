@@ -2,10 +2,8 @@ package by.pavka.memento.user;
 
 import java.util.Calendar;
 
-import by.pavka.memento.Chronicler;
 import by.pavka.memento.habit.HabitProgress;
 import by.pavka.memento.habit.HabitStatus;
-import by.pavka.memento.habit.UserHabitTracker;
 
 public class User {
     private String name;

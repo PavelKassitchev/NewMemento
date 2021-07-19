@@ -1,4 +1,4 @@
-package by.pavka.memento.habit;
+package by.pavka.memento.user;
 
 import android.content.res.TypedArray;
 import android.util.Log;
@@ -8,6 +8,9 @@ import java.util.Map;
 
 import by.pavka.memento.MementoApplication;
 import by.pavka.memento.R;
+import by.pavka.memento.habit.Habit;
+import by.pavka.memento.habit.HabitProgress;
+import by.pavka.memento.habit.HabitStatus;
 
 public class UserHabitTracker {
     private transient MementoApplication app;

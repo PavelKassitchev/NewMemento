@@ -1,13 +1,11 @@
-package by.pavka.memento;
+package by.pavka.memento.profile;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,6 +14,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Calendar;
 
+import by.pavka.memento.BottomNavigationListener;
+import by.pavka.memento.MementoActivity;
+import by.pavka.memento.MementoApplication;
+import by.pavka.memento.R;
 import by.pavka.memento.calculator.LifeSpanCalculator;
 import by.pavka.memento.calculator.PreCalculator;
 import by.pavka.memento.calculator.Questionnaire;

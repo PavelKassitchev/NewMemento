@@ -1,4 +1,4 @@
-package by.pavka.memento;
+package by.pavka.memento.profile;
 
 import android.app.Application;
 
@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 
 import java.util.Calendar;
 
+import by.pavka.memento.MementoApplication;
 import by.pavka.memento.user.User;
 
 public class WeightViewModel extends AndroidViewModel {

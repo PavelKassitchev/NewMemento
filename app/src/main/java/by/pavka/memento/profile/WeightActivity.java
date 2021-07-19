@@ -1,4 +1,4 @@
-package by.pavka.memento;
+package by.pavka.memento.profile;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
@@ -12,6 +12,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import by.pavka.memento.MementoActivity;
+import by.pavka.memento.R;
 import by.pavka.memento.databinding.ActivityWeightBinding;
 import by.pavka.memento.util.Displayer;
 import by.pavka.memento.util.MementoValidator;

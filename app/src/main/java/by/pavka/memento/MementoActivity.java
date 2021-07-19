@@ -1,23 +1,22 @@
 package by.pavka.memento;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import by.pavka.memento.habit.HabitActivity;
+import by.pavka.memento.setting.SettingsActivity;
+import by.pavka.memento.track.HabitActivity;
+import by.pavka.memento.profile.MainActivity;
 import by.pavka.memento.util.Displayer;
+import by.pavka.memento.weight.MeasureActivity;
 
 public class MementoActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 

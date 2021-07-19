@@ -1,8 +1,7 @@
-package by.pavka.memento.habit;
+package by.pavka.memento.track;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +13,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import by.pavka.memento.R;
+import by.pavka.memento.habit.Habit;
+import by.pavka.memento.habit.HabitProgress;
+import by.pavka.memento.habit.HabitStatus;
+import by.pavka.memento.user.UserHabitTracker;
 import by.pavka.memento.util.CalendarConverter;
 import by.pavka.memento.util.Displayer;
 

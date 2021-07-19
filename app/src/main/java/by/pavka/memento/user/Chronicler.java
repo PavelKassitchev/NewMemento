@@ -1,21 +1,15 @@
-package by.pavka.memento;
-
-import android.text.format.DateUtils;
-import android.util.Log;
+package by.pavka.memento.user;
 
 import com.jjoe64.graphview.series.DataPoint;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 
 import by.pavka.memento.util.CalendarConverter;
@@ -25,7 +19,7 @@ public class Chronicler {
     private Calendar latestDate;
 
     public Chronicler() {
-        chronicle = new TreeMap<String, Double>(new ChronicleComaparator());
+        chronicle = new TreeMap<>(new ChronicleComaparator());
     }
 
     public boolean addRecord(Calendar calendar, double weight) {
@@ -82,14 +76,10 @@ public class Chronicler {
             double weight = entry.getValue();
             dataSeries[i] = new DataPoint(date, weight);
         }
-        Arrays.sort(dataSeries, new Comparator<DataPoint>() {
-
-            @Override
-            public int compare(DataPoint o1, DataPoint o2) {
-                double d1 = o1.getX();
-                double d2 = o2.getX();
-                return (int)(d1 - d2);
-            }
+        Arrays.sort(dataSeries, (o1, o2) -> {
+            double d1 = o1.getX();
+            double d2 = o2.getX();
+            return (int)(d1 - d2);
         });
         return dataSeries;
     }

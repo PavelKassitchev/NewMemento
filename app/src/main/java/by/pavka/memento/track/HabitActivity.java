@@ -1,30 +1,23 @@
-package by.pavka.memento.habit;
+package by.pavka.memento.track;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.Map;
-
-import by.pavka.memento.BottomNavigationListener;
 import by.pavka.memento.MementoActivity;
 import by.pavka.memento.MementoApplication;
 import by.pavka.memento.R;
 import by.pavka.memento.databinding.ActivityHabbitBinding;
+import by.pavka.memento.habit.Habit;
+import by.pavka.memento.user.UserHabitTracker;
 
 public class  HabitActivity extends MementoActivity {
 

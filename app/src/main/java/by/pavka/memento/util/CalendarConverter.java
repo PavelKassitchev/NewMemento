@@ -1,7 +1,5 @@
 package by.pavka.memento.util;
 
-import android.util.Log;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;
@@ -59,14 +57,11 @@ public class CalendarConverter {
 
     public static int showProgress(Calendar start, Calendar end) {
         Calendar now = Calendar.getInstance();
-        int progress = (int)(100 * (now.getTimeInMillis() - start.getTimeInMillis()) / (end.getTimeInMillis() - start.getTimeInMillis()));
-
-        return progress;
+        return (int)(100 * (now.getTimeInMillis() - start.getTimeInMillis()) / (end.getTimeInMillis() - start.getTimeInMillis()));
     }
 
     public static int showProgress (Calendar start, Calendar end, int initial) {
         Calendar now = Calendar.getInstance();
-        int progress = initial + (int)((100 - initial) * (now.getTimeInMillis() - start.getTimeInMillis()) / (end.getTimeInMillis() - start.getTimeInMillis()));
-        return progress;
+        return initial + (int)((100 - initial) * (now.getTimeInMillis() - start.getTimeInMillis()) / (end.getTimeInMillis() - start.getTimeInMillis()));
     }
 }

@@ -4,7 +4,6 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -12,11 +11,10 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import by.pavka.memento.MainActivity;
 import by.pavka.memento.MementoApplication;
 import by.pavka.memento.R;
 import by.pavka.memento.habit.Habit;
-import by.pavka.memento.habit.HabitActivity;
+import by.pavka.memento.track.HabitActivity;
 
 import static androidx.core.app.NotificationCompat.PRIORITY_HIGH;
 

@@ -1,4 +1,4 @@
-package by.pavka.memento;
+package by.pavka.memento.profile;
 
 import android.app.Application;
 
@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.Arrays;
 
+import by.pavka.memento.MementoApplication;
 import by.pavka.memento.calculator.Questionnaire;
 import by.pavka.memento.user.User;
 

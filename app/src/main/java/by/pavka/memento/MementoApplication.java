@@ -3,7 +3,6 @@ package by.pavka.memento;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import androidx.core.app.NotificationManagerCompat;
 import androidx.multidex.MultiDexApplication;
@@ -24,9 +23,10 @@ import by.pavka.memento.calculator.impl.QuestionnaireImpl;
 import by.pavka.memento.habit.Habit;
 import by.pavka.memento.habit.HabitProgress;
 import by.pavka.memento.habit.HabitStatus;
-import by.pavka.memento.habit.UserHabitTracker;
+import by.pavka.memento.user.UserHabitTracker;
 import by.pavka.memento.notification.CountDownWorker;
 import by.pavka.memento.notification.MementoWorker;
+import by.pavka.memento.user.Chronicler;
 import by.pavka.memento.user.User;
 import by.pavka.memento.util.CalendarConverter;
 
@@ -41,6 +41,7 @@ public class MementoApplication extends MultiDexApplication {
     public static final String INDEX = "index";
     public static final String HABITS_CUSTOMIZED = "customized";
     public static final String TRACKER = "tracker";
+    public static final String HABIT = "habit";
     private static final String CHRONICLER = "chronicler";
 
     private Questionnaire questionnaire;

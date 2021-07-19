@@ -7,28 +7,21 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.preference.PreferenceManager;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import java.time.LocalDate;
-
-import by.pavka.memento.MainActivity;
+import by.pavka.memento.profile.MainActivity;
 import by.pavka.memento.MementoApplication;
 import by.pavka.memento.R;
-import by.pavka.memento.habit.ActivizationActivity;
 import by.pavka.memento.habit.Habit;
-import by.pavka.memento.habit.HabitActivity;
 
 import static androidx.core.app.NotificationCompat.PRIORITY_HIGH;
 

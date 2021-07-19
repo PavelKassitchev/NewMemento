@@ -1,4 +1,4 @@
-package by.pavka.memento;
+package by.pavka.memento.weight;
 
 import android.app.Application;
 import android.util.Log;
@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel;
 
 import java.util.Calendar;
 
+import by.pavka.memento.MementoApplication;
 import by.pavka.memento.habit.Habit;
 
 public class MeasureViewModel extends AndroidViewModel {

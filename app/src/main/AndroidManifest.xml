@@ -12,11 +12,11 @@
         android:roundIcon="@drawable/ic_sand_clock"
         android:supportsRtl="true"
         android:theme="@style/Theme.Memento">
-        <activity android:name=".WeightActivity" />
-        <activity android:name=".SettingsActivity" />
-        <activity android:name=".HistoryActivity" />
+        <activity android:name=".profile.WeightActivity" />
+        <activity android:name=".setting.SettingsActivity" />
+        <activity android:name=".weight.HistoryActivity" />
         <activity
-            android:name=".MeasureActivity"
+            android:name=".weight.MeasureActivity"
             android:launchMode="singleTask" />
 
         <receiver
@@ -24,14 +24,14 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".habit.ActivizationActivity" />
+        <activity android:name=".track.ActivizationActivity" />
         <activity
-            android:name=".habit.HabitActivity"
+            android:name=".track.HabitActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".IntroductionActivity" />
-        <activity android:name=".QuestionnaireActivity" />
+        <activity android:name=".profile.IntroductionActivity" />
+        <activity android:name=".profile.QuestionnaireActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".profile.MainActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -8,7 +8,9 @@ import androidx.annotation.NonNull;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import by.pavka.memento.habit.HabitActivity;
+import by.pavka.memento.track.HabitActivity;
+import by.pavka.memento.profile.MainActivity;
+import by.pavka.memento.weight.MeasureActivity;
 
 public class BottomNavigationListener implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -31,6 +33,10 @@ public class BottomNavigationListener implements BottomNavigationView.OnNavigati
             case R.id.weights:
                 intent = new Intent(activity, MeasureActivity.class);
                 break;
+            default:
+        }
+        if (intent == null) {
+            return false;
         }
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         activity.startActivity(intent);
