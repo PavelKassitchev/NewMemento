@@ -75,8 +75,7 @@ public class HabitRecyclerViewAdapter extends RecyclerView.Adapter<HabitRecycler
     }
 
     public class HabitViewHolder extends RecyclerView.ViewHolder {
-        public int REQUEST_CODE = 1;
-        private HabitRecyclerViewAdapter adapter;
+        public static final int REQUEST_CODE = 1;
         private ImageView imageView;
         private TextView habitName;
         private TextView period;
@@ -84,25 +83,21 @@ public class HabitRecyclerViewAdapter extends RecyclerView.Adapter<HabitRecycler
 
         public HabitViewHolder(@NonNull View itemView, HabitRecyclerViewAdapter adapter) {
             super(itemView);
-            this.adapter = adapter;
+
             imageView = itemView.findViewById(R.id.card_image);
             habitName = itemView.findViewById(R.id.card_text);
             period = itemView.findViewById(R.id.period);
             progressBar = itemView.findViewById(R.id.progressBar);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    HabitProgress habitProgress = progress.get(getLayoutPosition());
-                    if (habitProgress.getHabitStatus() == HabitStatus.DISABLED) {
-                        Displayer.showSnackbar(R.string.disabled, v);
-                    } else {
-                        Habit habit = habits.get(getLayoutPosition());
-                        HabitActivity habitActivity = (HabitActivity) (adapter.context);
-                        Intent intent = new Intent(habitActivity, ActivizationActivity.class);
-                        intent.putExtra("habit", habit);
-                        habitActivity.startActivityForResult(intent, REQUEST_CODE);
-
-                    }
+            itemView.setOnClickListener(v -> {
+                HabitProgress habitProgress = progress.get(getLayoutPosition());
+                if (habitProgress.getHabitStatus() == HabitStatus.DISABLED) {
+                    Displayer.showSnackbar(R.string.disabled, v);
+                } else {
+                    Habit habit = habits.get(getLayoutPosition());
+                    HabitActivity habitActivity = (HabitActivity) (adapter.context);
+                    Intent intent = new Intent(habitActivity, ActivizationActivity.class);
+                    intent.putExtra("habit", habit);
+                    habitActivity.startActivityForResult(intent, REQUEST_CODE);
                 }
             });
         }

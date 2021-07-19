@@ -14,7 +14,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Calendar;
 
-import by.pavka.memento.BottomNavigationListener;
 import by.pavka.memento.MementoActivity;
 import by.pavka.memento.MementoApplication;
 import by.pavka.memento.R;
@@ -54,7 +53,7 @@ public class MainActivity extends MementoActivity implements View.OnClickListene
         buttonClear.setOnClickListener(this);
         application = (MementoApplication) getApplication();
         BottomNavigationView bottomNavigationView = binding.bottomNavigation.getRoot();
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationListener(this));
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
         successHabit(getIntent());
     }
 
@@ -115,6 +114,7 @@ public class MainActivity extends MementoActivity implements View.OnClickListene
                     }
                 }
                 break;
+            default:
         }
     }
 
@@ -181,6 +181,8 @@ public class MainActivity extends MementoActivity implements View.OnClickListene
                 setHeader(null);
                 setForecast(null);
                 setButtons(false);
+                break;
+            default:
         }
     }
 

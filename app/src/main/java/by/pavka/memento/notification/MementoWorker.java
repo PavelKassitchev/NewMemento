@@ -47,7 +47,7 @@ public class MementoWorker extends Worker {
 
         Intent failed = new Intent(context, DoneReceiver.class);
         failed.setAction("by.pavka.fail");
-        failed.putExtra("habit", habit);
+        failed.putExtra(MementoApplication.HABIT, habit);
         PendingIntent pendingFailed = PendingIntent.getBroadcast(context, id, failed, 0);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, MementoApplication.MEMENTO_CHANNEL_ID);
@@ -65,7 +65,7 @@ public class MementoWorker extends Worker {
         if (!contentText.equals(context.getSuccess())) {
             Intent done = new Intent(context, DoneReceiver.class);
             done.setAction("by.pavka.done");
-            done.putExtra("habit", habit);
+            done.putExtra(MementoApplication.HABIT, habit);
             actionIntent = PendingIntent.getBroadcast(context, id, done, 0);
             builder.addAction(R.drawable.ic_done, context.getResources().getString(R.string.done), actionIntent);
             context.launchNotification(id, false);
@@ -73,7 +73,7 @@ public class MementoWorker extends Worker {
         } else {
             Intent finish = new Intent(context, DoneReceiver.class);
             finish.setAction("by.pavka.finish");
-            finish.putExtra("habit", habit);
+            finish.putExtra(MementoApplication.HABIT, habit);
             actionIntent = PendingIntent.getBroadcast(context, id, finish, 0);
             builder.addAction(R.drawable.thumb_up, context.getResources().getString(R.string.success_result), actionIntent);
         }

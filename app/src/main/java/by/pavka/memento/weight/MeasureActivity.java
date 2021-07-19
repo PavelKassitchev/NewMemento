@@ -18,7 +18,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.Calendar;
 
 import by.pavka.memento.MementoActivity;
-import by.pavka.memento.MementoApplication;
 import by.pavka.memento.R;
 import by.pavka.memento.databinding.ActivityMeasureBinding;
 import by.pavka.memento.util.CalendarConverter;
@@ -28,10 +27,7 @@ public class MeasureActivity extends MementoActivity implements View.OnClickList
 
     private Button measureDate;
     private EditText measureResult;
-    private Button buttonMeasure;
-    private Button buttonHistory;
     private MeasureViewModel viewModel;
-    private MementoApplication application;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +39,6 @@ public class MeasureActivity extends MementoActivity implements View.OnClickList
         Toolbar toolbar = binding.toolbar.getRoot();
         setSupportActionBar(toolbar);
         viewModel = new ViewModelProvider(this).get(MeasureViewModel.class);
-        application = (MementoApplication) getApplication();
         measureDate = binding.measureDate;
         measureDate.setOnClickListener(this);
         if (viewModel.getMeasureDate() == null) {
@@ -54,9 +49,9 @@ public class MeasureActivity extends MementoActivity implements View.OnClickList
         if (viewModel.getWeight() != 0) {
             measureResult.setText(String.valueOf(viewModel.getWeight()));
         }
-        buttonMeasure = binding.buttonMeasure;
+        Button buttonMeasure = binding.buttonMeasure;
         buttonMeasure.setOnClickListener(this);
-        buttonHistory = binding.buttonHistory;
+        Button buttonHistory = binding.buttonHistory;
         buttonHistory.setOnClickListener(this);
         BottomNavigationView bottomNavigationView = binding.bottomNavigation.getRoot();
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
@@ -104,6 +99,7 @@ public class MeasureActivity extends MementoActivity implements View.OnClickList
             case R.id.button_history:
                 startActivity(new Intent(this, HistoryActivity.class));
                 break;
+            default:
         }
     }
 

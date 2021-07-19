@@ -22,7 +22,6 @@ import by.pavka.memento.user.UserHabitTracker;
 public class  HabitActivity extends MementoActivity {
 
     private MementoApplication application;
-    private RecyclerView recycler;
     private HabitRecyclerViewAdapter adapter;
     private UserHabitTracker tracker;
 
@@ -41,7 +40,7 @@ public class  HabitActivity extends MementoActivity {
         MenuItem item = bottomNavigationView.getMenu().findItem(R.id.habit);
         item.setChecked(true);
         tracker = application.getUser().getTracker();
-        recycler = findViewById(R.id.recyclerView);
+        RecyclerView recycler = findViewById(R.id.recyclerView);
         adapter = new HabitRecyclerViewAdapter(this, tracker);
         recycler.setAdapter(adapter);
         recycler.setLayoutManager(new GridLayoutManager(this, getResources().getConfiguration().orientation * 2));
@@ -56,8 +55,8 @@ public class  HabitActivity extends MementoActivity {
     }
 
     private void clearHabit(Intent intent) {
-        if (intent != null && intent.getSerializableExtra("habit") != null) {
-            Habit habit = (Habit)intent.getSerializableExtra("habit");
+        if (intent != null && intent.getSerializableExtra(MementoApplication.HABIT) != null) {
+            Habit habit = (Habit)intent.getSerializableExtra(MementoApplication.HABIT);
             tracker.clearHabitProgress(habit.getId());
             adapter.setTracker(tracker);
             adapter.notifyItemChanged(adapter.habits.indexOf(habit));
@@ -71,8 +70,8 @@ public class  HabitActivity extends MementoActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            Habit habit = (Habit)data.getSerializableExtra("habit");
+        if (resultCode == RESULT_OK && data != null) {
+            Habit habit = (Habit)data.getSerializableExtra(MementoApplication.HABIT);
             application.launchNotification(habit.getId(), true);
             application.saveHabits();
             adapter.setTracker(application.getUser().getTracker());

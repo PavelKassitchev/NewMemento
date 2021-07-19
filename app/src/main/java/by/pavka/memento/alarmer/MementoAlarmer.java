@@ -1,7 +1,5 @@
 package by.pavka.memento.alarmer;
 
-import android.util.Log;
-
 import java.util.Calendar;
 
 public class MementoAlarmer {

@@ -1,10 +1,6 @@
 package by.pavka.memento.habit;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Calendar;
-
-import by.pavka.memento.MementoApplication;
 
 public class HabitProgress {
     private HabitStatus habitStatus;

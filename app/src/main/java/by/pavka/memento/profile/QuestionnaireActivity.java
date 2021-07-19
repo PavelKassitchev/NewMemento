@@ -21,7 +21,6 @@ import by.pavka.memento.user.User;
 
 public class QuestionnaireActivity extends MementoActivity implements View.OnClickListener {
 
-    private ActivityQuestionnaireBinding binding;
     private QuestionnaireViewModel viewModel;
     private TextView question;
     private Button buttonNext;
@@ -36,7 +35,7 @@ public class QuestionnaireActivity extends MementoActivity implements View.OnCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityQuestionnaireBinding.inflate(getLayoutInflater());
+        ActivityQuestionnaireBinding binding = ActivityQuestionnaireBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
         Toolbar toolbar = binding.toolbar.getRoot();

@@ -1,7 +1,5 @@
 package by.pavka.memento.calculator.impl;
 
-import android.util.Log;
-
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -51,8 +49,8 @@ public class LifeSpanCalculatorImpl implements LifeSpanCalculator {
     }
 
     private int findBMICorrection(Calendar birthDate, double weight, double height) {
-        Calendar now = Calendar.getInstance();
-        double ageInYears = (TimeUnit.MILLISECONDS.toDays(now.getTimeInMillis() - birthDate.getTimeInMillis())) / 365.25;
+        Calendar instance = Calendar.getInstance();
+        double ageInYears = (TimeUnit.MILLISECONDS.toDays(instance.getTimeInMillis() - birthDate.getTimeInMillis())) / 365.25;
         int correction = 0;
         if (ageInYears < 5) {
             return correction;

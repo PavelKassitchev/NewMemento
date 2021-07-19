@@ -61,7 +61,7 @@ public class HistoryActivity extends MementoActivity implements AdapterView.OnIt
             DateFormat df = new SimpleDateFormat("d/M/yy", Locale.getDefault());
             graphView.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(this, df));
             graphView.getGridLabelRenderer().setNumHorizontalLabels(4);
-            graphView.getViewport().setMaxX(new Date().getTime() + 1000 * 3600 * 24);
+            graphView.getViewport().setMaxX(new Date().getTime() + 1000 * 3600 * 24.0);
             graphView.getViewport().setXAxisBoundsManual(true);
             graphView.getGridLabelRenderer().setHumanRounding(false);
             graphView.getGridLabelRenderer().setVerticalAxisTitle(getResources().getString(R.string.weight));
@@ -109,7 +109,7 @@ public class HistoryActivity extends MementoActivity implements AdapterView.OnIt
             }
 
             graphView.getViewport().setMinX(start.getTimeInMillis());
-            graphView.getViewport().setMaxX(new Date().getTime() + 1000 * 3600 * 24);
+            graphView.getViewport().setMaxX(new Date().getTime() + 1000 * 3600 * 24.0);
             graphView.getViewport().setXAxisBoundsManual(true);
             graphView.onDataChanged(true, false);
         }
@@ -117,7 +117,7 @@ public class HistoryActivity extends MementoActivity implements AdapterView.OnIt
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
+        //not applied
     }
 
     @Override
@@ -130,6 +130,8 @@ public class HistoryActivity extends MementoActivity implements AdapterView.OnIt
                 ((MementoApplication) getApplication()).getUser().setChronicler(chronicler);
                 ((MementoApplication) getApplication()).saveChronicler();
                 graphView.removeAllSeries();
+                break;
+            default:
         }
     }
 

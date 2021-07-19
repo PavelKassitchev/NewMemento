@@ -79,6 +79,10 @@ public class MementoActivity extends AppCompatActivity implements BottomNavigati
             case R.id.weights:
                 intent = new Intent(this, MeasureActivity.class);
                 break;
+            default:
+        }
+        if (intent == null) {
+            return false;
         }
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
