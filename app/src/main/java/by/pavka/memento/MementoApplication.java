@@ -46,7 +46,6 @@ public class MementoApplication extends MultiDexApplication {
 
     private Questionnaire questionnaire;
     private User user;
-    private NotificationManager mNotifyManager;
     private NotificationChannel channel;
     private String success;
     private static String newHabit;
@@ -87,19 +86,19 @@ public class MementoApplication extends MultiDexApplication {
     }
 
     private User createUser() {
-        User user = new User();
+        User newUser = new User();
         SharedPreferences preferences = getSharedPreferences(APP_PREF, MODE_PRIVATE);
         boolean habitsCustomized = preferences.getBoolean(HABITS_CUSTOMIZED, false);
         UserHabitTracker tracker;
         if (habitsCustomized) {
-            user.setHabitCustomized(true);
+            newUser.setHabitCustomized(true);
             tracker = loadTracker();
             tracker.setApp(this);
         } else {
             tracker = new UserHabitTracker(this);
         }
         Chronicler chronicler = loadChronicler();
-        user.setChronicler(chronicler);
+        newUser.setChronicler(chronicler);
         String dateOfBirth = preferences.getString(DATE, null);
         String name = "";
         int length = getQuestionnaire().getLength();
@@ -107,21 +106,21 @@ public class MementoApplication extends MultiDexApplication {
         if (dateOfBirth != null) {
             name = preferences.getString(NAME, name);
             int gender = preferences.getInt(GENDER, 0);
-            user.setGender(gender);
+            newUser.setGender(gender);
             double weight = preferences.getFloat(WEIGHT, 0);
-            user.setWeight(weight);
+            newUser.setWeight(weight);
             double height = preferences.getFloat(HEIGHT, 0);
-            user.setHeight(height);
+            newUser.setHeight(height);
             Calendar birthDate = CalendarConverter.intoCalendar(dateOfBirth);
-            user.setBirthDate(birthDate);
+            newUser.setBirthDate(birthDate);
             for (int i = 0; i < length; i++) {
                 answers[i] = preferences.getInt(INDEX + i, 0);
             }
         }
-        user.setName(name);
-        user.setAnswers(answers);
-        user.setTracker(tracker);
-        return user;
+        newUser.setName(name);
+        newUser.setAnswers(answers);
+        newUser.setTracker(tracker);
+        return newUser;
     }
 
     public void savePersonData(String name, String dateOfBirth, int gender) {
@@ -207,8 +206,7 @@ public class MementoApplication extends MultiDexApplication {
         String tracker = preferences.getString(TRACKER, null);
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
-        UserHabitTracker habitTracker = gson.fromJson(tracker, UserHabitTracker.class);
-        return habitTracker;
+        return gson.fromJson(tracker, UserHabitTracker.class);
     }
 
     public String getSuccess() {
@@ -261,7 +259,7 @@ public class MementoApplication extends MultiDexApplication {
                 contentText = habitInProgress;
                 tillNext = delay;
             }
-            Data data = new Data.Builder().putString("habit", habit.getName())
+            Data data = new Data.Builder().putString(HABIT, habit.getName())
                     .putString("result", contentText).putInt("id", habit.getId()).build();
             OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(MementoWorker.class)
                     .setInitialDelay(tillNext, TimeUnit.SECONDS).setInputData(data).addTag(habitName + id).build();

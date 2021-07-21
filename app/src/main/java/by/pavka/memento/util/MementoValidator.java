@@ -14,6 +14,7 @@ public class MementoValidator {
     public static final int MAX_WEIGHT = 150;
     public static final int MAX_HEIGHT = 200;
 
+    private MementoValidator() {}
 
     public static boolean validateWeight(TextView tv) {
         String sw = tv.getText().toString();

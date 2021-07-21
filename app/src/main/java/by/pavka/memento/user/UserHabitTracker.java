@@ -1,7 +1,6 @@
 package by.pavka.memento.user;
 
 import android.content.res.TypedArray;
-import android.util.Log;
 
 import java.util.HashMap;
 import java.util.Map;

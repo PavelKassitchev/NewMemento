@@ -24,10 +24,7 @@ public class WeightActivity extends MementoActivity implements View.OnClickListe
     private EditText weight;
     private EditText height;
     private TextView bmi;
-    private Button calculate;
-    private Button forward;
     private SeekBar seekBar;
-    private double bodyMassIndex;
     private WeightViewModel viewModel;
 
     @Override
@@ -42,9 +39,9 @@ public class WeightActivity extends MementoActivity implements View.OnClickListe
         weight = binding.weight;
         height = binding.height;
         bmi = binding.bmi;
-        calculate = binding.calculate;
+        Button calculate = binding.calculate;
         calculate.setOnClickListener(this);
-        forward = binding.forward;
+        Button forward = binding.forward;
         forward.setOnClickListener(this);
         seekBar = binding.seekBar;
         seekBar.setEnabled(false);
@@ -92,7 +89,7 @@ public class WeightActivity extends MementoActivity implements View.OnClickListe
     }
 
     private void setScale() {
-        bodyMassIndex = viewModel.getBmi();
+        double bodyMassIndex = viewModel.getBmi();
         if (bodyMassIndex != 0) {
             bmi.setText(String.format(getResources().getString(R.string.bmi), bodyMassIndex));
         } else {
