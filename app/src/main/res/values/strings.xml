@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Memento</string>
+    <string name="app_name">Жизненно</string>
     <string name="header_main">Здравствуйте, %s!</string>
     <string name="forecast">В среднем человек вашего возраста, пола и привычек доживет до %s года.</string>
     <string name="invitation">Вы можете перейти к заполнению анкеты</string>
@@ -114,7 +114,7 @@
         <item>!Очистить историю!</item>
     </string-array>
 
-    <string name="helptext">ВАЖНО: Данное приложение не претендует на предсказание продолжительности жизни пользователя. Оно
+    <string name="helptext"><b>ВАЖНО</b>: Данное приложение не претендует на предсказание продолжительности жизни пользователя. Оно
         оценивает только СРЕДНЮЮ продолжительность жизни людей с датой рождения и привычками, как у пользователя.
         <a href="https://pavka-memento.github.io/help">Больше информации здесь</a>
     </string>
