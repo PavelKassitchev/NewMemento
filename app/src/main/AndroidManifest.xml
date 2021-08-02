@@ -2,6 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="by.pavka.memento">
 
+    <supports-screens
+    android:smallScreens="false"
+    android:normalScreens="true"
+    android:largeScreens="true"
+    android:xlargeScreens="false"
+    android:anyDensity="true"
+    />
+
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
